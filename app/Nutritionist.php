@@ -24,4 +24,13 @@ class Nutritionist extends Model
     {
         return $this->hasMany('App\Patient');
     }
+
+    /**
+     * the has many relationship
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function storemenu()
+    {
+        return $this->hasMany('App\Storemenu');
+    }
 }

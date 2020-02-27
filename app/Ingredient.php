@@ -6,14 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ingredient extends Model
 {
+    /* Ingredient Attributes:
+     *      int id
+     *      int nutritionist_id
+     *      int quantite
+     *      int calorie
+     */
+
     /**
-    * The attributes that are mass assignable.
-     *
-     * @var array
-    */
-    protected $fillable = [
-        'nom','calorie_g','calorie_l'
-    ];
+     * @var string
+     */
+    protected $table = 'ingredients';
 
     /**
      * One To Many (Inverse)

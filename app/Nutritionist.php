@@ -6,14 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Nutritionist extends Model
 {
+    /* Ingredient Attributes:
+     *      int id
+     *      string firstname
+     *      string email
+     *      string lastName
+     *      string picture
+     */
+
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-    */
-    protected $fillable = [
-        'email','password','firstName','lastName','picture'
-    ];
+     * @var string
+     */
+    protected $table = 'nutritionists';
 
 
     /**
@@ -40,5 +44,14 @@ class Nutritionist extends Model
     public function ingredients()
     {
         return $this->hasMany('App\Ingredient');
+    }
+
+    /**
+     * the has many relationship
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function conversations()
+    {
+        return $this->hasMany('App\Conversation');
     }
 }

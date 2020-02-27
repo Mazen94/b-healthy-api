@@ -4,24 +4,19 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Patient extends Model
+class Conversation extends Model
 {
     /* Ingredient Attributes:
      *      int id
-     *      string firstname
-     *      string email
-     *      string lastName
-     *      string picture
-     *      string numberPhone
-     *      string gender
-     *      string profession
+     *      int nutritionist_id
+     *      int patient_id
      *
      */
 
     /**
      * @var string
      */
-    protected $table = 'patients';
+    protected $table = 'conversations';
 
     /**
      * One To Many (Inverse)
@@ -33,12 +28,11 @@ class Patient extends Model
     }
 
     /**
-     * One To one
+     * One To one (Inverse)
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function conversation()
+    public function patient()
     {
-        return $this->hasOne('App\Conversation');
+        return $this->belongsTo('App\Patient');
     }
-
 }

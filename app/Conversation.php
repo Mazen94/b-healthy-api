@@ -35,4 +35,13 @@ class Conversation extends Model
     {
         return $this->belongsTo('App\Patient');
     }
+
+    /**
+     * the has many relationship
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function message()
+    {
+        return $this->hasMany('App\Message');
+    }
 }

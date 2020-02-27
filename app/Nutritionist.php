@@ -20,7 +20,7 @@ class Nutritionist extends Model
      * the has many relationship
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function patient()
+    public function patients()
     {
         return $this->hasMany('App\Patient');
     }

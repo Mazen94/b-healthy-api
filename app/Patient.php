@@ -15,7 +15,6 @@ class Patient extends Model
      *      string numberPhone
      *      string gender
      *      string profession
-     *
      */
 
     /**
@@ -40,6 +39,7 @@ class Patient extends Model
     {
         return $this->hasOne('App\Conversation');
     }
+
     /**
      * the has many relationship
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -47,5 +47,14 @@ class Patient extends Model
     public function visits()
     {
         return $this->hasMany('App\Visit');
+    }
+
+    /**
+     * the has many relationship
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function activitephysiques()
+    {
+        return $this->hasMany('App\Activitephysique');
     }
 }

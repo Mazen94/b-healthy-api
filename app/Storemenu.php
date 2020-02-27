@@ -6,14 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Storemenu extends Model
 {
-    /**
-     * The attributes that are mass assignable.
+    /* Storemenu Attributes:
+     *      int id
+     *      string nom
+     *      int max_age
+     *      int min_age
+     *      string type_menu
+     *      int nutritionnist
      *
-     * @var array
      */
-    protected $fillable = [
-        'nom','max_age','min_age','calorie','type_menu'
-    ];
+
+    /**
+     * @var string
+     */
+    protected $table = 'storemenus';
 
 
     /**

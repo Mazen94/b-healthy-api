@@ -40,5 +40,12 @@ class Patient extends Model
     {
         return $this->hasOne('App\Conversation');
     }
-
+    /**
+     * the has many relationship
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function visits()
+    {
+        return $this->hasMany('App\Visit');
+    }
 }

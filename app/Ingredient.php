@@ -4,17 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Storemenu extends Model
+class Ingredient extends Model
 {
     /**
-     * The attributes that are mass assignable.
+    * The attributes that are mass assignable.
      *
      * @var array
-     */
+    */
     protected $fillable = [
-        'nom','max_age','min_age','calorie','type_menu'
+        'nom','calorie_g','calorie_l'
     ];
-
 
     /**
      * One To Many (Inverse)
@@ -24,6 +23,4 @@ class Storemenu extends Model
     {
         return $this->belongsTo('App\Nutritionist');
     }
-
-
 }

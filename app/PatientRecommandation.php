@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class PatientRecommandation extends Pivot
 {
     /**
-     * Class Pivot between StoreMenu et Ingredients
+     * Class Pivot between Patient et Recommandation
      */
     /**
      * @var string

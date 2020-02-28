@@ -36,4 +36,14 @@ class Ingredient extends Model
         return $this->belongsToMany('App\Storemenu')
             ->using('App\StoremenuIngredient');
     }
+
+    /**
+     * Many To Many RelationShip between menu et ingredients
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function menus()
+    {
+        return $this->belongsToMany('App\Menu')
+            ->using('App\MenuIngredients');
+    }
 }

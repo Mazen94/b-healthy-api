@@ -64,7 +64,7 @@ class Patient extends Model
      */
     public function notifications()
     {
-        return $this->hasMany('App\Activitephysique');
+        return $this->hasMany('App\Notification');
     }
 
     /**

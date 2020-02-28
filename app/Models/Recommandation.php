@@ -22,7 +22,7 @@ class Recommandation extends Model
      */
     public function patients()
     {
-        return $this->belongsToMany('App\Patient')
+        return $this->belongsToMany('App\Models\Patient')
             ->using('App\PatientRecommandation');
     }
 
@@ -33,6 +33,6 @@ class Recommandation extends Model
     public function menus()
     {
         return $this->belongsToMany('App\Menu')
-            ->using('App\RecommandationMenu');
+            ->using('App\Models\RecommandationMenu');
     }
 }

@@ -35,7 +35,7 @@ class Nutritionist extends Model
      */
     public function storemenus()
     {
-        return $this->hasMany('App\Storemenu');
+        return $this->hasMany('App\Models\Storemenu');
     }
     /**
      * the has many relationship
@@ -43,7 +43,7 @@ class Nutritionist extends Model
      */
     public function ingredients()
     {
-        return $this->hasMany('App\Ingredient');
+        return $this->hasMany('App\Models\\Ingredient');
     }
 
     /**
@@ -52,6 +52,6 @@ class Nutritionist extends Model
      */
     public function conversations()
     {
-        return $this->hasMany('App\Conversation');
+        return $this->hasMany('App\Models\Conversation');
     }
 }

@@ -42,6 +42,6 @@ class Conversation extends Model
      */
     public function message()
     {
-        return $this->hasMany('App\Message');
+        return $this->hasMany('App\Models\Message');
     }
 }

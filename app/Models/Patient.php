@@ -28,7 +28,7 @@ class Patient extends Model
      */
     public function nutritionist()
     {
-        return $this->belongsTo('App\Nutritionist');
+        return $this->belongsTo('App\Models\Nutritionist');
     }
 
     /**
@@ -37,7 +37,7 @@ class Patient extends Model
      */
     public function conversation()
     {
-        return $this->hasOne('App\Conversation');
+        return $this->hasOne('App\Models\Conversation');
     }
 
     /**
@@ -46,7 +46,7 @@ class Patient extends Model
      */
     public function visits()
     {
-        return $this->hasMany('App\Visit');
+        return $this->hasMany('App\Models\Visit');
     }
 
     /**
@@ -55,7 +55,7 @@ class Patient extends Model
      */
     public function activitephysiques()
     {
-        return $this->hasMany('App\Activitephysique');
+        return $this->hasMany('App\Models\Activitephysique');
     }
 
     /**
@@ -64,7 +64,7 @@ class Patient extends Model
      */
     public function notifications()
     {
-        return $this->hasMany('App\Notification');
+        return $this->hasMany('App\Models\Notification');
     }
 
     /**
@@ -73,7 +73,7 @@ class Patient extends Model
      */
     public function recommandations()
     {
-        return $this->belongsToMany('App\Recommandation')
-            ->using('App\PatientRecommandation');
+        return $this->belongsToMany('App\Models\Recommandation')
+            ->using('App\Models\PatientRecommandation');
     }
 }

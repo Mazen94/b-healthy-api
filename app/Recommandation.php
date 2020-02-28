@@ -15,4 +15,14 @@ class Recommandation extends Model
      * @var string
      */
     protected $table = 'recommandations';
+
+    /**
+     * Many To Many RelationShip
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function patients()
+    {
+        return $this->belongsToMany('App\Patient')
+            ->using('App\PatientRecommandation');
+    }
 }

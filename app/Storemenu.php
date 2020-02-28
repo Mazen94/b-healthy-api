@@ -30,6 +30,11 @@ class Storemenu extends Model
     {
         return $this->belongsTo('App\Nutritionist');
     }
+
+    /**
+     * Many To Many RelationShip
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function ingredients()
     {
         return $this->belongsToMany('App\Ingredient')

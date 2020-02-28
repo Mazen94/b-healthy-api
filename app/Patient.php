@@ -66,4 +66,14 @@ class Patient extends Model
     {
         return $this->hasMany('App\Activitephysique');
     }
+
+    /**
+     * Many To Many RelationShip
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function recommandations()
+    {
+        return $this->belongsToMany('App\Recommandation')
+            ->using('App\PatientRecommandation');
+    }
 }

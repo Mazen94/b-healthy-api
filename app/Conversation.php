@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Conversation extends Model
 {
-    /* Ingredient Attributes:
+    /* conversation Attributes:
      *      int id
      *      int nutritionist_id
      *      int patient_id

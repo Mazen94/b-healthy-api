@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Patient extends Model
 {
-    /* Ingredient Attributes:
+    /* Patient Attributes:
      *      int id
      *      string firstname
      *      string email
@@ -54,6 +54,15 @@ class Patient extends Model
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function activitephysiques()
+    {
+        return $this->hasMany('App\Activitephysique');
+    }
+
+    /**
+     * the has many relationship
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function notifications()
     {
         return $this->hasMany('App\Activitephysique');
     }

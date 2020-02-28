@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Activitephysique extends Model
 {
-    /* Ingredient Attributes:
+    /* Activitephysique Attributes:
      *      int id
      *      int distance
      *      int patient_id

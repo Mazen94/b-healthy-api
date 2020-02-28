@@ -4,18 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Visit extends Model
+class Notification extends Model
 {
     /*  Visit Attributes:
-     *      int id
-     *      int poids
-     *      string note
-     *      date scheduled_at
-     *      date done_at
-     *      int patient_id
-     *
-     */
-    protected $table = 'visits';
+         *      int id
+         *      int id_patient
+         *      string message
+         */
+    protected $table = 'notifications';
+
     /**
      * One To Many (Inverse)
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

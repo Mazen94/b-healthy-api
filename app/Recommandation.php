@@ -25,4 +25,14 @@ class Recommandation extends Model
         return $this->belongsToMany('App\Patient')
             ->using('App\PatientRecommandation');
     }
+
+    /**
+     * Many To Many RelationShip between menu et recommandation
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function menus()
+    {
+        return $this->belongsToMany('App\Menu')
+            ->using('App\RecommandationMenu');
+    }
 }

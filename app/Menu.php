@@ -22,5 +22,13 @@ class Menu extends Model
      */
     protected $table = 'menus';
 
-
+    /**
+     * Many To Many RelationShip between menu et recommandation
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function recommandations()
+    {
+        return $this->belongsToMany('App\Recommandation')
+            ->using('App\RecommandationMenu');
+    }
 }

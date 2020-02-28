@@ -30,6 +30,10 @@ class Storemenu extends Model
     {
         return $this->belongsTo('App\Nutritionist');
     }
-
+    public function ingredients()
+    {
+        return $this->belongsToMany('App\Ingredient')
+            ->using('App\StoremenuIngredient');
+    }
 
 }

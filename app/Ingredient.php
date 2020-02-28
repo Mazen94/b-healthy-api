@@ -26,4 +26,14 @@ class Ingredient extends Model
     {
         return $this->belongsTo('App\Nutritionist');
     }
+
+    /**
+     * ManyToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function storemenus()
+    {
+        return $this->belongsToMany('App\Storemenu')
+            ->using('App\StoremenuIngredient');
+    }
 }

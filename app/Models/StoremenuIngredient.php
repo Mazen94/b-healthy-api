@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class StoremenuIngredient extends Pivot
 {
+    protected $fillable = ['storemenu_id', 'ingredients_id'];
     /**
      * Class Pivot between StoreMenu et Ingredients
      */
@@ -13,4 +14,6 @@ class StoremenuIngredient extends Pivot
      * @var string
      */
     protected $table = 'storemenus_ingredients';
+
+
 }

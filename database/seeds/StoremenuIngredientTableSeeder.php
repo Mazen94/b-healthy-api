@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class StoremenuTableSeeder extends Seeder
+class StoremenuIngredientTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class StoremenuTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Storemenu::class,20)->create();
+        factory(\App\StoremenuIngredient::class,50)->create();
     }
 }

@@ -38,12 +38,17 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'nutritionnists',
         ],
 
         'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
+            'driver' => 'jwt',
+            'provider' => 'nutritionnists',
+            'hash' => false,
+        ],
+        'api-patient' => [
+            'driver' => 'jwt',
+            'provider' => 'patients',
             'hash' => false,
         ],
     ],
@@ -70,7 +75,14 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
-
+        'nutritionnists' => [
+            'driver' => 'eloquent',
+            'model' => App\Nutritionist::class,
+        ],
+        'patients' => [
+            'driver' => 'eloquent',
+            'model' => App\Patient::class,
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

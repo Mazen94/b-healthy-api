@@ -13,6 +13,24 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+
+/*
+|--------------------------------------------------------------------------
+| API Nutritionist Routes
+|--------------------------------------------------------------------------
+
+*/
+Route::prefix('nutritionist')->group(function () {
+    Route::post('register','ApiNutritionnist\AuthNutrtionnistConrtoller@register');
+    Route::post('login','ApiNutritionnist\AuthNutrtionnistConrtoller@login');
+});
+
+/*
+|--------------------------------------------------------------------------
+| API Patient Routes
+|--------------------------------------------------------------------------
+
+*/
+Route::prefix('patient')->group(function () {
+
 });

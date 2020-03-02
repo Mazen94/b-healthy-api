@@ -2,10 +2,15 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 
-class Patient extends Model
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+
+class Patient extends Authenticatable implements JWTSubject
 {
+    use Notifiable;
+
     /* Patient Attributes:
      *      int id
      *      string firstname
@@ -75,5 +80,25 @@ class Patient extends Model
     {
         return $this->belongsToMany('App\Models\Recommandation')
             ->using('App\Models\PatientRecommandation');
+    }
+
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }

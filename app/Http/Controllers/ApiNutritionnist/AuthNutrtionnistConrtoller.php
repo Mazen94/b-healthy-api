@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\ApiNutritionnist;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginNutritionist;
+use App\Http\Requests\RegisterNutritionist;
 use App\Repositories\AuthNutrtionnistRepository;
 use Illuminate\Http\Request;
 use JWTAuth;
@@ -25,7 +27,7 @@ class AuthNutrtionnistConrtoller extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function register(Request $request)
+    public function register(RegisterNutritionist $request)
     {
         $nutritionist = $this->authNutrtionistRepository->register($request);
         $token = JWTAuth::fromUser($nutritionist);
@@ -44,7 +46,7 @@ class AuthNutrtionnistConrtoller extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(Request $request)
+    public function login(LoginNutritionist $request)
     {
         $credentials = $request->only('email', 'password');
         try {

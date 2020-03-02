@@ -3,25 +3,25 @@
 namespace App\Http\Controllers\ApiNutritionnist;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RegisterPatient;
-use App\Repositories\PatientRepository;
-use Illuminate\Http\Request;
+use App\Http\Requests\IngredientPutRequest;
+use App\Http\Requests\IngredientRequest;
+use App\Repositories\IngredientRepository;
 use JWTAuth;
 
-class PatientController extends Controller
+class IngredientConrtoller extends Controller
 {
-    protected $patientRepository;
+    protected $ingredientRepository;
     protected $nutritionist;
 
     /**
      * PatientController constructor.
-     * @param PatientRepository $patientRepository
+     * @param IngredientRepository $patientRepository
      * @throws \Tymon\JWTAuth\Exceptions\JWTException
      */
-    public function __construct(PatientRepository $patientRepository)
+    public function __construct(IngredientRepository $ingredientRepository)
     {
         $this->nutritionist = JWTAuth::parseToken()->authenticate();
-        $this->patientRepository = new PatientRepository($this->nutritionist);
+        $this->ingredientRepository = new IngredientRepository($this->nutritionist);
     }
 
     /**
@@ -32,11 +32,11 @@ class PatientController extends Controller
      */
     public function index()
     {
-        $patients = $this->patientRepository->getAllPatients();
+        $ingredients = $this->ingredientRepository->getAllIngredients();
         return response()->json(
             [
                 'success' => true,
-                'patients' => $patients,
+                'ingredients' => $ingredients,
             ],
             200
         );
@@ -48,14 +48,14 @@ class PatientController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(RegisterPatient $request)
+    public function store(IngredientRequest $request)
     {
-        $patient = $this->patientRepository->createPatient($request);
-        if (empty($patient)) {
+        $ingredient = $this->ingredientRepository->createIngredient($request);
+        if (empty($ingredient)) {
             return response()->json(
                 [
                     'success' => false,
-                    'patient' => 'Error to create patient',
+                    'ingredient' => 'Error to create ingredient',
                 ],
                 400
             );
@@ -63,7 +63,7 @@ class PatientController extends Controller
         return response()->json(
             [
                 'success' => true,
-                'patient' => $patient,
+                'ingredient' => $ingredient,
             ],
             200
         );
@@ -77,12 +77,12 @@ class PatientController extends Controller
      */
     public function show($id)
     {
-        $patient = $this->patientRepository->getPatient($id);
-        if (empty($patient)) {
+        $ingredient = $this->ingredientRepository->getIngredient($id);
+        if (empty($ingredient)) {
             return response()->json(
                 [
                     'success' => false,
-                    'patient' => 'Not Found',
+                    'ingredient' => 'Not Found',
                 ],
                 400
             );
@@ -90,12 +90,29 @@ class PatientController extends Controller
         return response()->json(
             [
                 'success' => true,
-                'patient' => $patient,
+                'ingredient' => $ingredient,
             ],
             200
         );
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param IngredientPutRequest $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(IngredientPutRequest $request, $id)
+    {
+        $ingredient = $this->ingredientRepository->updateIngredient($request, $id);
+        return response()->json(
+            [
+                'success' => true,
+            ],
+            200
+        );
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -106,11 +123,11 @@ class PatientController extends Controller
      */
     public function destroy($id)
     {
-        if ($this->patientRepository->deletePatient($id)) {
+        if ($this->ingredientRepository->deleteIngredient($id)) {
             return response()->json(
                 [
                     'success' => true,
-                    'patient' => 'deleted',
+                    'ingredient' => 'deleted',
                 ],
                 200
             );
@@ -118,9 +135,10 @@ class PatientController extends Controller
         return response()->json(
             [
                 'success' => false,
-                'patient' => 'Cannot delete this patient',
+                'ingredient' => 'Cannot delete this ingredient',
             ],
             400
         );
     }
+
 }

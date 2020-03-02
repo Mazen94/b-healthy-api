@@ -33,7 +33,7 @@ class Ingredient extends Model
      */
     public function storemenus()
     {
-        return $this->belongsToMany('App\Storemenu')
+        return $this->belongsToMany('App\Models\Storemenu')
             ->using('App\Models\StoremenuIngredient');
     }
 

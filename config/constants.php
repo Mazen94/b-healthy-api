@@ -15,4 +15,5 @@ return [
 
     //minimum length of a password
     'MIN_PASSWORD_LENGTH' => 8,
+
 ];

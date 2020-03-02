@@ -16,12 +16,13 @@ class Visit extends Model
      *
      */
     protected $table = 'visits';
+
     /**
      * One To Many (Inverse)
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function patient()
     {
-        return $this->belongsTo('App\Models\Patient');
+        return $this->belongsTo('App\Patient');
     }
 }

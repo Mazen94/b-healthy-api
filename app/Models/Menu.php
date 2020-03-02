@@ -29,7 +29,7 @@ class Menu extends Model
     public function recommandations()
     {
         return $this->belongsToMany('App\Recommandation')
-            ->using('App\Models\RecommandationMenu');
+            ->using('App\RecommandationMenu');
     }
 
     /**
@@ -39,6 +39,6 @@ class Menu extends Model
     public function ingredients()
     {
         return $this->belongsToMany('App\Ingredient')
-            ->using('App\Models\MenuIngredients');
+            ->using('App\MenuIngredients');
     }
 }

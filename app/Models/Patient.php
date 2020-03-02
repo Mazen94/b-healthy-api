@@ -33,7 +33,7 @@ class Patient extends Authenticatable implements JWTSubject
      */
     public function nutritionist()
     {
-        return $this->belongsTo('App\Models\Nutritionist');
+        return $this->belongsTo('App\Nutritionist');
     }
 
     /**
@@ -42,7 +42,7 @@ class Patient extends Authenticatable implements JWTSubject
      */
     public function conversation()
     {
-        return $this->hasOne('App\Models\Conversation');
+        return $this->hasOne('App\Conversation');
     }
 
     /**
@@ -51,7 +51,7 @@ class Patient extends Authenticatable implements JWTSubject
      */
     public function visits()
     {
-        return $this->hasMany('App\Models\Visit');
+        return $this->hasMany('App\Visit');
     }
 
     /**
@@ -60,7 +60,7 @@ class Patient extends Authenticatable implements JWTSubject
      */
     public function activitephysiques()
     {
-        return $this->hasMany('App\Models\Activitephysique');
+        return $this->hasMany('App\Activitephysique');
     }
 
     /**
@@ -78,8 +78,8 @@ class Patient extends Authenticatable implements JWTSubject
      */
     public function recommandations()
     {
-        return $this->belongsToMany('App\Models\Recommandation')
-            ->using('App\Models\PatientRecommandation');
+        return $this->belongsToMany('App\Recommandation')
+            ->using('App\PatientRecommandation');
     }
 
     /**

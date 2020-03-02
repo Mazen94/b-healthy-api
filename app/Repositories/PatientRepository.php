@@ -45,7 +45,7 @@ class PatientRepository
      * Method to create a new patient
      *
      * @param $request
-     * @return Patient
+     * @return false|\Illuminate\Database\Eloquent\Model
      */
     public function createPatient($data)
     {
@@ -61,7 +61,7 @@ class PatientRepository
     }
 
     /**
-     * Method to delete task
+     * Method to delete patient
      *
      * @param $id
      * @return bool|mixed|null

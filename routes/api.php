@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,12 +25,18 @@ Route::prefix('nutritionist')->group(function () {
     Route::post('register','ApiNutritionnist\AuthNutrtionnistConrtoller@register');
     Route::post('login','ApiNutritionnist\AuthNutrtionnistConrtoller@login');
     Route::middleware('auth:api')->group(function(){
+
         Route::post('patients/','ApiNutritionnist\PatientController@store');
-        Route::delete('tasks/{id}','API\TasksController@destroy');
-        Route::put('tasks/{id}','API\TasksController@update');
+        Route::delete('patient/{id}','ApiNutritionnist\PatientController@destroy');
         Route::get('patient/{id}','ApiNutritionnist\PatientController@show');
         Route::get('patients/','ApiNutritionnist\PatientController@index');
-        Route::get('logout', 'AuthPassport\AuthController@logout');
+
+        Route::post('ingredients/','ApiNutritionnist\IngredientConrtoller@store');
+        Route::delete('ingredient/{id}','ApiNutritionnist\IngredientConrtoller@destroy');
+        Route::get('ingredient/{id}','ApiNutritionnist\IngredientConrtoller@show');
+        Route::get('ingredients/','ApiNutritionnist\IngredientConrtoller@index');
+        Route::put('ingredient/{id}','ApiNutritionnist\IngredientConrtoller@update');
+
 
     });
 

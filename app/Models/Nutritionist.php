@@ -39,7 +39,7 @@ class Nutritionist extends Authenticatable implements JWTSubject
      */
     public function storemenus()
     {
-        return $this->hasMany('App\Models\Storemenu');
+        return $this->hasMany('App\Storemenu');
     }
 
     /**
@@ -48,7 +48,7 @@ class Nutritionist extends Authenticatable implements JWTSubject
      */
     public function ingredients()
     {
-        return $this->hasMany('App\Models\\Ingredient');
+        return $this->hasMany('App\Ingredient');
     }
 
     /**
@@ -57,7 +57,7 @@ class Nutritionist extends Authenticatable implements JWTSubject
      */
     public function conversations()
     {
-        return $this->hasMany('App\Models\Conversation');
+        return $this->hasMany('App\Conversation');
     }
 
     /**

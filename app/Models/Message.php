@@ -23,7 +23,7 @@ class Message extends Model
      */
     public function conversation()
     {
-        return $this->belongsTo('App\Models\Conversation');
+        return $this->belongsTo('App\Conversation');
     }
 
 }

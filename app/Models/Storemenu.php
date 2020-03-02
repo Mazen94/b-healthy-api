@@ -28,7 +28,7 @@ class Storemenu extends Model
      */
     public function nutritionist()
     {
-        return $this->belongsTo('App\Models\Nutritionist');
+        return $this->belongsTo('App\Nutritionist');
     }
 
     /**
@@ -37,8 +37,8 @@ class Storemenu extends Model
      */
     public function ingredients()
     {
-        return $this->belongsToMany('App\Models\Ingredient')
-            ->using('App\Models\StoremenuIngredient');
+        return $this->belongsToMany('App\Ingredient')
+            ->using('App\StoremenuIngredient');
     }
 
 }

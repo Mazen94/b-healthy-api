@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Config;
 class RegisterNutritionist extends FormRequest
 {
     /**
@@ -26,7 +26,7 @@ class RegisterNutritionist extends FormRequest
         return [
             'email' => 'required|string|email',
             'firstName' => 'required',
-            'password' => 'required',
+            'password' => 'required|min:'.Config::get('constants.MIN_PASSWORD_LENGTH').'|max:'.Config::get('constants.MAX_PASSWORD_LENGTH'),
             'lastName' => 'required',
         ];
     }

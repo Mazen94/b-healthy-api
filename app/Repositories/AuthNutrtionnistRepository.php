@@ -5,20 +5,20 @@ namespace App\Repositories;
 
 
 use App\Nutritionist;
-use Illuminate\Http\Request;
+
 
 class AuthNutrtionnistRepository
 {
     /**
-     * @param Request $request
+     * @param  $request
      * @return Nutritionist
      */
-    public function register(Request $request)
+    public function register( $request)
     {
         $nutritionist = new Nutritionist();
         $nutritionist->email = $request->email;
-        $nutritionist->firstName = $request->firsName;
-        $nutritionist->lastName = $request->firsName;
+        $nutritionist->firstName = $request->firstName;
+        $nutritionist->lastName = $request->lastName;
         $nutritionist->password = bcrypt($request->password);
         $nutritionist->save();
         return $nutritionist;

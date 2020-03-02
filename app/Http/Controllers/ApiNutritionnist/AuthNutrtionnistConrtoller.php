@@ -8,7 +8,7 @@ use App\Http\Requests\RegisterNutritionist;
 use App\Repositories\AuthNutrtionnistRepository;
 use Illuminate\Http\Request;
 use JWTAuth;
-use JWTAuthException;
+
 
 class AuthNutrtionnistConrtoller extends Controller
 {
@@ -49,26 +49,18 @@ class AuthNutrtionnistConrtoller extends Controller
     public function login(LoginNutritionist $request)
     {
         $credentials = $request->only('email', 'password');
-        try {
-            if (!$token = JWTAuth::attempt($credentials)) {
-                return response()->json(
-                    [
-                        'success' => false,
-                        'message' => 'invalid_email_or_password',
-                    ],
-                    401
-                );
-            }
-        } catch (JWTAuthException $e) {
+
+        if (!$token = JWTAuth::attempt($credentials)) {
             return response()->json(
                 [
                     'success' => false,
-                    'message' => 'failed_to_create_token',
+                    'message' => 'invalid_email_or_password',
                 ],
-                404
-
+                401
             );
         }
+
+
         return response()->json(
             [
                 'success' => true,

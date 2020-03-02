@@ -13,7 +13,7 @@ class AuthNutrtionnistRepository
      * @param  $request
      * @return Nutritionist
      */
-    public function register( $request)
+    public function register($request)
     {
         $nutritionist = new Nutritionist();
         $nutritionist->email = $request->email;
@@ -23,7 +23,6 @@ class AuthNutrtionnistRepository
         $nutritionist->save();
         return $nutritionist;
     }
-
 
 
 }

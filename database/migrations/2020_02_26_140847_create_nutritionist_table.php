@@ -13,15 +13,18 @@ class CreateNutritionistTable extends Migration
      */
     public function up()
     {
-        Schema::create('nutritionist', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('email')->unique();
-            $table->string('firstName');
-            $table->string('lastName');
-            $table->string('password');
-            $table->string('picture');
-            $table->timestamps();
-        });
+        Schema::create(
+            'nutritionist',
+            function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('email')->unique();
+                $table->string('firstName');
+                $table->string('lastName');
+                $table->string('password');
+                $table->string('picture');
+                $table->timestamps();
+            }
+        );
     }
 
     /**

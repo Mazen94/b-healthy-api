@@ -29,7 +29,7 @@ class StoreMenuRepository
      */
     public function getAllStoreMenus()
     {
-        $storemenus = $this->nutritionist->storemenus;
+        $storemenus = $this->nutritionist->storemenus()->paginate();
 
         return $storemenus;
     }

@@ -29,7 +29,7 @@ class VisitRepository
     public function getAllVisits($id)
     {
         $patient = $this->nutritionist->patients()->findOrFail($id);
-        return $patient->visits;
+        return $patient->visits()->paginate();
     }
 
     /**

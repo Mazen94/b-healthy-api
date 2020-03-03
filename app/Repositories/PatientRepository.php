@@ -27,7 +27,7 @@ class PatientRepository
      */
     public function getAllPatients()
     {
-        return $this->nutritionist->patients()->get();
+        return $this->nutritionist->patients()->paginate();
     }
 
     /**

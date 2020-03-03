@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Config ;
+use Config;
 
 class PutStoreMenuRequest extends FormRequest
 {
@@ -33,7 +33,7 @@ class PutStoreMenuRequest extends FormRequest
             'min_age' => 'integer|between:' . Config::get('constants.MIN_AGE_LENGTH') . ',' . Config::get(
                     'constants.MAX_AGE_LENGTH'
                 ),
-            'calorie' =>  'integer|between:' . Config::get('constants.MIN_CALORIES_LENGTH') . ',' . Config::get(
+            'calorie' => 'integer|between:' . Config::get('constants.MIN_CALORIES_LENGTH') . ',' . Config::get(
                     'constants.MAX_CALORIES_LENGTH'
                 ),
         ];

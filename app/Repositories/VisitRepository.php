@@ -54,7 +54,7 @@ class VisitRepository
      * @param $id_visit
      * @return bool|false|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Relations\HasMany|\Illuminate\Database\Eloquent\Relations\HasMany[]
      */
-    public function updateVisit($request, $id_patient,$id_visit)
+    public function updateVisit($request, $id_patient, $id_visit)
     {
         $patient = $this->nutritionist->patients()->findOrFail($id_patient);
         $visit = $patient->visits()->findOrFail($id_visit);
@@ -62,6 +62,7 @@ class VisitRepository
             return $visit->fill($request->all())->save();
         }
     }
+
     /**
      * Method to create a new visit
      *
@@ -69,7 +70,7 @@ class VisitRepository
      * @param $id_patient
      * @return false|\Illuminate\Database\Eloquent\Model
      */
-    public function createVisit($request,$id_patient)
+    public function createVisit($request, $id_patient)
     {
         $visit = new Visit();
         $visit->poids = $request->poids;
@@ -79,14 +80,15 @@ class VisitRepository
 
         return $patient->visits()->save($visit);
     }
+
     /**
-     * Method to delete Ingredient
+     * Method to delete visit
      *
      * @param $id
      * @return bool|mixed|null
      * @throws \Exception
      */
-    public function deleteVisit($id_patient,$id_visit)
+    public function deleteVisit($id_patient, $id_visit)
     {
         $patient = $this->nutritionist->patients()->findOrFail($id_patient);
         $visit = $patient->visits()->findOrFail($id_visit);

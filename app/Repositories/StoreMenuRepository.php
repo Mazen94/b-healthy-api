@@ -68,12 +68,11 @@ class StoreMenuRepository
      * Method to update storeMenu related to patient
      *
      * @param $request
-
      * @return bool|false|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Relations\HasMany|\Illuminate\Database\Eloquent\Relations\HasMany[]
      */
     public function updateStoreMenu($request, $id)
     {
-        $menu =  $this->nutritionist->storemenus()->findOrFail($id);
+        $menu = $this->nutritionist->storemenus()->findOrFail($id);
         $menu->nom = $request['nom'];
         $menu->max_age = $request['max_age'];
         $menu->min_age = $request['min_age'];
@@ -81,6 +80,18 @@ class StoreMenuRepository
         $menu->type_menu = $request['type_menu'];
         $menu->save();
         return $menu;
+    }
 
+    /**
+     * Method to delete storeMenu
+     *
+     * @param $id
+     * @return bool|mixed|null
+     * @throws \Exception
+     */
+    public function deleteStoreMenu($id)
+    {
+        $menu = $this->nutritionist->storemenus()->findOrFail($id);
+        return $menu->delete();
     }
 }

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PostStoreMenuRequest;
 use App\Http\Requests\PutStoreMenuRequest;
 use App\Repositories\StoreMenuRepository;
-use Illuminate\Http\Request;
 use JWTAuth;
 
 class StoreMenuController extends Controller
@@ -111,10 +110,18 @@ class StoreMenuController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
-        //
+        if ($this->storeMenuRepository->deleteStoreMenu($id)) {
+            return response()->json(
+                [
+                    'success' => true,
+                    'storeMenu' => 'deleted',
+                ],
+                200
+            );
+        }
     }
 }

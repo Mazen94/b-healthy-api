@@ -26,7 +26,7 @@ class IngredientRepository
      */
     public function getAllIngredients()
     {
-        return $this->nutritionist->ingredients()->get();
+        return $this->nutritionist->ingredients()->paginate();
     }
 
     /**
@@ -79,8 +79,10 @@ class IngredientRepository
     public function updateIngredient($request, $id)
     {
         $ingredient = $this->nutritionist->ingredients()->findOrFail($id);
-        if ($ingredient) {
-            return $ingredient->fill($request->all())->save();
-        }
+        $ingredient->nom = $request['nom'];
+        $ingredient->quantite = $request['quantite'];
+        $ingredient->calorie = $request['calorie'];
+        $ingredient->save();
+        return $ingredient ;
     }
 }

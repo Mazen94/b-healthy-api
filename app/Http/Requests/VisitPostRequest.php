@@ -24,7 +24,9 @@ class VisitPostRequest extends FormRequest
     public function rules()
     {
         return [
-            'poids' => 'required|integer',
+            'poids' => 'required|integer|min:' . Config::get('constants.MIN_WEIGHT_LENGTH') . '|max:' . Config::get(
+                    'constants.MAX_WEIGHT_LENGTH'
+                ),
             'scheduled_at' => 'date',
             'done_at' => 'nullable|date',
             'note' => 'nullable|string'

@@ -16,8 +16,21 @@ return [
     //minimum length of a password
     'MIN_PASSWORD_LENGTH' => 8,
 
-    //the value which cannot be associated with the weight
-    'VALUE_DIFFERENT' => 0,
+    //maximum length of a weight
+    'MAX_WEIGHT_LENGTH' => 1,
 
+    //minimum length of a weight
+    'MIN_WEIGHT_LENGTH' => 500,
 
+    //maximum length of a age
+    'MAX_AGE_LENGTH' => 90,
+
+    //minimum length of a age
+    'MIN_AGE_LENGTH' => 5,
+
+    //maximum calories of a store menu
+    'MAX_CALORIES_LENGTH' => 10000,
+
+    //minimum calories of a store menu
+    'MIN_CALORIES_LENGTH' => 100,
 ];

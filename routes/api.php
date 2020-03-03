@@ -44,6 +44,12 @@ Route::prefix('nutritionist')->group(function () {
         Route::put('patient/{id_patient}/visit/{id_visit}','ApiNutritionnist\VisitController@update');
         Route::delete('patient/{id_patient}/visit/{id_visit}','ApiNutritionnist\VisitController@destroy');
 
+        Route::get('storemenus/','ApiNutritionnist\StoreMenuController@index');
+        Route::post('storemenus','ApiNutritionnist\StoreMenuController@store');
+        Route::get('storemenu/{id_storemenus}','ApiNutritionnist\StoreMenuController@show');
+        Route::put('storemenu/{id_storemenus}','ApiNutritionnist\StoreMenuController@update');
+        Route::delete('storemenu/{id_storemenus}','ApiNutritionnist\StoreMenuController@destroy');
+
     });
 
 });

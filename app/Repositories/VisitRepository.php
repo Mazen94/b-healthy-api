@@ -63,7 +63,7 @@ class VisitRepository
         }
     }
     /**
-     * Method to create a new Ingredient
+     * Method to create a new visit
      *
      * @param $request
      * @param $id_patient

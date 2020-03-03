@@ -19,6 +19,7 @@ class Storemenu extends Model
     /**
      * @var string
      */
+
     protected $table = 'storemenus';
 
 
@@ -37,7 +38,12 @@ class Storemenu extends Model
      */
     public function ingredients()
     {
-        return $this->belongsToMany('App\Ingredient')
+        return $this->belongsToMany(
+            'App\Ingredient',
+            'storemenus_ingredients',
+            'storemenu_id',
+            'ingredients_id'
+        )->withPivot('quantite')
             ->using('App\StoremenuIngredient');
     }
 

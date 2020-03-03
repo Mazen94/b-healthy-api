@@ -51,9 +51,9 @@ class VisitController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(VisitPostRequest $request,$id_patient)
+    public function store(VisitPostRequest $request, $id_patient)
     {
-        $visit = $this->visitRepository->createVisit($request,$id_patient);
+        $visit = $this->visitRepository->createVisit($request, $id_patient);
         if (empty($visit)) {
             return response()->json(
                 [
@@ -70,7 +70,6 @@ class VisitController extends Controller
             ],
             200
         );
-
     }
 
     /**
@@ -80,9 +79,9 @@ class VisitController extends Controller
      * @param int $id_visit
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id_patient,$id_visit)
+    public function show($id_patient, $id_visit)
     {
-        $visit = $this->visitRepository->getVisit($id_patient,$id_visit);
+        $visit = $this->visitRepository->getVisit($id_patient, $id_visit);
         return response()->json(
             [
                 'success' => true,
@@ -100,9 +99,9 @@ class VisitController extends Controller
      * @param int $id_visit
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(VisitPutRequest $request, $id_patient,$id_visit)
+    public function update(VisitPutRequest $request, $id_patient, $id_visit)
     {
-        $visit = $this->visitRepository->updateVisit($request, $id_patient,$id_visit);
+        $visit = $this->visitRepository->updateVisit($request, $id_patient, $id_visit);
         return response()->json(
             [
                 'success' => $visit,
@@ -118,9 +117,9 @@ class VisitController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
-    public function destroy($id_patient,$id_visit)
+    public function destroy($id_patient, $id_visit)
     {
-        if ($this->visitRepository->deleteVisit($id_patient,$id_visit)) {
+        if ($this->visitRepository->deleteVisit($id_patient, $id_visit)) {
             return response()->json(
                 [
                     'success' => true,

@@ -33,7 +33,12 @@ class Ingredient extends Model
      */
     public function storemenus()
     {
-        return $this->belongsToMany('App\Models\Storemenu')
+        return $this->belongsToMany(
+            'App\Storemenu',
+            'storemenus_ingredients',
+            'ingredients_id',
+            'storemenu_id'
+        )->withPivot('quantite')
             ->using('App\StoremenuIngredient');
     }
 

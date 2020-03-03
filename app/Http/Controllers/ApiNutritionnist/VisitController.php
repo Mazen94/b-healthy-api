@@ -3,55 +3,58 @@
 namespace App\Http\Controllers\ApiNutritionnist;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\IngredientPutRequest;
-use App\Http\Requests\IngredientRequest;
-use App\Repositories\IngredientRepository;
+use App\Http\Requests\VisitPostRequest;
+use App\Http\Requests\VisitPutRequest;
+use App\Repositories\VisitRepository;
 use JWTAuth;
 
-class IngredientConrtoller extends Controller
+class VisitController extends Controller
 {
-    protected $ingredientRepository;
+
+    protected $visitRepository;
     protected $nutritionist;
 
     /**
      * PatientController constructor.
-     * @param IngredientRepository $ingredientRepository
-     *
+     * @param PatientRepository $patientRepository
+     * @throws \Tymon\JWTAuth\Exceptions\JWTException
      */
-    public function __construct(IngredientRepository $ingredientRepository)
+    public function __construct(VisitRepository $visitRepository)
     {
         $this->nutritionist = JWTAuth::parseToken()->authenticate();
-        $this->ingredientRepository = new IngredientRepository($this->nutritionist);
+        $this->visitRepository = new VisitRepository($this->nutritionist);
     }
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\JsonResponse
-     *
      */
-    public function index()
+    public function index($id_patient)
     {
-        $ingredients = $this->ingredientRepository->getAllIngredients();
+        $visits = $this->visitRepository->getAllVisits($id_patient);
         return response()->json(
             [
                 'success' => true,
-                'ingredients' => $ingredients,
+                'visits' => $visits,
             ],
             200
         );
     }
 
+
     /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
+     * @param $id_patient
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(IngredientRequest $request)
+    public function store(VisitPostRequest $request,$id_patient)
     {
-        $ingredient = $this->ingredientRepository->createIngredient($request);
-        if (empty($ingredient)) {
+        $visit = $this->visitRepository->createVisit($request,$id_patient);
+        if (empty($visit)) {
             return response()->json(
                 [
                     'success' => false,
@@ -63,34 +66,27 @@ class IngredientConrtoller extends Controller
         return response()->json(
             [
                 'success' => true,
-                'ingredient' => $ingredient,
+                'ingredient' => $visit,
             ],
             200
         );
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param int $id_patient
+     * @param int $id_visit
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id)
+    public function show($id_patient,$id_visit)
     {
-        $ingredient = $this->ingredientRepository->getIngredient($id);
-        if (empty($ingredient)) {
-            return response()->json(
-                [
-                    'success' => false,
-                    'ingredient' => 'Not Found',
-                ],
-                400
-            );
-        }
+        $visit = $this->visitRepository->getVisit($id_patient,$id_visit);
         return response()->json(
             [
                 'success' => true,
-                'ingredient' => $ingredient,
+                'visit' => $visit,
             ],
             200
         );
@@ -99,16 +95,17 @@ class IngredientConrtoller extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param IngredientPutRequest $request
-     * @param $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id_patient
+     * @param int $id_visit
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(IngredientPutRequest $request, $id)
+    public function update(VisitPutRequest $request, $id_patient,$id_visit)
     {
-        $ingredient = $this->ingredientRepository->updateIngredient($request, $id);
+        $visit = $this->visitRepository->updateVisit($request, $id_patient,$id_visit);
         return response()->json(
             [
-                'success' => $ingredient,
+                'success' => $visit,
             ],
             200
         );
@@ -116,14 +113,14 @@ class IngredientConrtoller extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param int $id
+     * @param $id_patient
+     * @param $id_visit
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy($id_patient,$id_visit)
     {
-        if ($this->ingredientRepository->deleteIngredient($id)) {
+        if ($this->visitRepository->deleteVisit($id_patient,$id_visit)) {
             return response()->json(
                 [
                     'success' => true,
@@ -132,7 +129,5 @@ class IngredientConrtoller extends Controller
                 200
             );
         }
-
     }
-
 }

@@ -38,6 +38,12 @@ Route::prefix('nutritionist')->group(function () {
         Route::put('ingredient/{id}','ApiNutritionnist\IngredientConrtoller@update');
 
 
+        Route::get('patient/{id_patient}/visits','ApiNutritionnist\VisitController@index');
+        Route::post('patient/{id_patient}/visits','ApiNutritionnist\VisitController@store');
+        Route::get('patient/{id_patient}/visit/{id_visit}','ApiNutritionnist\VisitController@show');
+        Route::put('patient/{id_patient}/visit/{id_visit}','ApiNutritionnist\VisitController@update');
+        Route::delete('patient/{id_patient}/visit/{id_visit}','ApiNutritionnist\VisitController@destroy');
+
     });
 
 });

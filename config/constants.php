@@ -16,4 +16,8 @@ return [
     //minimum length of a password
     'MIN_PASSWORD_LENGTH' => 8,
 
+    //the value which cannot be associated with the weight
+    'VALUE_DIFFERENT' => 0,
+
+
 ];

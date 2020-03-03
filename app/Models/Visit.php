@@ -15,6 +15,7 @@ class Visit extends Model
      *      int patient_id
      *
      */
+    protected $fillable = [ 'poids','note','scheduled_at','done_at'];
     protected $table = 'visits';
 
     /**

@@ -34,7 +34,7 @@ class Ingredient extends Model
     public function storemenus()
     {
         return $this->belongsToMany('App\Models\Storemenu')
-            ->using('App\Models\StoremenuIngredient');
+            ->using('App\StoremenuIngredient');
     }
 
     /**
@@ -44,6 +44,6 @@ class Ingredient extends Model
     public function menus()
     {
         return $this->belongsToMany('App\Menu')
-            ->using('App\Models\MenuIngredients');
+            ->using('App\MenuIngredients');
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PostStoreMenuRequest;
 use App\Http\Requests\PutStoreMenuRequest;
 use App\Repositories\StoreMenuRepository;
+use Illuminate\Http\Request;
 use JWTAuth;
 
 class StoreMenuController extends Controller
@@ -111,6 +112,7 @@ class StoreMenuController extends Controller
      *
      * @param int $id
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function destroy($id)
     {
@@ -124,4 +126,26 @@ class StoreMenuController extends Controller
             );
         }
     }
+
+    /**
+     * add ingredient to the storeMenu.
+     *
+     * @param int $id_storeMenu
+     * @param $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
+    public function addIngredient(Request $request,$id_storeMenu)
+    {
+         $storeMenu =  $this->storeMenuRepository->addIngredientToStoreMenu($request,$id_storeMenu);
+            return response()->json(
+                [
+                    'success' => true,
+                    'storeMenu' => $storeMenu,
+                ],
+                200
+            );
+
+    }
+
 }

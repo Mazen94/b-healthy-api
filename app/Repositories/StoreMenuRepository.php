@@ -6,7 +6,9 @@ namespace App\Repositories;
 
 use App\Nutritionist;
 use App\Storemenu;
+use App\StoremenuIngredient;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 
 
 class StoreMenuRepository
@@ -93,5 +95,43 @@ class StoreMenuRepository
     {
         $menu = $this->nutritionist->storemenus()->findOrFail($id);
         return $menu->delete();
+    }
+
+    /**
+     * Add ingredient to a storeMenu
+     *
+     * @param $request
+     * @param $id_storemenus
+     * @return bool|mixed|null
+     * @throws \Exception
+     */
+    public function addIngredientToStoreMenu($request, $id_storemenus)
+    {
+        $storeMenu = new StoremenuIngredient();
+        $storeMenu->storemenu_id = $id_storemenus;
+        $storeMenu->ingredients_id = $request['id'];
+        $storeMenu->quantite = $request['quantite'];
+        $storeMenu->save();
+
+        return $storeMenu;
+    }
+
+    /**
+     * delete ingredient to a storeMenu
+     *
+     * @param $request
+     * @param $id_storemenus
+     * @return bool|mixed|null
+     * @throws \Exception
+     */
+    public function deleteIngredientToStoreMenu($request, $id_storemenus)
+    {
+        $storeMenu = new StoremenuIngredient();
+        $storeMenu->storemenu_id = $id_storemenus;
+        $storeMenu->ingredients_id = $request['id'];
+        $storeMenu->quantite = $request['quantite'];
+        $storeMenu->save();
+
+        return $storeMenu;
     }
 }

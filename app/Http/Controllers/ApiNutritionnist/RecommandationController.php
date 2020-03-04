@@ -106,11 +106,20 @@ class RecommandationController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy($patient_id, $id_recommendation)
     {
-        //
+        if ($this->recommandationRepository->deleteRecommendation($patient_id, $id_recommendation)) {
+            return response()->json(
+                [
+                    'success' => true,
+                    'storeMenu' => 'deleted',
+                ],
+                200
+            );
+        }
     }
 
 

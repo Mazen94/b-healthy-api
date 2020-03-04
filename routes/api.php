@@ -123,7 +123,7 @@ Route::prefix('nutritionist')->group(
                 );
                 Route::delete(
                     'patient/{patient_id}/recommendation/{id_recommendation}',
-                    'ApiNutritionnist\VisitController@destroy'
+                    'ApiNutritionnist\RecommandationController@destroy'
                 )->name('delete recommendation ');
             }
         );

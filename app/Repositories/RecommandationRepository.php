@@ -77,4 +77,18 @@ class RecommandationRepository
 
         return $recommendation;
     }
+
+    /**
+     * Method to delete recommendation related to patient
+     *
+     * @param $id
+     * @return bool|mixed|null
+     * @throws \Exception
+     */
+    public function deleteRecommendation($patient_id, $id_recommendation)
+    {
+        $patient = $this->nutritionist->patients()->findOrFail($patient_id);
+        $recommendation = $patient->recommandations()->findOrFail($id_recommendation);
+        return $recommendation->delete();
+    }
 }

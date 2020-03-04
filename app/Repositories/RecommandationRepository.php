@@ -56,8 +56,7 @@ class RecommandationRepository
         $rec = new Recommandation();
         $rec->avoid = $request['avoid'];
         $rec->save();
-        $recommendation = $patient->recommandations()->attach($rec->id);
-
+        $patient->recommandations()->attach($rec->id);
         return $rec;
     }
 

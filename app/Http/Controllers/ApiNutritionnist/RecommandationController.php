@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRecommendationRequest;
 use App\Http\Requests\PutRecommendationRequest;
 use App\Repositories\RecommandationRepository;
-use Illuminate\Http\Request;
+
 use JWTAuth;
 
 class RecommandationController extends Controller

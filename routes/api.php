@@ -58,12 +58,12 @@ Route::prefix('nutritionist')->group(
                     'Recovery only one visit related to patient'
                 );
                 Route::put('patient/{id_patient}/visit/{id_visit}', 'ApiNutritionnist\VisitController@update')->name(
-                    'Recovery visits related to patient'
+                    'update visits related to patient'
                 );
                 Route::delete(
                     'patient/{id_patient}/visit/{id_visit}',
                     'ApiNutritionnist\VisitController@destroy'
-                )->name('Update visit related to patient');
+                )->name('delete visit related to patient');
 
                 Route::get('storemenus/', 'ApiNutritionnist\StoreMenuController@index')->name('Recovery StoreMenus');
                 Route::post('storemenus', 'ApiNutritionnist\StoreMenuController@store')->name('Store a StoreMenu');
@@ -95,6 +95,36 @@ Route::prefix('nutritionist')->group(
                 )->name(
                     'update amount ingredient related a storeMenu'
                 );
+
+
+                Route::get(
+                    'patient/{patient_id}/recommendations',
+                    'ApiNutritionnist\RecommandationController@index'
+                )->name(
+                    'Recovery all recommendations '
+                );
+                Route::post(
+                    'patient/{patient_id}/recommendation',
+                    'ApiNutritionnist\RecommandationController@store'
+                )->name(
+                    'Store visit recommendations'
+                );
+                Route::get(
+                    'patient/{patient_id}/recommendation/{id_recommendation}',
+                    'ApiNutritionnist\RecommandationController@show'
+                )->name(
+                    'Recovery only one recommendations'
+                );
+                Route::put(
+                    'patient/{patient_id}/recommendation/{id_recommendation}',
+                    'ApiNutritionnist\RecommandationController@update'
+                )->name(
+                    'update recommendation'
+                );
+                Route::delete(
+                    'patient/{patient_id}/recommendation/{id_recommendation}',
+                    'ApiNutritionnist\VisitController@destroy'
+                )->name('delete recommendation ');
             }
         );
     }

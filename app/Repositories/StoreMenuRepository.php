@@ -27,13 +27,11 @@ class StoreMenuRepository
     /**
      * Method to get all StoreMenu
      * @param $id
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function getAllStoreMenus()
     {
-        $storemenus = $this->nutritionist->storemenus()->paginate();
-
-        return $storemenus;
+        return $this->nutritionist->storemenus()->paginate();;
     }
 
     /**

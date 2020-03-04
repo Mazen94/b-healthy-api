@@ -22,8 +22,12 @@ class Recommandation extends Model
      */
     public function patients()
     {
-        return $this->belongsToMany('App\Patient')
-            ->using('App\PatientRecommandation');
+        return $this->belongsToMany(
+            'App\Recommandation',
+            'patients_recommandations',
+            'recommandation_id',
+            'patient_id'
+        )->using('App\PatientRecommandation');
     }
 
     /**

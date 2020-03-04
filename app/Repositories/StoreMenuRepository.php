@@ -110,7 +110,7 @@ class StoreMenuRepository
         $storeMenu = new StoremenuIngredient();
         $storeMenu->storemenu_id = $id_storemenus;
         $storeMenu->ingredients_id = $request['id'];
-        $storeMenu->quantite = $request['quantite'];
+        $storeMenu->amount = $request['amount'];
         $storeMenu->save();
 
         return $storeMenu;
@@ -127,8 +127,26 @@ class StoreMenuRepository
     public function deleteIngredientToStoreMenu($id_storemenus, $id_ingredient)
     {
         $menu = $this->nutritionist->storemenus()->findOrFail($id_storemenus);
+        if ($menu->ingredients()->findOrFail($id_ingredient)) {
+            return $menu->ingredients()->detach($id_ingredient);
+        }
+    }
+
+    /**
+     * update amount ingredient to a storeMenu
+     *
+     * @param $id_storemenus
+     * @param $id_storemenus
+     * @return bool|mixed|null
+     * @throws \Exception
+     */
+    public function updateIngredientToStoreMenu($request, $id_storeMenu, $id_ingredient)
+    {
+        $menu = $this->nutritionist->storemenus()->findOrFail($id_storeMenu);
         $ingredient = $menu->ingredients()->findOrFail($id_ingredient);
-        return $menu->ingredients()->detach($id_ingredient);
+        $ingredient->pivot->amount = $request['amount'];
+        $ingredient->pivot->save();
+        return $ingredient->pivot;
     }
 
 }

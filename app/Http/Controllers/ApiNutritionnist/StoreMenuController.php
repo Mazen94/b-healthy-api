@@ -135,17 +135,16 @@ class StoreMenuController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
-    public function addIngredient(Request $request,$id_storeMenu)
+    public function addIngredient(Request $request, $id_storeMenu)
     {
-         $storeMenu =  $this->storeMenuRepository->addIngredientToStoreMenu($request,$id_storeMenu);
-            return response()->json(
-                [
-                    'success' => true,
-                    'storeMenu' => $storeMenu,
-                ],
-                200
-            );
-
+        $storeMenu = $this->storeMenuRepository->addIngredientToStoreMenu($request, $id_storeMenu);
+        return response()->json(
+            [
+                'success' => true,
+                'storeMenu' => $storeMenu,
+            ],
+            200
+        );
     }
 
     /**
@@ -156,17 +155,39 @@ class StoreMenuController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
-    public function deleteIngredient($id_storeMenu ,$id_ingredient)
+    public function deleteIngredient($id_storeMenu, $id_ingredient)
     {
-       if($this->storeMenuRepository->deleteIngredientToStoreMenu($id_storeMenu,$id_ingredient)) {
-           return response()->json(
-               [
-                   'success' => true,
-                   'ingredient' => 'deleted',
-               ],
-               200
-           );
-       }
-       return 'failed';
+        if ($this->storeMenuRepository->deleteIngredientToStoreMenu($id_storeMenu, $id_ingredient)) {
+            return response()->json(
+                [
+                    'success' => true,
+                    'ingredient' => 'deleted',
+                ],
+                200
+            );
+        }
+    }
+
+    /**
+     * update amount ingredient to the storeMenu.
+     *
+     * @param int $id_storeMenu
+     * @param int $id_ingredient
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
+    public function updateIngredient(Request $request, $id_storeMenu, $id_ingredient)
+    {
+        $menuUpdated = $this->storeMenuRepository->updateIngredientToStoreMenu(
+            $request,
+            $id_storeMenu,
+            $id_ingredient
+        );
+        return response()->json(
+            [
+                'success' => $menuUpdated,
+            ],
+            200
+        );
     }
 }

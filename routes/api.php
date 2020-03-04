@@ -77,11 +77,23 @@ Route::prefix('nutritionist')->group(
                     'delete  Storemenu'
                 );
 
-                Route::post('storemenu/{id_storemenus}/ingredient/', 'ApiNutritionnist\StoreMenuController@addIngredient')->name(
+                Route::post(
+                    'storemenu/{id_storemenus}/ingredient/',
+                    'ApiNutritionnist\StoreMenuController@addIngredient'
+                )->name(
                     'Add ingredient to a storeMenu'
                 );
-                Route::delete('storemenu/{id_storemenus}/ingredient/{id_ingredient}', 'ApiNutritionnist\StoreMenuController@deleteIngredient')->name(
+                Route::delete(
+                    'storemenu/{id_storemenus}/ingredient/{id_ingredient}',
+                    'ApiNutritionnist\StoreMenuController@deleteIngredient'
+                )->name(
                     'Add ingredient to a storeMenu'
+                );
+                Route::put(
+                    'storemenu/{id_storemenus}/ingredient/{id_ingredient}',
+                    'ApiNutritionnist\StoreMenuController@updateIngredient'
+                )->name(
+                    'update amount ingredient related a storeMenu'
                 );
             }
         );

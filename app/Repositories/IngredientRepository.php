@@ -83,6 +83,6 @@ class IngredientRepository
         $ingredient->quantite = $request['quantite'];
         $ingredient->calorie = $request['calorie'];
         $ingredient->save();
-        return $ingredient ;
+        return $ingredient;
     }
 }

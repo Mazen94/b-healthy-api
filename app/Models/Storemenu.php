@@ -43,7 +43,7 @@ class Storemenu extends Model
             'storemenus_ingredients',
             'storemenu_id',
             'ingredients_id'
-        )->withPivot('quantite')
+        )->withPivot('amount')
             ->using('App\StoremenuIngredient');
     }
 

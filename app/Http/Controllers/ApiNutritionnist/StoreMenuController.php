@@ -148,4 +148,25 @@ class StoreMenuController extends Controller
 
     }
 
+    /**
+     * add ingredient to the storeMenu.
+     *
+     * @param int $id_storeMenu
+     * @param int $id_ingredient
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
+    public function deleteIngredient($id_storeMenu ,$id_ingredient)
+    {
+       if($this->storeMenuRepository->deleteIngredientToStoreMenu($id_storeMenu,$id_ingredient)) {
+           return response()->json(
+               [
+                   'success' => true,
+                   'ingredient' => 'deleted',
+               ],
+               200
+           );
+       }
+       return 'failed';
+    }
 }

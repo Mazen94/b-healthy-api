@@ -119,19 +119,16 @@ class StoreMenuRepository
     /**
      * delete ingredient to a storeMenu
      *
-     * @param $request
+     * @param $id_storemenus
      * @param $id_storemenus
      * @return bool|mixed|null
      * @throws \Exception
      */
-    public function deleteIngredientToStoreMenu($request, $id_storemenus)
+    public function deleteIngredientToStoreMenu($id_storemenus, $id_ingredient)
     {
-        $storeMenu = new StoremenuIngredient();
-        $storeMenu->storemenu_id = $id_storemenus;
-        $storeMenu->ingredients_id = $request['id'];
-        $storeMenu->quantite = $request['quantite'];
-        $storeMenu->save();
-
-        return $storeMenu;
+        $menu = $this->nutritionist->storemenus()->findOrFail($id_storemenus);
+        $ingredient = $menu->ingredients()->findOrFail($id_ingredient);
+        return $menu->ingredients()->detach($id_ingredient);
     }
+
 }

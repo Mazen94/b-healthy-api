@@ -78,7 +78,10 @@ Route::prefix('nutritionist')->group(
                 );
 
                 Route::post('storemenu/{id_storemenus}/ingredient/', 'ApiNutritionnist\StoreMenuController@addIngredient')->name(
-                    'update only one Storemenu'
+                    'Add ingredient to a storeMenu'
+                );
+                Route::delete('storemenu/{id_storemenus}/ingredient/{id_ingredient}', 'ApiNutritionnist\StoreMenuController@deleteIngredient')->name(
+                    'Add ingredient to a storeMenu'
                 );
             }
         );

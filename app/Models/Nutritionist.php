@@ -22,7 +22,7 @@ class Nutritionist extends Authenticatable implements JWTSubject
      * @var string
      */
     protected $table = 'nutritionists';
-
+    protected $hidden = ['password'];
 
     /**
      * the has many relationship

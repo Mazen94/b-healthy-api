@@ -12,6 +12,8 @@ Route::prefix('nutritionist')->group(
         Route::post('login', 'ApiNutritionnist\AuthNutrtionnistConrtoller@login')->name('Login Nutritionnist');
         Route::middleware('auth:api')->group(
             function () {
+                Route::get('/', 'ApiNutritionnist\NutritionnistController@index');
+                Route::put('/', 'ApiNutritionnist\NutritionnistController@update');
                 Route::post('patients/', 'ApiNutritionnist\PatientController@store')->name('Store Patient');
                 Route::delete('patient/{id}', 'ApiNutritionnist\PatientController@destroy')->name('Delete Patient');
                 Route::get('patient/{id}', 'ApiNutritionnist\PatientController@show')->name(

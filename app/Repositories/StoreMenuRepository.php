@@ -7,8 +7,6 @@ namespace App\Repositories;
 use App\Nutritionist;
 use App\Storemenu;
 use App\StoremenuIngredient;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
 
 
 class StoreMenuRepository

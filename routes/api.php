@@ -131,6 +131,12 @@ Route::prefix('nutritionist')->group(
                 )->name(
                     'Store  recommendations'
                 );
+                Route::delete(
+                    'patient/{patient_id}/recommendation/{id_recommendation}/menu/{id_menu}',
+                    'ApiNutritionnist\RecommandationController@destroyMenu'
+                )->name(
+                    'Store  recommendations'
+                );
             }
 
         );

@@ -136,16 +136,37 @@ class RecommandationController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
-    public function storeMenu(Request $request,$patient_id, $id_recommendation)
+    public function storeMenu(Request $request, $patient_id, $id_recommendation)
     {
-        $recommendation = $this->recommandationRepository->storeMenu($request,$patient_id, $id_recommendation);
-            return response()->json(
-                [
-                    'success' => true,
-                    'storeMenu' => $recommendation,
-                ],
-                200
-            );
+        $recommendation = $this->recommandationRepository->storeMenu($request, $patient_id, $id_recommendation);
+        return response()->json(
+            [
+                'success' => true,
+                'storeMenu' => $recommendation,
+            ],
+            200
+        );
+    }
+
+
+    /**
+     * destroy  a menu related  to recommendation
+     *
+     * @param Request $request
+     * @param int $patient_id
+     * @param $id_recommendation
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
+    public function destroyMenu($patient_id, $id_recommendation, $id_menu)
+    {
+        $this->recommandationRepository->destroyMenu($patient_id, $id_recommendation, $id_menu);
+        return response()->json(
+            [
+                'success' => true,
+            ],
+            200
+        );
     }
 
 

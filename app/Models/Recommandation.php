@@ -36,7 +36,11 @@ class Recommandation extends Model
      */
     public function menus()
     {
-        return $this->belongsToMany('App\Menu')
-            ->using('App\RecommandationMenu');
+        return $this->belongsToMany(
+            'App\Menu',
+            'menus_recommandations',
+            'recommandation_id',
+            'menu_id'
+        )->using('App\RecommandationMenu');
     }
 }

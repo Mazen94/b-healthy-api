@@ -110,7 +110,6 @@ class StoreMenuRepository
         $storeMenu->ingredients_id = $request['id'];
         $storeMenu->amount = $request['amount'];
         $storeMenu->save();
-
         return $storeMenu;
     }
 

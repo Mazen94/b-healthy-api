@@ -4,6 +4,8 @@
 namespace App\Repositories;
 
 
+use App\Menu;
+use App\MenuIngredients;
 use App\Nutritionist;
 use App\Recommandation;
 
@@ -89,5 +91,43 @@ class RecommandationRepository
         $patient = $this->nutritionist->patients()->findOrFail($patient_id);
         $recommendation = $patient->recommandations()->findOrFail($id_recommendation);
         return $recommendation->delete();
+    }
+
+    /**
+     * Method to delete recommendation related to patient
+     *
+     * @param $patient_id
+     * @param $request
+     * @param $id_recommendation
+     * @return bool|mixed|null
+     * @throws \Exception
+     */
+    public function storeMenu($request, $patient_id, $id_recommendation)
+    {
+        $patient = $this->nutritionist->patients()->findOrFail($patient_id);
+        $recommendation = $patient->recommandations()->findOrFail($id_recommendation);
+        // Create new menu
+        $menu = new Menu();
+        $menu->nom = $request['Storemenu.nom'];
+        $menu->max_age = $request['Storemenu.max_age'];
+        $menu->min_age = $request['Storemenu.min_age'];
+        $menu->calorie = $request['Storemenu.calorie'];
+        $menu->type_menu = $request['Storemenu.type_menu'];
+        $menu->save();
+        // Get ingredients sent in request
+        $ingredients = $request['Storemenu.ingredients'];
+
+        // linked the ingredients with the menus in the table pivot menus_ingredients
+        foreach ($ingredients as $ingredient) {
+            $menuIngredients = new MenuIngredients();
+            $menuIngredients->menu_id = $menu->id;
+            $menuIngredients->ingredients_id = $ingredient['id'];
+            $menuIngredients->amount = $ingredient['pivot']['amount'];
+            $menuIngredients->save();
+        }
+        //linked the menu with the recommendation in the table pivot menus_recommandations
+        $recommendation->menus()->attach($menu->id);
+
+        return $recommendation;
     }
 }

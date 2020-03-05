@@ -28,8 +28,12 @@ class Menu extends Model
      */
     public function recommandations()
     {
-        return $this->belongsToMany('App\Recommandation')
-            ->using('App\RecommandationMenu');
+        return $this->belongsToMany(
+            'App\Recommandation',
+            'menus_recommandations',
+            'menu_id',
+            'recommandation_id'
+        )->using('App\RecommandationMenu');
     }
 
     /**
@@ -38,7 +42,13 @@ class Menu extends Model
      */
     public function ingredients()
     {
-        return $this->belongsToMany('App\Ingredient')
+        return $this->belongsToMany(
+            'App\Ingredient',
+            'menus_ingredients',
+            'menu_id',
+            'ingredients_id'
+        )->withPivot('amount')
             ->using('App\MenuIngredients');
     }
+
 }

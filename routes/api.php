@@ -107,7 +107,7 @@ Route::prefix('nutritionist')->group(
                     'patient/{patient_id}/recommendation',
                     'ApiNutritionnist\RecommandationController@store'
                 )->name(
-                    'Store visit recommendations'
+                    'Store  recommendations'
                 );
                 Route::get(
                     'patient/{patient_id}/recommendation/{id_recommendation}',
@@ -125,7 +125,14 @@ Route::prefix('nutritionist')->group(
                     'patient/{patient_id}/recommendation/{id_recommendation}',
                     'ApiNutritionnist\RecommandationController@destroy'
                 )->name('delete recommendation ');
+                Route::post(
+                    'patient/{patient_id}/recommendation/{id_recommendation}/menu',
+                    'ApiNutritionnist\RecommandationController@storeMenu'
+                )->name(
+                    'Store  recommendations'
+                );
             }
+
         );
     }
 );

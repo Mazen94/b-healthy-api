@@ -7,6 +7,7 @@ use App\Http\Requests\PostRecommendationRequest;
 use App\Http\Requests\PutRecommendationRequest;
 use App\Repositories\RecommandationRepository;
 
+use Illuminate\Http\Request;
 use JWTAuth;
 
 class RecommandationController extends Controller
@@ -17,7 +18,7 @@ class RecommandationController extends Controller
     /**
      * PatientController constructor.
      * @param RecommandationRepository $recommandationRepository
-     * @throws \Tymon\JWTAuth\Exceptions\JWTException
+     *
      */
     public function __construct(RecommandationRepository $recommandationRepository)
     {
@@ -27,7 +28,7 @@ class RecommandationController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
+     * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function index($id)
@@ -46,7 +47,8 @@ class RecommandationController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param PostRecommendationRequest $request
+     * @param $id_patient
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(PostRecommendationRequest $request, $id_patient)
@@ -64,7 +66,8 @@ class RecommandationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param int $patient_id
+     * @param $id_recommendation
      * @return \Illuminate\Http\JsonResponse
      */
     public function show($patient_id, $id_recommendation)
@@ -83,7 +86,8 @@ class RecommandationController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param int $patient_id
+     * @param $id_recommendation
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(PutRecommendationRequest $request, $patient_id, $id_recommendation)
@@ -105,7 +109,8 @@ class RecommandationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param int $patient_id
+     * @param $id_recommendation
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
@@ -120,6 +125,27 @@ class RecommandationController extends Controller
                 200
             );
         }
+    }
+
+    /**
+     * add a menu to a recommendation
+     *
+     * @param Request $request
+     * @param int $patient_id
+     * @param $id_recommendation
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
+    public function storeMenu(Request $request,$patient_id, $id_recommendation)
+    {
+        $recommendation = $this->recommandationRepository->storeMenu($request,$patient_id, $id_recommendation);
+            return response()->json(
+                [
+                    'success' => true,
+                    'storeMenu' => $recommendation,
+                ],
+                200
+            );
     }
 
 

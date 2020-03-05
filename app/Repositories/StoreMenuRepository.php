@@ -42,7 +42,6 @@ class StoreMenuRepository
     public function getStoreMenuWithIngredients($id)
     {
         $storemenu = $this->nutritionist->storemenus()->findOrFail($id);
-
         $storemenu['ingredients'] = $storemenu->ingredients;
         return $storemenu;
     }

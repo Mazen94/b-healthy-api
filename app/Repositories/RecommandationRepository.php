@@ -131,7 +131,8 @@ class RecommandationRepository
         return $recommendation;
     }
 
-    public function destroyMenu($patient_id, $id_recommendation,$id_menu){
+    public function destroyMenu($patient_id, $id_recommendation, $id_menu)
+    {
         $patient = $this->nutritionist->patients()->findOrFail($patient_id);
         $recommendation = $patient->recommandations()->findOrFail($id_recommendation);
         $menu = $recommendation->menus()->findOrFail($id_menu);

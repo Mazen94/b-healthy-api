@@ -5,24 +5,10 @@ namespace App\Http\Controllers\ApiNutritionnist;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterPatient;
 use App\Repositories\PatientRepository;
-use Illuminate\Http\Request;
 use JWTAuth;
 
 class PatientController extends Controller
 {
-    protected $patientRepository;
-    protected $nutritionist;
-
-    /**
-     * PatientController constructor.
-     * @param PatientRepository $patientRepository
-     * @throws \Tymon\JWTAuth\Exceptions\JWTException
-     */
-    public function __construct(PatientRepository $patientRepository)
-    {
-        $this->nutritionist = JWTAuth::parseToken()->authenticate();
-        $this->patientRepository = new PatientRepository($this->nutritionist);
-    }
 
     /**
      * Display a listing of the resource.
@@ -32,7 +18,8 @@ class PatientController extends Controller
      */
     public function index()
     {
-        $patients = $this->patientRepository->getAllPatients();
+        $patientRepository = new PatientRepository(JWTAuth::parseToken()->authenticate());
+        $patients = $patientRepository->getAllPatients();
         return response()->json(
             [
                 'success' => true,
@@ -50,7 +37,8 @@ class PatientController extends Controller
      */
     public function store(RegisterPatient $request)
     {
-        $patient = $this->patientRepository->createPatient($request);
+        $patientRepository = new PatientRepository(JWTAuth::parseToken()->authenticate());
+        $patient = $patientRepository->createPatient($request);
         if (empty($patient)) {
             return response()->json(
                 [
@@ -77,7 +65,8 @@ class PatientController extends Controller
      */
     public function show($id)
     {
-        $patient = $this->patientRepository->getPatient($id);
+        $patientRepository = new PatientRepository(JWTAuth::parseToken()->authenticate());
+        $patient = $patientRepository->getPatient($id);
         if (empty($patient)) {
             return response()->json(
                 [
@@ -106,7 +95,8 @@ class PatientController extends Controller
      */
     public function destroy($id)
     {
-        if ($this->patientRepository->deletePatient($id)) {
+        $patientRepository = new PatientRepository(JWTAuth::parseToken()->authenticate());
+        if ($patientRepository->deletePatient($id)) {
             return response()->json(
                 [
                     'success' => true,

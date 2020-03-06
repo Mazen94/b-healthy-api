@@ -38,7 +38,7 @@ class Patient extends Authenticatable implements JWTSubject
 
     /**
      * One To one
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function conversation()
     {

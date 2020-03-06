@@ -46,6 +46,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
         $this->mapApiWebRoutes();
+        $this->mapApiMobileRoutes();
 
         //
     }
@@ -92,5 +93,20 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware('api')
             ->namespace($this->namespace)
             ->group(base_path('routes/web/web.php'));
+    }
+
+    /**
+     * Define the "web-api" routes for the application.
+     *
+     * These routes are typically stateless.
+     *
+     * @return void
+     */
+    protected function mapApiMobileRoutes()
+    {
+        Route::prefix('api')
+            ->middleware('api')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/mobile/mobile.php'));
     }
 }

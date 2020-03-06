@@ -26,7 +26,7 @@ class Patient extends Authenticatable implements JWTSubject
      * @var string
      */
     protected $table = 'patients';
-
+    protected $hidden = ['password'];
     /**
      * One To Many (Inverse)
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

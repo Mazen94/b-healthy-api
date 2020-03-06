@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\ApiNutritionnist;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginNutritionist;
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterNutritionist;
 use App\Repositories\AuthNutrtionnistRepository;
 use Illuminate\Http\Request;
@@ -46,7 +46,7 @@ class AuthNutrtionnistConrtoller extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(LoginNutritionist $request)
+    public function login(LoginRequest $request)
     {
         $credentials = $request->only('email', 'password');
 

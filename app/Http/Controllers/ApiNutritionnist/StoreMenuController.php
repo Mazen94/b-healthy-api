@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PostStoreMenuRequest;
 use App\Http\Requests\PutStoreMenuRequest;
 use App\Repositories\StoreMenuRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use JWTAuth;
 
@@ -28,7 +29,7 @@ class StoreMenuController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function index()
     {
@@ -47,7 +48,7 @@ class StoreMenuController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function store(PostStoreMenuRequest $request)
     {
@@ -74,7 +75,7 @@ class StoreMenuController extends Controller
      * Display the specified StoreMenu with these ingredients.
      *
      * @param int $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function show($id)
     {
@@ -94,7 +95,7 @@ class StoreMenuController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function update(PutStoreMenuRequest $request, $id)
     {
@@ -111,7 +112,7 @@ class StoreMenuController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      * @throws \Exception
      */
     public function destroy($id)
@@ -120,7 +121,6 @@ class StoreMenuController extends Controller
             return response()->json(
                 [
                     'success' => true,
-                    'storeMenu' => 'deleted',
                 ],
                 200
             );
@@ -132,7 +132,7 @@ class StoreMenuController extends Controller
      *
      * @param int $id_storeMenu
      * @param $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      * @throws \Exception
      */
     public function addIngredient(Request $request, $id_storeMenu)
@@ -148,11 +148,11 @@ class StoreMenuController extends Controller
     }
 
     /**
-     * add ingredient to the storeMenu.
+     * delete ingredient to the storeMenu.
      *
      * @param int $id_storeMenu
      * @param int $id_ingredient
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      * @throws \Exception
      */
     public function deleteIngredient($id_storeMenu, $id_ingredient)
@@ -173,7 +173,7 @@ class StoreMenuController extends Controller
      *
      * @param int $id_storeMenu
      * @param int $id_ingredient
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      * @throws \Exception
      */
     public function updateIngredient(Request $request, $id_storeMenu, $id_ingredient)

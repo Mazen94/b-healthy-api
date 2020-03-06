@@ -3,22 +3,21 @@
 
 namespace App\Repositories;
 
-
-use App\Nutritionist;
 use App\Visit;
+use Illuminate\Database\Eloquent\Model;
 
 
 class VisitRepository
 {
-    protected $nutritionist;
+    protected $model;
 
     /**
-     * PatientRepository constructor.
-     * @param Nutritionist $nutritionist
+     * RecommandationRepository constructor.
+     * @param Model $model
      */
-    public function __construct(Nutritionist $nutritionist)
+    public function __construct(Model $model)
     {
-        $this->nutritionist = $nutritionist;
+        $this->model = $model;
     }
 
     /**
@@ -28,7 +27,7 @@ class VisitRepository
      */
     public function getAllVisits($id)
     {
-        $patient = $this->nutritionist->patients()->findOrFail($id);
+        $patient = $this->model->patients()->findOrFail($id);
         return $patient->visits()->paginate();
     }
 
@@ -41,7 +40,7 @@ class VisitRepository
      */
     public function getVisit($id_patient, $id_visit)
     {
-        $patient = $this->nutritionist->patients()->findOrFail($id_patient);
+        $patient = $this->model->patients()->findOrFail($id_patient);
         $visit = $patient->visits()->findOrFail($id_visit);
         return $visit;
     }
@@ -56,15 +55,17 @@ class VisitRepository
      */
     public function updateVisit($request, $id_patient, $id_visit)
     {
-        $patient = $this->nutritionist->patients()->findOrFail($id_patient);
+        $patient = $this->model->patients()->findOrFail($id_patient);
         $visit = $patient->visits()->findOrFail($id_visit);
-        if ($visit) {
-            return $visit->fill($request->all())->save();
-        }
+        $visit->poids = $request->poids;
+        $visit->note = $request->note;
+        $visit->scheduled_at = $request->scheduled_at;
+        $visit->save();
+        return $visit;
     }
 
     /**
-     * Method to create a new visit
+     * Method to create a new visit related to patient
      *
      * @param $request
      * @param $id_patient
@@ -76,13 +77,13 @@ class VisitRepository
         $visit->poids = $request->poids;
         $visit->note = $request->note;
         $visit->scheduled_at = $request->scheduled_at;
-        $patient = $this->nutritionist->patients()->findOrFail($id_patient);
+        $patient = $this->model->patients()->findOrFail($id_patient);
 
         return $patient->visits()->save($visit);
     }
 
     /**
-     * Method to delete visit
+     * Method to delete visit related to patient
      *
      * @param $id
      * @return bool|mixed|null
@@ -90,7 +91,7 @@ class VisitRepository
      */
     public function deleteVisit($id_patient, $id_visit)
     {
-        $patient = $this->nutritionist->patients()->findOrFail($id_patient);
+        $patient = $this->model->patients()->findOrFail($id_patient);
         $visit = $patient->visits()->findOrFail($id_visit);
         return $visit->delete();
     }

@@ -12,18 +12,15 @@ use JWTAuth;
 
 class RecommandationController extends Controller
 {
-    protected $recommandationRepository;
-    protected $nutritionist;
 
-    /**
-     * PatientController constructor.
-     * @param RecommandationRepository $recommandationRepository
-     *
-     */
-    public function __construct(RecommandationRepository $recommandationRepository)
+    protected $nutritionist;
+    private $recommandationRepository;
+
+
+    public function __construct()
     {
         $this->nutritionist = JWTAuth::parseToken()->authenticate();
-        $this->recommandationRepository = new RecommandationRepository($this->nutritionist);
+        $this->recommandationRepository = new RecommandationRepository($this->nutritionist) ;
     }
 
     /**
@@ -33,6 +30,7 @@ class RecommandationController extends Controller
      */
     public function index($id)
     {
+
         $recommandations = $this->recommandationRepository->getAllRecommendations($id);
         return response()->json(
             [
@@ -53,6 +51,7 @@ class RecommandationController extends Controller
      */
     public function store(PostRecommendationRequest $request, $id_patient)
     {
+
         $recommandation = $this->recommandationRepository->createRecommendation($request, $id_patient);
         return response()->json(
             [
@@ -92,6 +91,7 @@ class RecommandationController extends Controller
      */
     public function update(PutRecommendationRequest $request, $patient_id, $id_recommendation)
     {
+
         $recommandation = $this->recommandationRepository->updateRecommendation(
             $request,
             $patient_id,
@@ -116,6 +116,7 @@ class RecommandationController extends Controller
      */
     public function destroy($patient_id, $id_recommendation)
     {
+
         if ($this->recommandationRepository->deleteRecommendation($patient_id, $id_recommendation)) {
             return response()->json(
                 [
@@ -138,6 +139,7 @@ class RecommandationController extends Controller
      */
     public function storeMenu(Request $request, $patient_id, $id_recommendation)
     {
+
         $recommendation = $this->recommandationRepository->storeMenu($request, $patient_id, $id_recommendation);
         return response()->json(
             [
@@ -160,6 +162,7 @@ class RecommandationController extends Controller
      */
     public function destroyMenu($patient_id, $id_recommendation, $id_menu)
     {
+
         $this->recommandationRepository->destroyMenu($patient_id, $id_recommendation, $id_menu);
         return response()->json(
             [

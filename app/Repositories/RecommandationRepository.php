@@ -6,21 +6,22 @@ namespace App\Repositories;
 
 use App\Menu;
 use App\MenuIngredients;
-use App\Nutritionist;
+
 use App\Recommandation;
+use Illuminate\Database\Eloquent\Model;
 
 
 class RecommandationRepository
 {
-    protected $nutritionist;
+    protected $model;
 
     /**
-     * RecommandationRepository constructor.
-     * @param Nutritionist $nutritionist
+     * PatientRepository constructor.
+     * @param Model $model
      */
-    public function __construct(Nutritionist $nutritionist)
+    public function __construct(Model $model)
     {
-        $this->nutritionist = $nutritionist;
+        $this->model = $model;
     }
 
     /**
@@ -28,9 +29,9 @@ class RecommandationRepository
      *
      * @return mixed
      */
-    public function getAllRecommendations($id)
+    public   function getAllRecommendations($id)
     {
-        $patient = $this->nutritionist->patients()->findOrFail($id);
+        $patient = $this->model->patients()->findOrFail($id);
         return $patient->recommandations;
     }
 
@@ -41,7 +42,7 @@ class RecommandationRepository
      */
     public function getRecommendation($patient_id, $id_recommendation)
     {
-        $patient = $this->nutritionist->patients()->findOrFail($patient_id);
+        $patient = $this->model->patients()->findOrFail($patient_id);
         return $patient->recommandations()->findOrFail($id_recommendation);
     }
 
@@ -54,7 +55,7 @@ class RecommandationRepository
      */
     public function createRecommendation($request, $id_patient)
     {
-        $patient = $this->nutritionist->patients()->findOrFail($id_patient);
+        $patient = $this->model->patients()->findOrFail($id_patient);
         $rec = new Recommandation();
         $rec->avoid = $request['avoid'];
         $rec->save();
@@ -71,7 +72,7 @@ class RecommandationRepository
      */
     public function updateRecommendation($request, $id_patient, $id_recommendation)
     {
-        $patient = $this->nutritionist->patients()->findOrFail($id_patient);
+        $patient = $this->model->patients()->findOrFail($id_patient);
         $recommendation = $patient->recommandations()->findOrFail($id_recommendation);
         $recommendation->avoid = $request['avoid'];
         $recommendation->save();
@@ -88,7 +89,7 @@ class RecommandationRepository
      */
     public function deleteRecommendation($patient_id, $id_recommendation)
     {
-        $patient = $this->nutritionist->patients()->findOrFail($patient_id);
+        $patient = $this->model->patients()->findOrFail($patient_id);
         $recommendation = $patient->recommandations()->findOrFail($id_recommendation);
         return $recommendation->delete();
     }
@@ -104,7 +105,7 @@ class RecommandationRepository
      */
     public function storeMenu($request, $patient_id, $id_recommendation)
     {
-        $patient = $this->nutritionist->patients()->findOrFail($patient_id);
+        $patient = $this->model->patients()->findOrFail($patient_id);
         $recommendation = $patient->recommandations()->findOrFail($id_recommendation);
         // Create new menu
         $menu = new Menu();
@@ -133,7 +134,7 @@ class RecommandationRepository
 
     public function destroyMenu($patient_id, $id_recommendation, $id_menu)
     {
-        $patient = $this->nutritionist->patients()->findOrFail($patient_id);
+        $patient = $this->model->patients()->findOrFail($patient_id);
         $recommendation = $patient->recommandations()->findOrFail($id_recommendation);
         $menu = $recommendation->menus()->findOrFail($id_menu);
         return $recommendation->menus()->detach($id_menu);

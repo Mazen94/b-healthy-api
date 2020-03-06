@@ -42,22 +42,15 @@ class IngredientConrtoller extends Controller
         $nutritionist = JWTAuth::parseToken()->authenticate();
         $ingredientRepository = new IngredientRepository($nutritionist);
         $ingredient = $ingredientRepository->createIngredient($request);
-        if (empty($ingredient)) {
+        if ($ingredient) {
             return response()->json(
                 [
-                    'success' => false,
-                    'ingredient' => 'Error to create ingredient',
+                    'success' => true,
+                    'ingredient' => $ingredient,
                 ],
-                400
+                200
             );
         }
-        return response()->json(
-            [
-                'success' => true,
-                'ingredient' => $ingredient,
-            ],
-            200
-        );
     }
 
     /**
@@ -71,15 +64,6 @@ class IngredientConrtoller extends Controller
         $nutritionist = JWTAuth::parseToken()->authenticate();
         $ingredientRepository = new IngredientRepository($nutritionist);
         $ingredient = $ingredientRepository->getIngredient($id);
-        if (empty($ingredient)) {
-            return response()->json(
-                [
-                    'success' => false,
-                    'ingredient' => 'Not Found',
-                ],
-                400
-            );
-        }
         return response()->json(
             [
                 'success' => true,
@@ -96,7 +80,7 @@ class IngredientConrtoller extends Controller
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(IngredientPutRequest $request, $id)
+    public function update(IngredientRequest $request, $id)
     {
         $nutritionist = JWTAuth::parseToken()->authenticate();
         $ingredientRepository = new IngredientRepository($nutritionist);

@@ -38,7 +38,7 @@ class IngredientRepository
      */
     public function getIngredient($id)
     {
-        return $this->model->ingredients()->find($id);
+        return $this->model->ingredients()->findOrFail($id);
     }
 
     /**

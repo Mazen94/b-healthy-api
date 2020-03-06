@@ -29,7 +29,7 @@ class RecommandationRepository
      *
      * @return mixed
      */
-    public   function getAllRecommendations($id)
+    public function getAllRecommendations($id)
     {
         $patient = $this->model->patients()->findOrFail($id);
         return $patient->recommandations;
@@ -95,7 +95,7 @@ class RecommandationRepository
     }
 
     /**
-     * Nutritionist :  Method to delete recommendation related to patient
+     * Nutritionist :  Method to add menu to  recommendation related to patient
      *
      * @param $patient_id
      * @param $request
@@ -153,7 +153,7 @@ class RecommandationRepository
      */
     public function getRecommendationByPatient()
     {
-       return  $this->model->recommandations()->latest("updated_at")->first();
+        return $this->model->recommandations()->latest("updated_at")->first();
     }
 
     /**
@@ -162,7 +162,7 @@ class RecommandationRepository
      */
     public function getRecommendationMenusByPatient()
     {
-        $recommendation =   $this->model->recommandations()->latest("updated_at")->first();
-        return $recommendation->menus ;
+        $recommendation = $this->model->recommandations()->latest("updated_at")->first();
+        return $recommendation->menus;
     }
 }

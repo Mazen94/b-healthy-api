@@ -38,7 +38,7 @@ class PatientRepository
      */
     public function getPatient($id)
     {
-        return $this->model->patients()->find($id);
+        return $this->model->patients()->findOrFail($id);
     }
 
     /**

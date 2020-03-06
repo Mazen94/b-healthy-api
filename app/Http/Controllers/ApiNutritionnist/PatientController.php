@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ApiNutritionnist;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterPatient;
 use App\Repositories\PatientRepository;
+use Illuminate\Http\JsonResponse;
 use JWTAuth;
 
 class PatientController extends Controller
@@ -13,7 +14,7 @@ class PatientController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      *
      */
     public function index()
@@ -32,8 +33,8 @@ class PatientController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param  $request
+     * @return JsonResponse
      */
     public function store(RegisterPatient $request)
     {
@@ -61,21 +62,12 @@ class PatientController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function show($id)
     {
         $patientRepository = new PatientRepository(JWTAuth::parseToken()->authenticate());
         $patient = $patientRepository->getPatient($id);
-        if (empty($patient)) {
-            return response()->json(
-                [
-                    'success' => false,
-                    'patient' => 'Not Found',
-                ],
-                400
-            );
-        }
         return response()->json(
             [
                 'success' => true,
@@ -90,27 +82,18 @@ class PatientController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      * @throws \Exception
      */
     public function destroy($id)
     {
         $patientRepository = new PatientRepository(JWTAuth::parseToken()->authenticate());
-        if ($patientRepository->deletePatient($id)) {
-            return response()->json(
-                [
-                    'success' => true,
-                    'patient' => 'deleted',
-                ],
-                200
-            );
-        }
+        $patientRepository->deletePatient($id);
         return response()->json(
             [
-                'success' => false,
-                'patient' => 'Cannot delete this patient',
+                'success' => true,
             ],
-            400
+            200
         );
     }
 }

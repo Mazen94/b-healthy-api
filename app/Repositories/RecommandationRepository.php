@@ -16,7 +16,7 @@ class RecommandationRepository
     protected $model;
 
     /**
-     * PatientRepository constructor.
+     * RecommandationRepository constructor.
      * @param Model $model
      */
     public function __construct(Model $model)

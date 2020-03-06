@@ -4,19 +4,20 @@
 namespace App\Repositories;
 
 use App\Ingredient;
-use App\Nutritionist;
+
+use Illuminate\Database\Eloquent\Model;
 
 class IngredientRepository
 {
-    protected $nutritionist;
+    protected $model;
 
     /**
      * PatientRepository constructor.
-     * @param Nutritionist $nutritionist
+     * @param Model $model
      */
-    public function __construct(Nutritionist $nutritionist)
+    public function __construct(Model $model)
     {
-        $this->nutritionist = $nutritionist;
+        $this->model = $model;
     }
 
     /**
@@ -26,7 +27,7 @@ class IngredientRepository
      */
     public function getAllIngredients()
     {
-        return $this->nutritionist->ingredients()->paginate();
+        return $this->model->ingredients()->paginate();
     }
 
     /**
@@ -37,7 +38,7 @@ class IngredientRepository
      */
     public function getIngredient($id)
     {
-        return $this->nutritionist->ingredients()->find($id);
+        return $this->model->ingredients()->find($id);
     }
 
     /**
@@ -53,7 +54,7 @@ class IngredientRepository
         $ingredient->quantite = $data->quantite;
         $ingredient->calorie = $data->calorie;
 
-        return $this->nutritionist->ingredients()->save($ingredient);
+        return $this->model->ingredients()->save($ingredient);
     }
 
     /**
@@ -65,7 +66,7 @@ class IngredientRepository
      */
     public function deleteIngredient($id)
     {
-        $ingredient = $this->nutritionist->ingredients()->findOrFail($id);
+        $ingredient = $this->model->ingredients()->findOrFail($id);
         return $ingredient->delete();
     }
 
@@ -78,7 +79,7 @@ class IngredientRepository
      */
     public function updateIngredient($request, $id)
     {
-        $ingredient = $this->nutritionist->ingredients()->findOrFail($id);
+        $ingredient = $this->model->ingredients()->findOrFail($id);
         $ingredient->nom = $request['nom'];
         $ingredient->quantite = $request['quantite'];
         $ingredient->calorie = $request['calorie'];

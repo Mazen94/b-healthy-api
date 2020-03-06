@@ -69,7 +69,7 @@ class Patient extends Authenticatable implements JWTSubject
      */
     public function notifications()
     {
-        return $this->hasMany('App\Models\Notification');
+        return $this->hasMany('App\Notification');
     }
 
     /**

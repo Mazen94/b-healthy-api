@@ -155,4 +155,14 @@ class RecommandationRepository
     {
        return  $this->model->recommandations()->latest("updated_at")->first();
     }
+
+    /**
+     *  Patient : Get the list of menus linked to a recommendation
+     * @return mixed
+     */
+    public function getRecommendationMenusByPatient()
+    {
+        $recommendation =   $this->model->recommandations()->latest("updated_at")->first();
+        return $recommendation->menus ;
+    }
 }

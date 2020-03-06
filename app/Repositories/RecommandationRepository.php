@@ -25,7 +25,7 @@ class RecommandationRepository
     }
 
     /**
-     * Method to get all the recommandations related to patient from database
+     * Nutritionist : Method to get all the recommandations related to patient from database
      *
      * @return mixed
      */
@@ -36,7 +36,7 @@ class RecommandationRepository
     }
 
     /**
-     * method to get only one recommendation related to patient
+     * Nutritionist : method to get only one recommendation related to patient
      * @param $id
      * @return array $data;
      */
@@ -47,7 +47,7 @@ class RecommandationRepository
     }
 
     /**
-     * Method to create a new recommendation related to patient
+     *Nutritionist :  Method to create a new recommendation related to patient
      *
      * @param $request
      *
@@ -64,7 +64,7 @@ class RecommandationRepository
     }
 
     /**
-     * Method to update recommendation related to patient
+     * Nutritionist :  Method to update recommendation related to patient
      *
      * @param $request
      *
@@ -81,7 +81,7 @@ class RecommandationRepository
     }
 
     /**
-     * Method to delete recommendation related to patient
+     * Nutritionist :  Method to delete recommendation related to patient
      *
      * @param $id
      * @return bool|mixed|null
@@ -95,7 +95,7 @@ class RecommandationRepository
     }
 
     /**
-     * Method to delete recommendation related to patient
+     * Nutritionist :  Method to delete recommendation related to patient
      *
      * @param $patient_id
      * @param $request
@@ -132,11 +132,27 @@ class RecommandationRepository
         return $recommendation;
     }
 
+    /**
+     *  Nutritionist : Destroy menu related to patient
+     * @param $patient_id
+     * @param $id_recommendation
+     * @param $id_menu
+     * @return mixed
+     */
     public function destroyMenu($patient_id, $id_recommendation, $id_menu)
     {
         $patient = $this->model->patients()->findOrFail($patient_id);
         $recommendation = $patient->recommandations()->findOrFail($id_recommendation);
         $menu = $recommendation->menus()->findOrFail($id_menu);
         return $recommendation->menus()->detach($id_menu);
+    }
+
+    /**
+     *  Patient : Get the last recommendation
+     * @return mixed
+     */
+    public function getRecommendationByPatient()
+    {
+       return  $this->model->recommandations()->latest("updated_at")->first();
     }
 }

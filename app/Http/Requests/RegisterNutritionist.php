@@ -25,7 +25,7 @@ class RegisterNutritionist extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|string|email',
+            'email' => 'required|string|email|unique:nutritionists',
             'firstName' => 'required',
             'password' => 'required|min:' . Config::get('constants.MIN_PASSWORD_LENGTH') . '|max:' . Config::get(
                     'constants.MAX_PASSWORD_LENGTH'

@@ -25,7 +25,7 @@ class RegisterPatient extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|string|email',
+            'email' => 'required|string|email|unique:patients',
             'firstName' => 'required',
             'lastName' => 'required',
             'password' => 'required|min:' . Config::get('constants.MIN_PASSWORD_LENGTH') . '|max:' . Config::get(

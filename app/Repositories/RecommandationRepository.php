@@ -9,6 +9,7 @@ use App\MenuIngredients;
 
 use App\Recommandation;
 use Illuminate\Database\Eloquent\Model;
+use Config;
 
 
 class RecommandationRepository
@@ -114,6 +115,7 @@ class RecommandationRepository
         $menu->min_age = $request['Storemenu.min_age'];
         $menu->calorie = $request['Storemenu.calorie'];
         $menu->type_menu = $request['Storemenu.type_menu'];
+        $menu->posted_by = Config::get('constants.POSTED_BY_NUTRITIONIST');
         $menu->save();
         // Get ingredients sent in request
         $ingredients = $request['Storemenu.ingredients'];

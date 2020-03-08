@@ -96,7 +96,7 @@ class RecommandationRepository
     }
 
     /**
-     * Nutritionist :  Method to add menu to  recommendation related to patient
+     * Nutritionist :  Method to add menu to recommendation related to patient
      *
      * @param $patient_id
      * @param $request
@@ -130,7 +130,7 @@ class RecommandationRepository
         }
         //linked the menu with the recommendation in the table pivot menus_recommandations
         $recommendation->menus()->attach($menu->id);
-
+        $recommendation['menus'] =  $recommendation->menus;
         return $recommendation;
     }
 

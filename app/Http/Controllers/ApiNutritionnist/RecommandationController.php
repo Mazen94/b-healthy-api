@@ -141,7 +141,7 @@ class RecommandationController extends Controller
         return response()->json(
             [
                 'success' => true,
-                'storeMenu' => $recommendation,
+                'recommendation' => $recommendation,
             ],
             200
         );

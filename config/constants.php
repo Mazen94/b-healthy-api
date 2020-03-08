@@ -7,8 +7,6 @@ return [
     // maximum length of a task title is 255
     'MAX_TITLE_LENGTH' => 255,
 
-    //Maximum Tasks per page (paginaton)
-    'TASKS_PER_PAGE' => 10,
 
     //maximum length of a password
     'MAX_PASSWORD_LENGTH' => 25,
@@ -33,4 +31,9 @@ return [
 
     //minimum calories of a store menu
     'MIN_CALORIES_LENGTH' => 100,
+
+    //Value when a menu posted by nutritionist
+    'POSTED_BY_NUTRITIONIST' => 0,
+    //Value when a menu posted by patient
+    'POSTED_BY_PATIENT' => 1,
 ];

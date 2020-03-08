@@ -54,7 +54,7 @@ class StoreMenuRepository
     public function createStoreMenu($request)
     {
         $menu = new Storemenu();
-        $menu->nom = $request->nom;
+        $menu->name = $request->name;
         $menu->max_age = $request->max_age;
         $menu->min_age = $request->min_age;
         $menu->type_menu = $request->type_menu;
@@ -70,7 +70,7 @@ class StoreMenuRepository
     public function updateStoreMenu($request, $id)
     {
         $menu = $this->nutritionist->storemenus()->findOrFail($id);
-        $menu->nom = $request['nom'];
+        $menu->name = $request['name'];
         $menu->max_age = $request['max_age'];
         $menu->min_age = $request['min_age'];
         $menu->calorie = $request['calorie'];

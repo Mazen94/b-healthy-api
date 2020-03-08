@@ -26,7 +26,7 @@ class PutStoreMenuRequest extends FormRequest
     {
         return [
             'type_menu' => 'string',
-            'nom' => 'string',
+            'name' => 'string',
             'max_age' => 'integer|between:' . Config::get('constants.MIN_AGE_LENGTH') . ',' . Config::get(
                     'constants.MAX_AGE_LENGTH'
                 ),

@@ -109,7 +109,7 @@ class RecommandationRepository
         $recommendation = $patient->recommandations()->findOrFail($id_recommendation);
         // Create new menu
         $menu = new Menu();
-        $menu->nom = $request['Storemenu.nom'];
+        $menu->name = $request['Storemenu.name'];
         $menu->max_age = $request['Storemenu.max_age'];
         $menu->min_age = $request['Storemenu.min_age'];
         $menu->calorie = $request['Storemenu.calorie'];

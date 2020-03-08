@@ -50,7 +50,7 @@ class IngredientRepository
     public function createIngredient($data)
     {
         $ingredient = new Ingredient();
-        $ingredient->nom = $data->nom;
+        $ingredient->name = $data->nom;
         $ingredient->quantite = $data->quantite;
         $ingredient->calorie = $data->calorie;
 
@@ -80,7 +80,7 @@ class IngredientRepository
     public function updateIngredient($request, $id)
     {
         $ingredient = $this->model->ingredients()->findOrFail($id);
-        $ingredient->nom = $request['nom'];
+        $ingredient->name = $request['name'];
         $ingredient->quantite = $request['quantite'];
         $ingredient->calorie = $request['calorie'];
         $ingredient->save();

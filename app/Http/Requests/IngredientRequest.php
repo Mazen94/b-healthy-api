@@ -24,7 +24,7 @@ class IngredientRequest extends FormRequest
     public function rules()
     {
         return [
-            'nom' => 'required|string',
+            'name' => 'required|string',
             'quantite' => 'required|integer',
             'calorie' => 'required|integer',
         ];

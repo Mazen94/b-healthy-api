@@ -18,7 +18,7 @@ class Activitephysique extends Model
     /**
      * @var string
      */
-    protected $table = 'activitephysiques';
+    protected $table = 'physicalactivitys';
 
     /**
      * One To Many (Inverse)

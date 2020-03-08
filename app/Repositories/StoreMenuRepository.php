@@ -55,7 +55,7 @@ class StoreMenuRepository
             ->where('min_age', '<=', $age)
             ->where('max_age', '>=', $age)
             ->get();
-        
+
         return $storemenu;
     }
 

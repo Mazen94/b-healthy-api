@@ -45,6 +45,21 @@ class StoreMenuRepository
     }
 
     /**
+     * method to get only one StoreMenu with the ingredients
+     * @param $id
+     * @return  $storemenu;
+     */
+    public function getStoreMenuWithIngredientsByAge($age)
+    {
+        $storemenu = $this->nutritionist->storemenus()
+            ->where('min_age', '<=', $age)
+            ->where('max_age', '>=', $age)
+            ->get();
+        
+        return $storemenu;
+    }
+
+    /**
      * Method to create a new store menu
      *
      * @param $request

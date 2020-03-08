@@ -85,6 +85,7 @@ Route::prefix('nutritionist')->group(
                 Route::prefix('storemenus')->group(
                     function () {
                         Route::get('/', 'ApiNutritionnist\StoreMenuController@index');
+                        Route::get('/ages', 'ApiNutritionnist\StoreMenuController@showByAge');
                         Route::post('/', 'ApiNutritionnist\StoreMenuController@store');
                         Route::get('/{id_storemenus}', 'ApiNutritionnist\StoreMenuController@show');
                         Route::put('/{id_storemenus}', 'ApiNutritionnist\StoreMenuController@update');

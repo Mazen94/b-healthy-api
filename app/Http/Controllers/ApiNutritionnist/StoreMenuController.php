@@ -88,7 +88,23 @@ class StoreMenuController extends Controller
             200
         );
     }
-
+    /**
+     * Display the specified StoreMenu with these ingredients by age .
+     *
+     * @param int $age
+     * @return JsonResponse
+     */
+    public function showByAge(Request $request)
+    {
+        $storeMenuWithIngredients = $this->storeMenuRepository->getStoreMenuWithIngredientsByAge($request->age);
+        return response()->json(
+            [
+                'success' => true,
+                'Storemenu' => $storeMenuWithIngredients,
+            ],
+            200
+        );
+    }
 
     /**
      * Update the specified resource in storage.
@@ -190,4 +206,5 @@ class StoreMenuController extends Controller
             200
         );
     }
+
 }

@@ -14,7 +14,7 @@ class AddPostedbyToMenusTable extends Migration
     public function up()
     {
         Schema::table('menus', function (Blueprint $table) {
-            //
+            $table->integer('posted_by');
         });
     }
 

@@ -25,6 +25,14 @@ Route::prefix('patient')->group(
                         Route::get('/{id_notification}', 'ApiPatient\NotificationController@show');
                     }
                 );
+
+                Route::prefix('activity')->group(
+                    function () {
+                        Route::get('/', 'ApiPatient\PhysicalActiviteController@index');
+                        Route::post('/', 'ApiPatient\PhysicalActiviteController@store');
+
+                    }
+                );
             }
         );
     }

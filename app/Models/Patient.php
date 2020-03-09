@@ -27,6 +27,7 @@ class Patient extends Authenticatable implements JWTSubject
      */
     protected $table = 'patients';
     protected $hidden = ['password'];
+
     /**
      * One To Many (Inverse)
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -58,7 +59,7 @@ class Patient extends Authenticatable implements JWTSubject
      * the has many relationship
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function activitephysiques()
+    public function physicalActivity()
     {
         return $this->hasMany('App\Activitephysique');
     }

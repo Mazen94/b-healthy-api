@@ -8,40 +8,39 @@ use App\Nutritionist;
 
 class NutritionnistRepository
 {
-    protected $nutritionist;
 
     /**
-     * NutritionnistRepository constructor.
-     * @param Nutritionist $nutritionist
+     * @param $email
+     * @param $firstName
+     * @param $lastName
+     * @param $password
+     * @return Nutritionist
      */
-    public function __construct(Nutritionist $nutritionist)
+    public function register($email, $firstName, $lastName, $password)
     {
-        $this->nutritionist = $nutritionist;
+        $nutritionist = new Nutritionist();
+        $nutritionist->email = $email;
+        $nutritionist->firstName = $firstName;
+        $nutritionist->lastName = $lastName;
+        $nutritionist->password = bcrypt($password);
+        $nutritionist->save();
+        return $nutritionist;
     }
 
-    /**
-     * Method to get nutritionist  from database
-     *
-     * @return mixed
-     */
-    public function getNutritionist()
-    {
-        return $this->nutritionist;
-    }
+
     /**
      * update nutritionist  from database
      *
      * @return mixed
      */
-    public function updateNutritionist($request)
+    public function updateNutritionist($email, $firstName, $lastName, $password)
     {
-        $this->nutritionist->email = $request['email'] ;
-        $this->nutritionist->firstName = $request['firstName'] ;
-        $this->nutritionist->lastName = $request['lastName'] ;
-        $this->nutritionist->password = bcrypt($request['password']) ;
-        $this->nutritionist->picture = bcrypt($request['picture']) ;
-        $this->nutritionist->save();
-        return  $this->nutritionist;
+        auth()->user()->email = $email;
+        auth()->user()->firstName = $firstName;
+        auth()->user()->lastName = $lastName;
+        auth()->user()->password = bcrypt($password);
+        auth()->user()->save();
+        return auth()->user();
     }
 
     /**
@@ -51,7 +50,6 @@ class NutritionnistRepository
      */
     public function deleteNutritionist()
     {
-
-        return  $this->nutritionist->delete();
+        return auth()->user()->delete();
     }
 }

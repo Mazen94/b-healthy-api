@@ -30,6 +30,7 @@ class MenuRepository
      */
     public function createMenu($request, $id_recommendation)
     {
+        //TODO change $request
         $recommendation = $this->model->recommandations()->findOrFail($id_recommendation);
         $menu = new Menu();
         $menu->name = $request->name;

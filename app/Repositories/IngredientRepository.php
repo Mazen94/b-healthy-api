@@ -49,6 +49,7 @@ class IngredientRepository
      */
     public function createIngredient($data)
     {
+
         $ingredient = new Ingredient();
         $ingredient->name = $data->nom;
         $ingredient->quantite = $data->quantite;

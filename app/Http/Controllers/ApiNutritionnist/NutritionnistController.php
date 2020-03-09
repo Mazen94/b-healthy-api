@@ -44,7 +44,7 @@ class NutritionnistController extends Controller
             $request->input('firstName'),
             $request->input('lastName'),
             $request->input('password'),
-            $request->input('picture'),
+            $request->input('picture')
         );
         return response()->json(
             [

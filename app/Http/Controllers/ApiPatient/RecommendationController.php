@@ -35,7 +35,7 @@ class RecommendationController extends Controller
      */
     public function indexMenus()
     {
-        $patient = JWTAuth::parseToken()->authenticate();
+        $patient = auth()->user();
         $recommandationRepository = new RecommandationRepository($patient);
         $recommendation = $recommandationRepository->getRecommendationMenusByPatient();
         return response()->json(

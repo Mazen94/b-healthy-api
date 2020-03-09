@@ -17,7 +17,7 @@ class MenuController extends Controller
      */
     public function store(MenuRequest $request,$id_recommendation)
     {
-        $patient = JWTAuth::parseToken()->authenticate();
+        $patient = auth()->user();
         $menuRepository = new MenuRepository($patient);
         $menu = $menuRepository->createMenu($request,$id_recommendation);
         if ($menu) {

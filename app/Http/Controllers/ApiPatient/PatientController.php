@@ -30,7 +30,8 @@ class PatientController extends Controller
      */
     public function update(Request $request)
     {
-        $patientRepository = new PatientRepository(JWTAuth::parseToken()->authenticate());
+        $nutirtionist = auth()->user();
+        $patientRepository = new PatientRepository($nutirtionist);
         $patient = $patientRepository->updatePatient($request);
         return response()->json(
             [

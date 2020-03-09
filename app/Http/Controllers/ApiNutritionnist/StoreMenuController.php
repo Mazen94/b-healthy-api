@@ -22,7 +22,7 @@ class StoreMenuController extends Controller
      */
     public function __construct(StoreMenuRepository $storeMenuRepository)
     {
-        $this->nutritionist = JWTAuth::parseToken()->authenticate();
+        $this->nutritionist = auth()->user();
         $this->storeMenuRepository = new StoreMenuRepository($this->nutritionist);
     }
 

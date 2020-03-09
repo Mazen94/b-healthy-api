@@ -17,7 +17,7 @@ class PhysicalActiviteController extends Controller
      */
     public function store(PhysicalActivityRequest $request)
     {
-        $patient = JWTAuth::parseToken()->authenticate();
+        $patient = auth()->user();
         $activityRepository = new PhysicalActiviteRepository($patient);
         $activity = $activityRepository->createActivity($request);
         if ($activity) {

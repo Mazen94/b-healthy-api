@@ -20,7 +20,7 @@ class VisitController extends Controller
      */
     public function index($id_patient)
     {
-        $nutritionist = JWTAuth::parseToken()->authenticate();
+        $nutritionist = auth()->user();
         $visitRepository = new VisitRepository($nutritionist);
         $visits = $visitRepository->getAllVisits($id_patient);
         return response()->json(
@@ -43,7 +43,7 @@ class VisitController extends Controller
      */
     public function store(VisitPostRequest $request, $id_patient)
     {
-        $nutritionist = JWTAuth::parseToken()->authenticate();
+        $nutritionist = auth()->user();
         $visitRepository = new VisitRepository($nutritionist);
         $visit = $visitRepository->createVisit($request, $id_patient);
         return response()->json(
@@ -64,7 +64,7 @@ class VisitController extends Controller
      */
     public function show($id_patient, $id_visit)
     {
-        $nutritionist = JWTAuth::parseToken()->authenticate();
+        $nutritionist = auth()->user();
         $visitRepository = new VisitRepository($nutritionist);
         $visit = $visitRepository->getVisit($id_patient, $id_visit);
         return response()->json(
@@ -86,7 +86,7 @@ class VisitController extends Controller
      */
     public function update(VisitPostRequest $request, $id_patient, $id_visit)
     {
-        $nutritionist = JWTAuth::parseToken()->authenticate();
+        $nutritionist = auth()->user();
         $visitRepository = new VisitRepository($nutritionist);
         $visit = $visitRepository->updateVisit($request, $id_patient, $id_visit);
         return response()->json(
@@ -107,7 +107,7 @@ class VisitController extends Controller
      */
     public function destroy($id_patient, $id_visit)
     {
-        $nutritionist = JWTAuth::parseToken()->authenticate();
+        $nutritionist = auth()->user();
         $visitRepository = new VisitRepository($nutritionist);
         $visitRepository->deleteVisit($id_patient, $id_visit);
         return response()->json(

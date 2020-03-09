@@ -19,7 +19,8 @@ class PatientController extends Controller
      */
     public function index()
     {
-        $patientRepository = new PatientRepository(JWTAuth::parseToken()->authenticate());
+        $nutritionist = auth()->user() ;
+        $patientRepository = new PatientRepository($nutritionist);
         $patients = $patientRepository->getAllPatients();
         return response()->json(
             [
@@ -38,7 +39,8 @@ class PatientController extends Controller
      */
     public function store(RegisterPatient $request)
     {
-        $patientRepository = new PatientRepository(JWTAuth::parseToken()->authenticate());
+        $nutritionist = auth()->user() ;
+        $patientRepository = new PatientRepository($nutritionist);
         $patient = $patientRepository->createPatient($request);
         if (empty($patient)) {
             return response()->json(
@@ -66,7 +68,8 @@ class PatientController extends Controller
      */
     public function show($id)
     {
-        $patientRepository = new PatientRepository(JWTAuth::parseToken()->authenticate());
+        $nutritionist = auth()->user() ;
+        $patientRepository = new PatientRepository($nutritionist);
         $patient = $patientRepository->getPatient($id);
         return response()->json(
             [
@@ -87,7 +90,8 @@ class PatientController extends Controller
      */
     public function destroy($id)
     {
-        $patientRepository = new PatientRepository(JWTAuth::parseToken()->authenticate());
+        $nutritionist = auth()->user() ;
+        $patientRepository = new PatientRepository($nutritionist);
         $patientRepository->deletePatient($id);
         return response()->json(
             [

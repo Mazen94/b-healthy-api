@@ -20,7 +20,7 @@ class RecommandationController extends Controller
      */
     public function index($id)
     {
-        $nutritionist = JWTAuth::parseToken()->authenticate();
+        $nutritionist = auth()->user();
         $recommandationRepository = new RecommandationRepository($nutritionist);
         $recommandations = $recommandationRepository->getAllRecommendations($id);
         return response()->json(
@@ -42,7 +42,7 @@ class RecommandationController extends Controller
      */
     public function store(PostRecommendationRequest $request, $id_patient)
     {
-        $nutritionist = JWTAuth::parseToken()->authenticate();
+        $nutritionist = auth()->user();
         $recommandationRepository = new RecommandationRepository($nutritionist);
         $recommandation = $recommandationRepository->createRecommendation($request, $id_patient);
         return response()->json(
@@ -63,7 +63,7 @@ class RecommandationController extends Controller
      */
     public function show($patient_id, $id_recommendation)
     {
-        $nutritionist = JWTAuth::parseToken()->authenticate();
+        $nutritionist = auth()->user();
         $recommandationRepository = new RecommandationRepository($nutritionist);
         $recommandation = $recommandationRepository->getRecommendation($patient_id, $id_recommendation);
         return response()->json(
@@ -85,7 +85,7 @@ class RecommandationController extends Controller
      */
     public function update(PutRecommendationRequest $request, $patient_id, $id_recommendation)
     {
-        $nutritionist = JWTAuth::parseToken()->authenticate();
+        $nutritionist = auth()->user();
         $recommandationRepository = new RecommandationRepository($nutritionist);
         $recommandation = $recommandationRepository->updateRecommendation(
             $request,
@@ -111,7 +111,7 @@ class RecommandationController extends Controller
      */
     public function destroy($patient_id, $id_recommendation)
     {
-        $nutritionist = JWTAuth::parseToken()->authenticate();
+        $nutritionist = auth()->user();
         $recommandationRepository = new RecommandationRepository($nutritionist);
         if ($recommandationRepository->deleteRecommendation($patient_id, $id_recommendation)) {
             return response()->json(
@@ -135,7 +135,7 @@ class RecommandationController extends Controller
      */
     public function storeMenu(Request $request, $patient_id, $id_recommendation)
     {
-        $nutritionist = JWTAuth::parseToken()->authenticate();
+        $nutritionist = auth()->user();
         $recommandationRepository = new RecommandationRepository($nutritionist);
         $recommendation = $recommandationRepository->storeMenu($request, $patient_id, $id_recommendation);
         return response()->json(
@@ -159,7 +159,7 @@ class RecommandationController extends Controller
      */
     public function destroyMenu($patient_id, $id_recommendation, $id_menu)
     {
-        $nutritionist = JWTAuth::parseToken()->authenticate();
+        $nutritionist = auth()->user();
         $recommandationRepository = new RecommandationRepository($nutritionist);
         $recommandationRepository->destroyMenu($patient_id, $id_recommendation, $id_menu);
         return response()->json(

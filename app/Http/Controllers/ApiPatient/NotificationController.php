@@ -16,7 +16,7 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        $patient = JWTAuth::parseToken()->authenticate();
+        $patient = auth()->user();
         $notificationRepository = new NotificationRepository($patient);
         $notification = $notificationRepository->getNotifications();
         return response()->json(

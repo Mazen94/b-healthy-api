@@ -12,6 +12,7 @@ Route::prefix('patient')->group(
                     function () {
                         Route::get('/', 'ApiPatient\RecommendationController@index');
                         Route::get('/menus', 'ApiPatient\RecommendationController@indexMenus');
+                        Route::post('/{id_recommendation}/menus', 'ApiPatient\MenuController@store');
                     }
                 );
 

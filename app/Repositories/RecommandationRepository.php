@@ -111,8 +111,6 @@ class RecommandationRepository
         // Create new menu
         $menu = new Menu();
         $menu->name = $request['Storemenu.name'];
-        $menu->max_age = $request['Storemenu.max_age'];
-        $menu->min_age = $request['Storemenu.min_age'];
         $menu->calorie = $request['Storemenu.calorie'];
         $menu->type_menu = $request['Storemenu.type_menu'];
         $menu->posted_by = Config::get('constants.POSTED_BY_NUTRITIONIST');
@@ -130,7 +128,7 @@ class RecommandationRepository
         }
         //linked the menu with the recommendation in the table pivot menus_recommandations
         $recommendation->menus()->attach($menu->id);
-        $recommendation['menus'] =  $recommendation->menus;
+        $recommendation['menus'] = $recommendation->menus;
         return $recommendation;
     }
 

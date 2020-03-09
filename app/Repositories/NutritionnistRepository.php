@@ -33,8 +33,11 @@ class NutritionnistRepository
      *
      * @return mixed
      */
-    public function updateNutritionist($email, $firstName, $lastName, $password)
+    public function updateNutritionist($email, $firstName, $lastName, $password,$picture)
     {
+        if(!empty($picture)){
+            auth()->user()->picture = $picture;
+        }
         auth()->user()->email = $email;
         auth()->user()->firstName = $firstName;
         auth()->user()->lastName = $lastName;

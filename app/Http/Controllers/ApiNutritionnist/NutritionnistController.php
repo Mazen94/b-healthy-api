@@ -40,11 +40,11 @@ class NutritionnistController extends Controller
     {
         $nutritionistRepository = new NutritionnistRepository();
         $nutritionist = $nutritionistRepository->updateNutritionist(
-            $request['email'],
-            $request['firstName'],
-            $request['lastName'],
-            $request['password'],
-            $request['picture']
+            $request->input('email'),
+            $request->input('firstName'),
+            $request->input('lastName'),
+            $request->input('password'),
+            $request->input('picture'),
         );
         return response()->json(
             [

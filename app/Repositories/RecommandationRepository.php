@@ -113,7 +113,7 @@ class RecommandationRepository
         $menu->name = $request['Storemenu.name'];
         $menu->calorie = $request['Storemenu.calorie'];
         $menu->type_menu = $request['Storemenu.type_menu'];
-        // TODO Delete Posted By
+        // TODO Delete Posted by
         $menu->posted_by = Config::get('constants.POSTED_BY_NUTRITIONIST');
         $menu->save();
         // Get ingredients sent in request

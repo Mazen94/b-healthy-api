@@ -30,4 +30,26 @@ class PhysicalActiviteController extends Controller
             );
         }
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param PhysicalActivityRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index()
+    {
+        $patient = JWTAuth::parseToken()->authenticate();
+        $activityRepository = new PhysicalActiviteRepository($patient);
+        $activitys = $activityRepository->getActivitys();
+
+        return response()->json(
+            [
+                'success' => true,
+                'activity' => $activitys,
+            ],
+            200
+        );
+    }
+
 }

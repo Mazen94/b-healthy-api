@@ -38,4 +38,13 @@ class PhysicalActiviteRepository
         $this->model->physicalActivity()->save($activity);
         return $activity;
     }
+    /**
+     * Method to get all Activitys
+     *
+     * @return false|\Illuminate\Database\Eloquent\Model
+     */
+    public function getActivitys()
+    {
+        return $this->model->physicalActivity;
+    }
 }

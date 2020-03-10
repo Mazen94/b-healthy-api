@@ -4,9 +4,6 @@
 /* Contains constants used globally in the application*/
 
 return [
-    // maximum length of a task title is 255
-    'MAX_TITLE_LENGTH' => 255,
-
 
     //maximum length of a password
     'MAX_PASSWORD_LENGTH' => 25,
@@ -15,10 +12,10 @@ return [
     'MIN_PASSWORD_LENGTH' => 8,
 
     //maximum length of a weight
-    'MAX_WEIGHT_LENGTH' => 1,
+    'MAX_WEIGHT_LENGTH' => 500,
 
     //minimum length of a weight
-    'MIN_WEIGHT_LENGTH' => 500,
+    'MIN_WEIGHT_LENGTH' => 1,
 
     //maximum length of a age
     'MAX_AGE_LENGTH' => 90,
@@ -32,8 +29,5 @@ return [
     //minimum calories of a store menu
     'MIN_CALORIES_LENGTH' => 100,
 
-    //Value when a menu posted by nutritionist
-    'POSTED_BY_NUTRITIONIST' => 0,
-    //Value when a menu posted by patient
-    'POSTED_BY_PATIENT' => 1,
+
 ];

@@ -32,7 +32,7 @@ Route::prefix('nutritionist')->group(
                                         Route::get('/', 'ApiNutritionnist\VisitController@index');
                                         Route::post('/', 'ApiNutritionnist\VisitController@store');
                                         Route::get('/{id_visit}', 'ApiNutritionnist\VisitController@show');
-                                        Route::put('=/{id_visit}', 'ApiNutritionnist\VisitController@update');
+                                        Route::put('/{id_visit}', 'ApiNutritionnist\VisitController@update');
                                         Route::delete('/{id_visit}', 'ApiNutritionnist\VisitController@destroy');
                                     }
                                 );

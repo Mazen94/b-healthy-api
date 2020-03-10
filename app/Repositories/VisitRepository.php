@@ -3,96 +3,79 @@
 
 namespace App\Repositories;
 
+use App\Patient;
 use App\Visit;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Date;
 
 
 class VisitRepository
 {
-    protected $model;
 
     /**
-     * RecommandationRepository constructor.
-     * @param Model $model
-     */
-    public function __construct(Model $model)
-    {
-        $this->model = $model;
-    }
-
-    /**
-     * Method to get all the visits related to a patient from database
-     * @param $id
-     * @return mixed
-     */
-    public function getAllVisits($id)
-    {
-        $patient = $this->model->patients()->findOrFail($id);
-        return $patient->visits()->paginate();
-    }
-
-    /**
-     * method to get only  one visit related to a patient
+     * Method for nutritionist to update Visit related to patient
      *
-     * @param $id_patient
-     * @param $id_visit
-     * @return mixed
-     */
-    public function getVisit($id_patient, $id_visit)
-    {
-        $patient = $this->model->patients()->findOrFail($id_patient);
-        $visit = $patient->visits()->findOrFail($id_visit);
-        return $visit;
-    }
-
-    /**
-     * Method to update Visit related to patient
+     * @param Visit $visit
+     * @param int $weight
+     * @param string $note
+     * @param Date $scheduled_at
+     * @param Date $done_at
      *
-     * @param $request
-     * @param $id_patient
-     * @param $id_visit
-     * @return bool|false|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Relations\HasMany|\Illuminate\Database\Eloquent\Relations\HasMany[]
+     * @return bool|false|Collection|Model|HasMany|HasMany[]
      */
-    public function updateVisit($request, $id_patient, $id_visit)
+    public static function updateVisit($visit, $weight, $note, $scheduled_at, $done_at)
     {
-        $patient = $this->model->patients()->findOrFail($id_patient);
-        $visit = $patient->visits()->findOrFail($id_visit);
-        $visit->poids = $request->poids;
-        $visit->note = $request->note;
-        $visit->scheduled_at = $request->scheduled_at;
+        $visit->weight = $weight;
+        $visit->scheduled_at = $scheduled_at;
+        if (!empty($done_at)) {
+            $visit->done_at = $done_at;
+        }
+        if (!empty($note)) {
+            $visit->note = $note;
+        }
         $visit->save();
+
         return $visit;
     }
 
     /**
-     * Method to create a new visit related to patient
+     * Method for nutritionist to create a new visit related to patient
      *
-     * @param $request
-     * @param $id_patient
-     * @return false|\Illuminate\Database\Eloquent\Model
+     * @param Patient $patient
+     * @param int $weight
+     * @param string $note
+     * @param Date $scheduled_at
+     * @param Date $done_at
+     *
+     * @return false|Model
      */
-    public function createVisit($request, $id_patient)
+    public static function createVisit($patient, $weight, $note, $scheduled_at, $done_at)
     {
         $visit = new Visit();
-        $visit->poids = $request->poids;
-        $visit->note = $request->note;
-        $visit->scheduled_at = $request->scheduled_at;
-        $patient = $this->model->patients()->findOrFail($id_patient);
-
+        $visit->weight = $weight;
+        $visit->scheduled_at = $scheduled_at;
+        if (!empty($done_at)) {
+            $visit->done_at = $done_at;
+        }
+        if (!empty($note)) {
+            $visit->note = $note;
+        }
         return $patient->visits()->save($visit);
     }
 
     /**
      * Method to delete visit related to patient
      *
-     * @param $id
+     * @param Visit $visit
+     *
      * @return bool|mixed|null
+     *
      * @throws \Exception
      */
-    public function deleteVisit($id_patient, $id_visit)
+    public static function deleteVisit($visit)
     {
-        $patient = $this->model->patients()->findOrFail($id_patient);
-        $visit = $patient->visits()->findOrFail($id_visit);
         return $visit->delete();
     }
 }

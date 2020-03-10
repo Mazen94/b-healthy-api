@@ -4,13 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Notification
+ * @package App
+ * @property int $id
+ * @property string $message
+ */
 class Notification extends Model
 {
-    /*  Visit Attributes:
-         *      int id
-         *      int id_patient
-         *      string message
-         */
+
     protected $table = 'notifications';
 
     /**

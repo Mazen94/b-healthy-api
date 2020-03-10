@@ -100,7 +100,7 @@ Route::prefix('nutritionist')->group(
                                     '{id_ingredient}',
                                     'ApiNutritionnist\StoreMenuController@deleteIngredient'
                                 );
-                                Route::put('{id_ingredient}', 'ApiNutritionnist\StoreMenuController@updateIngredient');
+                                Route::put('{id_ingredient}', 'ApiNutritionnist\StoreMenuController@updateAmountPivotIngredient');
                             }
                         );
                     }

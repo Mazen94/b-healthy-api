@@ -33,8 +33,8 @@ class StoreMenuRequest extends FormRequest
             'min_age' => 'required|integer|between:' . Config::get('constants.MIN_AGE_LENGTH') . ',' . Config::get(
                     'constants.MAX_AGE_LENGTH'
                 ),
-            'calorie' => 'integer|between:' . Config::get('constants.MIN_AGE_LENGTH') . ',' . Config::get(
-                    'constants.MAX_AGE_LENGTH'
+            'calorie' => 'integer|between:' . Config::get('constants.MIN_CALORIES_LENGTH') . ',' . Config::get(
+                    'constants.MAX_CALORIES_LENGTH'
                 ),
         ];
     }

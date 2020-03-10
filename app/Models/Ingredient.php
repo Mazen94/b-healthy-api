@@ -20,6 +20,7 @@ class Ingredient extends Model
      */
     protected $table = 'ingredients';
 
+
     /**
      * One To Many (Inverse)
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

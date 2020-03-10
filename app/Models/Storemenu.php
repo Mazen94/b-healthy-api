@@ -4,17 +4,19 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Storemenu
+ * @package App
+ * @property int $id
+ * @property string $name
+ * @property int $max_age
+ * @property int $min_age
+ * @property int $calorie
+ * @property string type_menu
+ */
 class Storemenu extends Model
 {
-    /* Storemenu Attributes:
-     *      int id
-     *      string nom
-     *      int max_age
-     *      int min_age
-     *      string type_menu
-     *      int nutritionnist
-     *
-     */
+
 
     /**
      * @var string

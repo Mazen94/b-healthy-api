@@ -4,14 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Ingredient
+ * @package App
+ * @property integer $id
+ * @property string $name
+ * @property integer $amount
+ * @property integer $calorie
+ */
 class Ingredient extends Model
 {
-    /* Ingredient Attributes:
-     *      int id
-     *      int nutritionist_id
-     *      int quantite
-     *      int calorie
-     */
 
     /**
      * @var string

@@ -16,7 +16,7 @@ class NutritionnistRepository
      * @param $password
      * @return Nutritionist
      */
-    public function register($email, $firstName, $lastName, $password)
+    public static function register($email, $firstName, $lastName, $password)
     {
         $nutritionist = new Nutritionist();
         $nutritionist->email = $email;
@@ -33,7 +33,7 @@ class NutritionnistRepository
      *
      * @return mixed
      */
-    public function updateNutritionist($email, $firstName, $lastName, $password, $picture)
+    public static function updateNutritionist($email, $firstName, $lastName, $password, $picture)
     {
         if (!empty($picture)) {
             auth()->user()->picture = $picture;
@@ -51,7 +51,7 @@ class NutritionnistRepository
      *
      * @throws \Exception
      */
-    public function deleteNutritionist()
+    public static function deleteNutritionist()
     {
         return auth()->user()->delete();
     }

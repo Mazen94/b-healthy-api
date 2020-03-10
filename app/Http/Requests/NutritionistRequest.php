@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Config;
 
-class RegisterNutritionist extends FormRequest
+class NutritionistRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class RegisterNutritionist extends FormRequest
      */
     public function rules()
     {
-        ;
+
         if ($this->route()->getName() == 'registerNutritionist') {
             return [
                 'email' => 'required|string|email|unique:nutritionists',

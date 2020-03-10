@@ -4,7 +4,7 @@ namespace App\Http\Controllers\ApiNutritionnist;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegisterNutritionist;
+use App\Http\Requests\NutritionistRequest;
 use App\Repositories\NutritionnistRepository;
 use Illuminate\Http\JsonResponse;
 use JWTAuth;
@@ -32,10 +32,10 @@ class NutritionistController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param NutritionistRequest $request
      * @return JsonResponse
      */
-    public function update(RegisterNutritionist $request)
+    public function update(NutritionistRequest $request)
     {
         $nutritionist = NutritionnistRepository::updateNutritionist(
             $request->input('email'),
@@ -72,10 +72,10 @@ class NutritionistController extends Controller
 
     /**
      * Nutritionist Register
-     * @param RegisterNutritionist $request
+     * @param NutritionistRequest $request
      * @return JsonResponse
      */
-    public function register(RegisterNutritionist $request)
+    public function register(NutritionistRequest $request)
     {
         $nutritionist = NutritionnistRepository::register(
             $request['email'],

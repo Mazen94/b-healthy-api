@@ -5,46 +5,33 @@ namespace App\Repositories;
 
 
 use App\Activitephysique;
+use App\Patient;
 use Illuminate\Database\Eloquent\Model;
 
 class PhysicalActiviteRepository
 {
-    protected $model;
-
-    /**
-     * PatientRepository constructor.
-     * @param Model $model
-     */
-    public function __construct(Model $model)
-    {
-        $this->model = $model;
-    }
 
     /**
      * Method to create a new  Activity
      *
      *
-     * @param $request
+     * @param Patient $patient
+     * @param int $distance
+     * @param string $activite_type
+     * @param int $energy_burned
+     * @param int $duration
      *
      * @return false|\Illuminate\Database\Eloquent\Model
      */
-    public function createActivity($request)
+    public static function createActivity($patient,$distance,$activite_type,$energy_burned,$duration)
     {
         $activity = new Activitephysique();
-        $activity->distance = $request['distance'];
-        $activity->activite_type = $request['activite_type'];
-        $activity->energy_burned = $request['energy_burned'];
-        $activity->duration = $request['duration'];
-        $this->model->physicalActivity()->save($activity);
+        $activity->distance = $distance;
+        $activity->activite_type = $activite_type;
+        $activity->energy_burned = $energy_burned;
+        $activity->duration = $duration;
+        $patient->physicalActivity()->save($activity);
         return $activity;
     }
-    /**
-     * Method to get all Activitys
-     *
-     * @return false|\Illuminate\Database\Eloquent\Model
-     */
-    public function getActivitys()
-    {
-        return $this->model->physicalActivity;
-    }
+
 }

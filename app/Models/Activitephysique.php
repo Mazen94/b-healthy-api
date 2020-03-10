@@ -4,16 +4,17 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Activitephysique
+ * @package App
+ * @property int $id
+ * @property int $distance
+ * @property int $duration
+ * @property string $activite_type
+ * @property int $energy_burned
+ */
 class Activitephysique extends Model
 {
-    /* Activitephysique Attributes:
-     *      int id
-     *      int distance
-     *      int patient_id
-     *      time duration
-     *      int energy_burned
-     *      string activite_type
-     */
 
     /**
      * @var string

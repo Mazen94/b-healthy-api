@@ -4,6 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Visit
+ * @package App
+ * @property int $id
+ * @property int $weight
+ * @property string $note
+ * @property  $scheduled_at
+ * @property  $done_at
+ *
+ */
 class Visit extends Model
 {
     /*  Visit Attributes:

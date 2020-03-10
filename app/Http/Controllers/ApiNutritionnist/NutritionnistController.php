@@ -36,7 +36,7 @@ class NutritionnistController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return JsonResponse
      */
-    public function update(Request $request)
+    public function update(RegisterNutritionist $request)
     {
         $nutritionistRepository = new NutritionnistRepository();
         $nutritionist = $nutritionistRepository->updateNutritionist(

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 use Config;
 
@@ -24,13 +25,30 @@ class RegisterNutritionist extends FormRequest
      */
     public function rules()
     {
-        return [
-            'email' => 'required|string|email|unique:nutritionists',
-            'firstName' => 'required',
-            'password' => 'required|min:' . Config::get('constants.MIN_PASSWORD_LENGTH') . '|max:' . Config::get(
-                    'constants.MAX_PASSWORD_LENGTH'
-                ),
-            'lastName' => 'required',
-        ];
+        ;
+        if ($this->route()->getName() == 'registerNutritionist') {
+            return [
+                'email' => 'required|string|email|unique:nutritionists',
+                'firstName' => 'required|string',
+                'password' => 'required|min:' . Config::get('constants.MIN_PASSWORD_LENGTH') . '|max:' . Config::get(
+                        'constants.MAX_PASSWORD_LENGTH'
+                    ),
+                'lastName' => 'required|string',
+            ];
+        } else {
+            $user = auth()->user();
+            return [
+                'email' => [
+                    'required',
+                    Rule::unique('nutritionists', 'email')->ignore($user->id)
+                ],
+                'firstName' => 'required|string',
+                'password' => 'required|min:' . Config::get('constants.MIN_PASSWORD_LENGTH') . '|max:' . Config::get(
+                        'constants.MAX_PASSWORD_LENGTH'
+                    ),
+                'lastName' => 'required|string',
+            ];
+        }
     }
+
 }

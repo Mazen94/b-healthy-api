@@ -3,13 +3,16 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Recommandation extends Model
+/**
+ * Class Recommandation
+ * @package App
+ * @property int $id
+ * @property string $avoid
+ */
+class Recommendation extends Model
 {
-    /* Storemenu Attributes:
-     *      int id
-     *      string aeviter
-     */
 
     /**
      * @var string
@@ -18,7 +21,7 @@ class Recommandation extends Model
 
     /**
      * Many To Many RelationShip
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function patients()
     {
@@ -31,8 +34,8 @@ class Recommandation extends Model
     }
 
     /**
-     * Many To Many RelationShip between menu et recommandation
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * Many To Many RelationShip between menu et recommandetion
+     * @return BelongsToMany
      */
     public function menus()
     {

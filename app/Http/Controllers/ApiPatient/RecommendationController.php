@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ApiPatient;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\RecommandationRepository;
+use App\Repositories\RecommendationRepository;
 use JWTAuth;
 
 class RecommendationController extends Controller
@@ -17,12 +18,11 @@ class RecommendationController extends Controller
     public function index()
     {
         $patient = auth()->user();
-        $recommandationRepository = new RecommandationRepository($patient);
-        $recommendation = $recommandationRepository->getRecommendationByPatient();
+        $recommendation = RecommendationRepository::getRecommendationByPatient($patient);
         return response()->json(
             [
                 'success' => true,
-                'recommandations' => $recommendation,
+                'recommandation' => $recommendation,
             ],
             200
         );
@@ -36,12 +36,11 @@ class RecommendationController extends Controller
     public function indexMenus()
     {
         $patient = auth()->user();
-        $recommandationRepository = new RecommandationRepository($patient);
-        $recommendation = $recommandationRepository->getRecommendationMenusByPatient();
+        $menus = RecommendationRepository::getRecommendationMenusByPatient($patient);
         return response()->json(
             [
                 'success' => true,
-                'recommandations' => $recommendation,
+                'Menus' => $menus,
             ],
             200
         );

@@ -80,20 +80,22 @@ class RecommendationRepository
 
     /**
      *  Patient : Get the last recommendation
+     * @param Patient $patient
      * @return mixed
      */
-    public function getRecommendationByPatient()
+    public static function getRecommendationByPatient($patient)
     {
-        return $this->model->recommandations()->latest("updated_at")->first();
+        return $patient->recommendations()->latest("updated_at")->first();
     }
 
     /**
      *  Patient : Get the list of menus linked to a recommendation
+     * @param Patient $patient
      * @return mixed
      */
-    public function getRecommendationMenusByPatient()
+    public static function getRecommendationMenusByPatient($patient)
     {
-        $recommendation = $this->model->recommandations()->latest("updated_at")->first();
+        $recommendation = $patient->recommendations()->latest("updated_at")->first();
         return $recommendation->menus;
     }
 }

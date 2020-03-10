@@ -23,27 +23,28 @@ class MenuRepository
     }
 
     /**
-     * Method to create a new  menu
+     * Method for patient to create a new  menu
      *
-     * @param $request
-     *
-     * @return false|\Illuminate\Database\Eloquent\Model
+     * @param string $name
+     * @param string $type_menu
+     * @param string $calorie
+     * @return Menu
      */
-    public function createMenu($request, $id_recommendation)
+    public static function createMenu($name, $type_menu, $calorie)
     {
-        //TODO change $request
-        $recommendation = $this->model->recommandations()->findOrFail($id_recommendation);
         $menu = new Menu();
-        $menu->name = $request->name;
-        $menu->type_menu = $request->type_menu;
-        $menu->posted_by = Config::get('constants.POSTED_BY_PATIENT');
+        $menu->name = $name;
+        $menu->type_menu = $type_menu;
+        if (!empty($calorie)) {
+            $menu->calorie = $calorie;
+        }
         $menu->save();
-        $recommendation->menus()->attach($menu->id);
-        return $recommendation->menus()->findOrFail($menu->id);
+
+        return $menu;
     }
 
     /**
-     * Method to create a menu with these ingredients
+     * Method for nutritionist to create a menu with these ingredients
      * @param string $name
      * @param int $calorie
      * @param string $type_menu

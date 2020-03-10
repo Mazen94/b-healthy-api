@@ -9,7 +9,6 @@ use App\Repositories\IngredientRepository;
 
 class IngredientConrtoller extends Controller
 {
-    //TODO test this controller
     /**
      * Display a listing of the resource.
      *

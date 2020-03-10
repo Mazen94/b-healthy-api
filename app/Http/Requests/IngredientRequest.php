@@ -25,7 +25,7 @@ class IngredientRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'quantite' => 'required|integer',
+            'amount' => 'required|integer',
             'calorie' => 'required|integer',
         ];
     }

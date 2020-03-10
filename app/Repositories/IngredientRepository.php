@@ -15,16 +15,15 @@ class IngredientRepository
      *
      * @param Nutritionist $nutritionist
      * @param $name
-     * @param $quantite
+     * @param $amount
      * @param $calorie
      * @return false|\Illuminate\Database\Eloquent\Model
      */
-    public static function createIngredient($nutritionist, $name, $quantite, $calorie)
+    public static function createIngredient($nutritionist, $name, $amount, $calorie)
     {
-        //TODO change the name of columns
         $ingredient = new Ingredient();
         $ingredient->name = $name;
-        $ingredient->quantite = $quantite;
+        $ingredient->amount = $amount;
         $ingredient->calorie = $calorie;
         return $nutritionist->ingredients()->save($ingredient);
     }

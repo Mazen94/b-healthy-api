@@ -8,17 +8,17 @@
 */
 Route::prefix('nutritionist')->group(
     function () {
-        Route::post('register', 'ApiNutritionnist\NutritionnistController@register')->name('registerNutritionist');
-        Route::post('login', 'ApiNutritionnist\NutritionnistController@login');
+        Route::post('register', 'ApiNutritionnist\NutritionistController@register')->name('registerNutritionist');
+        Route::post('login', 'ApiNutritionnist\NutritionistController@login');
         Route::middleware('auth:api')->group(
             function () {
-                Route::get('/', 'ApiNutritionnist\NutritionnistController@index');
-                Route::put('/', 'ApiNutritionnist\NutritionnistController@update')->name('updateNutritionist');
+                Route::get('/', 'ApiNutritionnist\NutritionistController@index');
+                Route::put('/', 'ApiNutritionnist\NutritionistController@update')->name('updateNutritionist');
 
                 Route::prefix('patients')->group(
                     function () {
-                        Route::post('/', 'ApiNutritionnist\PatientController@store');
-                        Route::get('/', 'ApiNutritionnist\PatientController@index');
+                        Route::post('/', 'ApiNutritionist\PatientController@store');
+                        Route::get('/', 'ApiNutritionist\PatientController@index');
 
 
                         Route::prefix('{id_patient}')->group(

@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * Class Recommandation
+ * Class Recommendation
  * @package App
  * @property int $id
  * @property string $avoid
  */
-class Recommendation extends Model
+class Recommandation extends Model
 {
 
     /**
@@ -30,7 +30,7 @@ class Recommendation extends Model
             'patients_recommandations',
             'recommandation_id',
             'patient_id'
-        )->using('App\PatientRecommandation');
+        )->using('App\PatientRecommendation');
     }
 
     /**

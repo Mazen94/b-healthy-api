@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class PatientRecommendation extends Pivot
+class PatientRecommandation extends Pivot
 {
     /**
      * Class Pivot between Patient et Recommandation

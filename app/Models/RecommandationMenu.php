@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class RecommendationMenu extends Pivot
+class RecommandationMenu extends Pivot
 {
     /**
      * Class Pivot between Recommandation et Menu

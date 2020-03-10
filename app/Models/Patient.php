@@ -3,6 +3,9 @@
 namespace App;
 
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -12,6 +15,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @package App
  * @property integer $id
  * @property string $email
+ * @property string $password
  * @property string $firstName
  * @property string $lastName
  * @property string $picture
@@ -31,7 +35,7 @@ class Patient extends Authenticatable implements JWTSubject
 
     /**
      * One To Many (Inverse)
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function nutritionist()
     {
@@ -40,7 +44,7 @@ class Patient extends Authenticatable implements JWTSubject
 
     /**
      * One To one
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return HasOne
      */
     public function conversation()
     {
@@ -49,7 +53,7 @@ class Patient extends Authenticatable implements JWTSubject
 
     /**
      * the has many relationship
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function visits()
     {
@@ -58,7 +62,7 @@ class Patient extends Authenticatable implements JWTSubject
 
     /**
      * the has many relationship
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function physicalActivity()
     {
@@ -67,7 +71,7 @@ class Patient extends Authenticatable implements JWTSubject
 
     /**
      * the has many relationship
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function notifications()
     {

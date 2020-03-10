@@ -17,8 +17,8 @@ Route::prefix('nutritionist')->group(
 
                 Route::prefix('patients')->group(
                     function () {
-                        Route::post('/', 'ApiNutritionist\PatientController@store');
-                        Route::get('/', 'ApiNutritionist\PatientController@index');
+                        Route::post('/', 'ApiNutritionnist\PatientController@store')->name('registerPatient');
+                        Route::get('/', 'ApiNutritionnist\PatientController@index');
 
 
                         Route::prefix('{id_patient}')->group(

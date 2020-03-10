@@ -4,94 +4,88 @@
 namespace App\Repositories;
 
 
+use App\Nutritionist;
 use App\Patient;
-use Illuminate\Database\Eloquent\Model;
+
 
 class PatientRepository
 {
-   protected $model;
-
     /**
-     * PatientRepository constructor.
-     * @param Model $model
-     */
-    public function __construct(Model $model)
-    {
-        $this->model = $model;
-    }
-
-    /**
-     * Method to get all the patients from database
+     * Method to create a new patient related to patient
      *
-     * @return mixed
-     */
-    public function getAllPatients()
-    {
-        return $this->model->patients()->paginate();
-    }
-
-    /**
-     * method to get only  one patient
-     *
-     * @param $id
-     * @return mixed
-     */
-    public function getPatient($id)
-    {
-        return $this->model->patients()->findOrFail($id);
-    }
-
-    /**
-     * Method to create a new patient
-     *
-     * @param $request
+     * @param Nutritionist $nutritionist
+     * @param string $email
+     * @param string $firstName
+     * @param string $lastName
+     * @param string $password
+     * @param string $gender
+     * @param string $numberPhone
+     * @param string $profession
      * @return false|\Illuminate\Database\Eloquent\Model
      */
-    public function createPatient($data)
-    {
+    public static function createPatient(
+        $nutritionist,
+        $email,
+        $firstName,
+        $lastName,
+        $password,
+        $gender,
+        $numberPhone,
+        $profession
+    ) {
         $patient = new Patient();
-        $patient->email = $data->email;
-        $patient->firstName = $data->firstName;
-        $patient->lastName = $data->lastName;
-        $patient->gender = $data->gender;
-        $patient->numberPhone = $data->numberPhone;
-        $patient->profession = $data->profession;
-        $patient->password = bcrypt($data->password);
-        return $this->model->patients()->save($patient);
+        $patient->email = $email;
+        $patient->firstName = $firstName;
+        $patient->lastName = $lastName;
+        $patient->gender = $gender;
+        $patient->numberPhone = $numberPhone;
+        $patient->profession = $profession;
+        $patient->password = bcrypt($password);
+        return $nutritionist->patients()->save($patient);
     }
 
     /**
-     * Method to delete patient
+     * Method to delete patient related to nutritionist
      *
-     * @param $id
+     * @param Patient $patient
      * @return bool|mixed|null
      * @throws \Exception
      */
-    public function deletePatient($id)
+    public static function deletePatient($patient)
     {
-        $patient = $this->model->patients()->findOrFail($id);
         return $patient->delete();
     }
 
     /**
      * Method to update patient connected
      *
-     * @param $request
-     * @param $patient
+     * @param Patient $patient
+     * @param string $email
+     * @param string $firstName
+     * @param string $lastName
+     * @param string $gender
+     * @param string $numberPhone
+     * @param string $profession
      * @return bool|mixed|null
-     * @throws \Exception
      */
-    public function updatePatient($request)
-    {
-        $this->model->email = $request['email'];
-        $this->model->firstName = $request['firstName'];
-        $this->model->lastName = $request['lastName'];
-        //$patient->password = bcrypt($request['password']);
-        $this->model->gender = $request['gender'];
-        $this->model->profession = $request['profession'];
-        $this->model->numberPhone = $request['numberPhone'];
-        $this->model->save();
-        return $this->model;
+    public static function updatePatient(
+        $patient,
+        $email,
+        $firstName,
+        $lastName,
+        $gender,
+        $numberPhone,
+        $profession
+    ) {
+        $patient->email = $email;
+        $patient->firstName = $firstName;
+        $patient->lastName = $lastName;
+        //$patient->password = bcrypt($password);
+        $patient->gender = $gender;
+        $patient->profession = $numberPhone;
+        $patient->numberPhone = $profession;
+        $patient->save();
+        return $patient;
     }
 
 }

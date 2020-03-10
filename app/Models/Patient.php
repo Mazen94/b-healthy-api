@@ -82,7 +82,7 @@ class Patient extends Authenticatable implements JWTSubject
      * Many To Many RelationShip
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function recommandations()
+    public function recommendations()
     {
         return $this->belongsToMany(
             'App\Recommandation',

@@ -40,26 +40,29 @@ Route::prefix('nutritionist')->group(
 
                                 Route::prefix('recommendations')->group(
                                     function () {
-                                        Route::get('/', 'ApiNutritionnist\RecommandationController@index');
-                                        Route::post('/', 'ApiNutritionnist\RecommandationController@store');
+                                        Route::get('/', 'ApiNutritionnist\RecommendationController@index');
+                                        Route::post('/', 'ApiNutritionnist\RecommendationController@store');
                                         Route::get(
                                             '/{id_recommendation}',
-                                            'ApiNutritionnist\RecommandationController@show'
+                                            'ApiNutritionnist\RecommendationController@show'
                                         );
                                         Route::put(
                                             '/{id_recommendation}',
-                                            'ApiNutritionnist\RecommandationController@update'
+                                            'ApiNutritionnist\RecommendationController@update'
                                         );
                                         Route::delete(
                                             '/{id_recommendation}',
-                                            'ApiNutritionnist\RecommandationController@destroy'
+                                            'ApiNutritionnist\RecommendationController@destroy'
                                         );
                                         Route::prefix('{id_recommendation}/menus')->group(
                                             function () {
-                                                Route::post('/', 'ApiNutritionnist\RecommandationController@storeMenu');
+                                                Route::post(
+                                                    '/',
+                                                    'ApiNutritionnist\RecommendationController@addMenuToRecommendation'
+                                                );
                                                 Route::delete(
                                                     '/{id_menu}',
-                                                    'ApiNutritionnist\RecommandationController@destroyMenu'
+                                                    'ApiNutritionnist\RecommendationController@destroyMenu'
                                                 );
                                             }
                                         );

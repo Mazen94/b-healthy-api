@@ -37,7 +37,7 @@ class StoreMenuController extends Controller
         return response()->json(
             [
                 'success' => true,
-                'Storemenus' => $storeMenu,
+                'StoreMenus' => $storeMenu,
             ],
             200
         );
@@ -83,7 +83,7 @@ class StoreMenuController extends Controller
         return response()->json(
             [
                 'success' => true,
-                'Storemenu' => $storeMenuWithIngredients,
+                'StoreMenu' => $storeMenuWithIngredients,
             ],
             200
         );
@@ -100,7 +100,7 @@ class StoreMenuController extends Controller
         return response()->json(
             [
                 'success' => true,
-                'Storemenu' => $storeMenuWithIngredients,
+                'StoreMenu' => $storeMenuWithIngredients,
             ],
             200
         );

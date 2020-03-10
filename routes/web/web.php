@@ -8,12 +8,12 @@
 */
 Route::prefix('nutritionist')->group(
     function () {
-        Route::post('register', 'ApiNutritionnist\NutritionnistController@register');
+        Route::post('register', 'ApiNutritionnist\NutritionnistController@register')->name('registerNutritionist');
         Route::post('login', 'ApiNutritionnist\NutritionnistController@login');
         Route::middleware('auth:api')->group(
             function () {
                 Route::get('/', 'ApiNutritionnist\NutritionnistController@index');
-                Route::put('/', 'ApiNutritionnist\NutritionnistController@update');
+                Route::put('/', 'ApiNutritionnist\NutritionnistController@update')->name('updateNutritionist');
 
                 Route::prefix('patients')->group(
                     function () {

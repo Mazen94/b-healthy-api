@@ -4,85 +4,58 @@
 namespace App\Repositories;
 
 use App\Ingredient;
+use App\Nutritionist;
 
-use Illuminate\Database\Eloquent\Model;
 
 class IngredientRepository
 {
-    protected $model;
 
     /**
-     * PatientRepository constructor.
-     * @param Model $model
-     */
-    public function __construct(Model $model)
-    {
-        $this->model = $model;
-    }
-
-    /**
-     * Method to get all the Ingredients from database
+     * Method to create a new Ingredient related to nutritionist
      *
-     * @return mixed
-     */
-    public function getAllIngredients()
-    {
-        return $this->model->ingredients()->paginate();
-    }
-
-    /**
-     * method to get only  one Ingredient
-     *
-     * @param $id
-     * @return mixed
-     */
-    public function getIngredient($id)
-    {
-        return $this->model->ingredients()->findOrFail($id);
-    }
-
-    /**
-     * Method to create a new Ingredient
-     *
-     * @param $request
+     * @param Nutritionist $nutritionist
+     * @param $name
+     * @param $quantite
+     * @param $calorie
      * @return false|\Illuminate\Database\Eloquent\Model
      */
-    public function createIngredient($data)
+    public static function createIngredient($nutritionist, $name, $quantite, $calorie)
     {
+        //TODO change the name of columns
         $ingredient = new Ingredient();
-        $ingredient->name = $data->nom;
-        $ingredient->quantite = $data->quantite;
-        $ingredient->calorie = $data->calorie;
-
-        return $this->model->ingredients()->save($ingredient);
+        $ingredient->name = $name;
+        $ingredient->quantite = $quantite;
+        $ingredient->calorie = $calorie;
+        return $nutritionist->ingredients()->save($ingredient);
     }
 
     /**
      * Method to delete Ingredient
      *
-     * @param $id
-     * @return bool|mixed|null
+     * @param Ingredient $ingredient
+     * @return bool
+     *
      * @throws \Exception
      */
-    public function deleteIngredient($id)
+    public static function deleteIngredient($ingredient)
     {
-        $ingredient = $this->model->ingredients()->findOrFail($id);
         return $ingredient->delete();
     }
 
     /**
      * Method to update ingredient
      *
-     * @param $request
-     * @param $res
-     * @return bool|false|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Relations\HasMany|\Illuminate\Database\Eloquent\Relations\HasMany[]
+     * @param $name
+     * @param $quantite
+     * @param $calorie
+     * @param Ingredient $ingredient
+     * @return Ingredient $ingredient
      */
-    public function updateIngredient($request, $id)
+    public static function updateIngredient($name, $quantite, $calorie, $ingredient)
     {
-        $ingredient = $this->model->ingredients()->findOrFail($id);
-        $ingredient->name = $request['name'];
-        $ingredient->quantite = $request['quantite'];
-        $ingredient->calorie = $request['calorie'];
+        $ingredient->name = $name;
+        $ingredient->quantite = $quantite;
+        $ingredient->calorie = $calorie;
         $ingredient->save();
         return $ingredient;
     }

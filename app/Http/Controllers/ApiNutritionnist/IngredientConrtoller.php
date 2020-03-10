@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\ApiNutritionnist;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\IngredientPutRequest;
 use App\Http\Requests\IngredientRequest;
 use App\Repositories\IngredientRepository;
-use JWTAuth;
+
 
 class IngredientConrtoller extends Controller
 {
-
+    //TODO test this controller
     /**
      * Display a listing of the resource.
      *
@@ -20,8 +19,7 @@ class IngredientConrtoller extends Controller
     public function index()
     {
         $nutritionist = auth()->user();
-        $ingredientRepository = new IngredientRepository($nutritionist);
-        $ingredients = $ingredientRepository->getAllIngredients();
+        $ingredients = $nutritionist->ingredients()->paginate();
         return response()->json(
             [
                 'success' => true,
@@ -40,17 +38,21 @@ class IngredientConrtoller extends Controller
     public function store(IngredientRequest $request)
     {
         $nutritionist = auth()->user();
-        $ingredientRepository = new IngredientRepository($nutritionist);
-        $ingredient = $ingredientRepository->createIngredient($request);
-        if ($ingredient) {
-            return response()->json(
-                [
-                    'success' => true,
-                    'ingredient' => $ingredient,
-                ],
-                200
-            );
-        }
+
+        $ingredient = IngredientRepository::createIngredient(
+            $nutritionist,
+            $request->input('name'),
+            $request->input('quantite'),
+            $request->input('calorie')
+        );
+
+        return response()->json(
+            [
+                'success' => true,
+                'ingredient' => $ingredient,
+            ],
+            200
+        );
     }
 
     /**
@@ -61,9 +63,7 @@ class IngredientConrtoller extends Controller
      */
     public function show($id)
     {
-        $nutritionist = auth()->user();
-        $ingredientRepository = new IngredientRepository($nutritionist);
-        $ingredient = $ingredientRepository->getIngredient($id);
+        $ingredient = auth()->user()->ingredients()->findOrFail($id);
         return response()->json(
             [
                 'success' => true,
@@ -76,18 +76,24 @@ class IngredientConrtoller extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param IngredientPutRequest $request
+     * @param IngredientRequest $request
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(IngredientRequest $request, $id)
     {
         $nutritionist = auth()->user();
-        $ingredientRepository = new IngredientRepository($nutritionist);
-        $ingredient = $ingredientRepository->updateIngredient($request, $id);
+        $ingredient = $nutritionist->ingredients()->findOrFail($id);
+        $ingredient = IngredientRepository::updateIngredient(
+            $request->input('name'),
+            $request->input('quantite'),
+            $request->input('calorie'),
+            $ingredient
+        );
         return response()->json(
             [
-                'success' => $ingredient,
+                'success' => true,
+                'ingredient' => $ingredient
             ],
             200
         );
@@ -103,8 +109,8 @@ class IngredientConrtoller extends Controller
     public function destroy($id)
     {
         $nutritionist = auth()->user();
-        $ingredientRepository = new IngredientRepository($nutritionist);
-        $ingredientRepository->deleteIngredient($id);
+        $ingredient = $nutritionist->ingredients()->findOrFail($id);
+        IngredientRepository::deleteIngredient($ingredient);
         return response()->json(
             [
                 'success' => true,

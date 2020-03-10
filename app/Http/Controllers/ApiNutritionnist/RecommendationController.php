@@ -10,7 +10,7 @@ use App\Repositories\RecommandationRepository;
 use Illuminate\Http\Request;
 use JWTAuth;
 
-class RecommandationController extends Controller
+class RecommendationController extends Controller
 {
 
     /**

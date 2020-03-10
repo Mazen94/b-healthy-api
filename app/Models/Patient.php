@@ -7,20 +7,21 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
+/**
+ * Class Patient
+ * @package App
+ * @property integer $id
+ * @property string $email
+ * @property string $firstName
+ * @property string $lastName
+ * @property string $picture
+ * @property string $gender
+ * @property string $profession
+ * @property string $numberPhone
+ */
 class Patient extends Authenticatable implements JWTSubject
 {
     use Notifiable;
-
-    /* Patient Attributes:
-     *      int id
-     *      string firstname
-     *      string email
-     *      string lastName
-     *      string picture
-     *      string numberPhone
-     *      string gender
-     *      string profession
-     */
 
     /**
      * @var string

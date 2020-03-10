@@ -42,7 +42,7 @@ class IngredientConrtoller extends Controller
         $ingredient = IngredientRepository::createIngredient(
             $nutritionist,
             $request->input('name'),
-            $request->input('quantite'),
+            $request->input('amount'),
             $request->input('calorie')
         );
 

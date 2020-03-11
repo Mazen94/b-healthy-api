@@ -28,6 +28,8 @@ return [
 
     //minimum calories of a store menu
     'MIN_CALORIES_LENGTH' => 100,
+   
+    'FAILED_TO_LOGIN' => 'Invalid email or password'
 
 
 ];

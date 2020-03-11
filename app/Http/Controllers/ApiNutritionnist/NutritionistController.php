@@ -7,6 +7,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\NutritionistRequest;
 use App\Repositories\NutritionnistRepository;
 use Illuminate\Http\JsonResponse;
+use Config;
 use JWTAuth;
 
 class NutritionistController extends Controller
@@ -108,13 +109,12 @@ class NutritionistController extends Controller
             return response()->json(
                 [
                     'success' => false,
-                    'message' => 'invalid_email_or_password',
+                    'message' => Config::get('constants.FAILED_TO_LOGIN')
                 ],
                 401
             );
         }
-
-
+        
         return response()->json(
             [
                 'success' => true,

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Class Menu
@@ -21,8 +22,8 @@ class Menu extends Model
     protected $table = 'menus';
 
     /**
-     * Many To Many RelationShip between menu et recommandation
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * Many To Many RelationShip between menu et recommendation
+     * @return BelongsToMany
      */
     public function recommandations()
     {
@@ -36,7 +37,7 @@ class Menu extends Model
 
     /**
      * Many To Many RelationShip between menu et ingredients
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function ingredients()
     {

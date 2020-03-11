@@ -16,8 +16,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Storemenu extends Model
 {
-
-
     /**
      * @var string
      */

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class Visit
@@ -16,21 +17,14 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Visit extends Model
 {
-    /*  Visit Attributes:
-     *      int id
-     *      int poids
-     *      string note
-     *      date scheduled_at
-     *      date done_at
-     *      int patient_id
-     *
-     */
-    protected $fillable = [ 'poids','note','scheduled_at','done_at'];
+
+
+    protected $fillable = ['poids', 'note', 'scheduled_at', 'done_at'];
     protected $table = 'visits';
 
     /**
      * One To Many (Inverse)
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function patient()
     {

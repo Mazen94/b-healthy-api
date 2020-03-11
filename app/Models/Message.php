@@ -3,14 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * Class Message
+ * @package App
+ * @property int $id
+ * @property string $message
+ * @property int $conversation_id
+ */
 class Message extends Model
 {
-    /* message Attributes:
-     *      int id
-     *      string message
-     *      int conversation_id
-     */
 
     /**
      * @var string
@@ -19,7 +22,7 @@ class Message extends Model
 
     /**
      * One To Many (Inverse)
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function conversation()
     {

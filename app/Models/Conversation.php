@@ -4,15 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Conversation
+ * @package App
+ * @property int $id
+ * @property int $nutritionist_id
+ * @property int $patient_id
+ */
 class Conversation extends Model
 {
-    /* conversation Attributes:
-     *      int id
-     *      int nutritionist_id
-     *      int patient_id
-     *
-     */
-
     /**
      * @var string
      */

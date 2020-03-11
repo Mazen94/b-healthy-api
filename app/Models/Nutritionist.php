@@ -2,21 +2,24 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * Class Nutritionist
+ * @package App
+ * @property int $id
+ * @property string $firstName
+ * @property string $email
+ * @property string $lastName
+ * @property string $picture
+ *
+ */
 class Nutritionist extends Authenticatable implements JWTSubject
 {
     use Notifiable;
-
-    /* nutritionists Attributes:
-     *      int id
-     *      string firstname
-     *      string email
-     *      string lastName
-     *      string picture
-     */
 
     /**
      * @var string
@@ -26,7 +29,7 @@ class Nutritionist extends Authenticatable implements JWTSubject
 
     /**
      * the has many relationship
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function patients()
     {
@@ -35,7 +38,7 @@ class Nutritionist extends Authenticatable implements JWTSubject
 
     /**
      * the has many relationship
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function storemenus()
     {
@@ -44,7 +47,7 @@ class Nutritionist extends Authenticatable implements JWTSubject
 
     /**
      * the has many relationship
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function ingredients()
     {
@@ -53,7 +56,7 @@ class Nutritionist extends Authenticatable implements JWTSubject
 
     /**
      * the has many relationship
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function conversations()
     {

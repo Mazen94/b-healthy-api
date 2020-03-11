@@ -114,7 +114,7 @@ class NutritionistController extends Controller
                 401
             );
         }
-        
+
         return response()->json(
             [
                 'success' => true,

@@ -26,7 +26,7 @@ class NutritionistRequest extends FormRequest
     public function rules()
     {
 
-        if ($this->route()->getName() == 'registerNutritionist') {
+        if ($this->route()->getName() == Config::get('constants.ROUTE_NAME_REGISTER_NUTRITIONIST')) {
             return [
                 'email' => 'required|string|email|unique:nutritionists',
                 'firstName' => 'required|string',

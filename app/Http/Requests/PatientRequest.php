@@ -25,7 +25,7 @@ class PatientRequest extends FormRequest
      */
     public function rules()
     {
-        if ($this->route()->getName() == 'registerPatient') {
+        if ($this->route()->getName() == Config::get('constants.ROUTE_NAME_REGISTER_PATIENT')) {
             return [
                 'email' => 'required|string|email|unique:patients',
                 'firstName' => 'required',

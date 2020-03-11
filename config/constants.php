@@ -28,8 +28,13 @@ return [
 
     //minimum calories of a store menu
     'MIN_CALORIES_LENGTH' => 100,
-   
-    'FAILED_TO_LOGIN' => 'Invalid email or password'
+
+    'FAILED_TO_LOGIN' => 'Invalid email or password',
+
+    //Route name RegisterNutritionist
+    'ROUTE_NAME_REGISTER_NUTRITIONIST' => 'registerNutritionist',
+    //Route name RegisterPatient
+    'ROUTE_NAME_REGISTER_PATIENT' =>'registerPatient'
 
 
 ];

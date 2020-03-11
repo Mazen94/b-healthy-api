@@ -38,7 +38,8 @@ class NutritionistController extends Controller
      */
     public function update(NutritionistRequest $request)
     {
-        $nutritionist = NutritionnistRepository::updateNutritionist(
+        $nutritionistRepository = new NutritionnistRepository(auth()->user());
+        $nutritionist = $nutritionistRepository->updateNutritionist(
             $request->input('email'),
             $request->input('firstName'),
             $request->input('lastName'),
@@ -62,7 +63,8 @@ class NutritionistController extends Controller
      */
     public function destroy()
     {
-        NutritionnistRepository::deleteNutritionist();
+        $nutritionistRepository = new NutritionnistRepository(auth()->user());
+        $nutritionistRepository->deleteNutritionist();
         return response()->json(
             [
                 'success' => true,

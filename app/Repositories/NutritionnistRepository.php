@@ -8,6 +8,12 @@ use App\Nutritionist;
 
 class NutritionnistRepository
 {
+    protected $nutritionist;
+
+    public function __construct(Nutritionist $nutritionist)
+    {
+        $this->nutritionist = $nutritionist;
+    }
 
     /**
      * @param $email
@@ -27,23 +33,27 @@ class NutritionnistRepository
         return $nutritionist;
     }
 
-
     /**
      * update nutritionist  from database
      *
+     * @param $email
+     * @param $firstName
+     * @param $lastName
+     * @param $password
+     * @param $picture
      * @return mixed
      */
-    public static function updateNutritionist($email, $firstName, $lastName, $password, $picture)
+    public function updateNutritionist($email, $firstName, $lastName, $password, $picture)
     {
         if (!empty($picture)) {
-            auth()->user()->picture = $picture;
+            $this->nutritionist->picture = $picture;
         }
-        auth()->user()->email = $email;
-        auth()->user()->firstName = $firstName;
-        auth()->user()->lastName = $lastName;
-        auth()->user()->password = bcrypt($password);
-        auth()->user()->save();
-        return auth()->user();
+        $this->nutritionist->email = $email;
+        $this->nutritionist->firstName = $firstName;
+        $this->nutritionist->lastName = $lastName;
+        $this->nutritionist->password = bcrypt($password);
+        $this->nutritionist->save();
+        return $this->nutritionist;
     }
 
     /**
@@ -51,8 +61,8 @@ class NutritionnistRepository
      *
      * @throws \Exception
      */
-    public static function deleteNutritionist()
+    public function deleteNutritionist()
     {
-        return auth()->user()->delete();
+        return $this->nutritionist->delete();
     }
 }

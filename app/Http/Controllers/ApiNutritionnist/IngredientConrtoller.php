@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ApiNutritionnist;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\IngredientRequest;
 use App\Repositories\IngredientRepository;
+use Illuminate\Http\JsonResponse;
 
 
 class IngredientConrtoller extends Controller
@@ -12,64 +13,43 @@ class IngredientConrtoller extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      *
      */
     public function index()
     {
         $nutritionist = auth()->user();
         $ingredients = $nutritionist->ingredients()->paginate();
-        return response()->json(
-            [
-                'success' => true,
-                'ingredients' => $ingredients,
-            ],
-            200
-        );
+        return response()->json(['ingredients' => $ingredients], 200);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param IngredientRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function store(IngredientRequest $request)
     {
         $nutritionist = auth()->user();
-
-        $ingredient = IngredientRepository::createIngredient(
-            $nutritionist,
-            $request->input('name'),
-            $request->input('amount'),
-            $request->input('calorie')
-        );
-
-        return response()->json(
-            [
-                'success' => true,
-                'ingredient' => $ingredient,
-            ],
-            200
-        );
+        $name = $request->input('name');
+        $amount = $request->input('amount');
+        $calorie = $request->input('calorie');
+        $ingredientRepository = new IngredientRepository($nutritionist);
+        $ingredient = $ingredientRepository->createIngredient($name, $amount, $calorie);
+        return response()->json(['ingredient' => $ingredient], 200);
     }
 
     /**
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function show($id)
     {
         $ingredient = auth()->user()->ingredients()->findOrFail($id);
-        return response()->json(
-            [
-                'success' => true,
-                'ingredient' => $ingredient,
-            ],
-            200
-        );
+        return response()->json(['ingredient' => $ingredient], 200);
     }
 
     /**
@@ -77,32 +57,24 @@ class IngredientConrtoller extends Controller
      *
      * @param IngredientRequest $request
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function update(IngredientRequest $request, $id)
     {
         $nutritionist = auth()->user();
         $ingredient = $nutritionist->ingredients()->findOrFail($id);
-        $ingredient = IngredientRepository::updateIngredient(
-            $request->input('name'),
-            $request->input('quantite'),
-            $request->input('calorie'),
-            $ingredient
-        );
-        return response()->json(
-            [
-                'success' => true,
-                'ingredient' => $ingredient
-            ],
-            200
-        );
+        $name = $request->input('name');
+        $amount = $request->input('amount');
+        $calorie = $request->input('calorie');
+        $ingredient = IngredientRepository::updateIngredient($name, $amount, $calorie, $ingredient);
+        return response()->json(['ingredient' => $ingredient], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      * @throws \Exception
      */
     public function destroy($id)
@@ -110,12 +82,7 @@ class IngredientConrtoller extends Controller
         $nutritionist = auth()->user();
         $ingredient = $nutritionist->ingredients()->findOrFail($id);
         IngredientRepository::deleteIngredient($ingredient);
-        return response()->json(
-            [
-                'success' => true,
-            ],
-            200
-        );
+        return response()->json(['success' => true,], 200);
     }
 
 }

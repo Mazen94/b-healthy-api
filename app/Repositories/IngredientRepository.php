@@ -5,27 +5,32 @@ namespace App\Repositories;
 
 use App\Ingredient;
 use App\Nutritionist;
+use Illuminate\Database\Eloquent\Model;
 
 
 class IngredientRepository
 {
+    protected $nutritionist;
 
+    public function __construct(Nutritionist $nutritionist)
+    {
+        $this->nutritionist = $nutritionist;
+    }
     /**
      * Method to create a new Ingredient related to nutritionist
      *
-     * @param Nutritionist $nutritionist
      * @param $name
      * @param $amount
      * @param $calorie
-     * @return false|\Illuminate\Database\Eloquent\Model
+     * @return false|Model
      */
-    public static function createIngredient($nutritionist, $name, $amount, $calorie)
+    public function createIngredient($name, $amount, $calorie)
     {
         $ingredient = new Ingredient();
         $ingredient->name = $name;
         $ingredient->amount = $amount;
         $ingredient->calorie = $calorie;
-        return $nutritionist->ingredients()->save($ingredient);
+        return $this->nutritionist->ingredients()->save($ingredient);
     }
 
     /**
@@ -45,15 +50,15 @@ class IngredientRepository
      * Method to update ingredient
      *
      * @param $name
-     * @param $quantite
+     * @param $amount
      * @param $calorie
      * @param Ingredient $ingredient
      * @return Ingredient $ingredient
      */
-    public static function updateIngredient($name, $quantite, $calorie, $ingredient)
+    public static function updateIngredient($name, $amount, $calorie, $ingredient)
     {
         $ingredient->name = $name;
-        $ingredient->quantite = $quantite;
+        $ingredient->amount = $amount;
         $ingredient->calorie = $calorie;
         $ingredient->save();
         return $ingredient;

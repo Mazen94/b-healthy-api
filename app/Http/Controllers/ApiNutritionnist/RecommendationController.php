@@ -4,7 +4,6 @@ namespace App\Http\Controllers\ApiNutritionnist;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RecommendationRequest;
-use App\Recommandation;
 use App\Repositories\MenuRepository;
 use App\Repositories\RecommendationRepository;
 use Illuminate\Http\JsonResponse;
@@ -16,107 +15,83 @@ class RecommendationController extends Controller
 
     /**
      * Method for nutritionist to get all recommendation related to patient
-     * @param $id
+     * @param $patientId
      * @return JsonResponse
      */
-    public function index($id)
+    public function index($patientId)
     {
         $nutritionist = auth()->user();
-        $patient = $nutritionist->patients()->findOrFail($id);
-        return response()->json(
-            [
-                'success' => true,
-                'recommandations' => $patient->recommendations,
-            ],
-            200
-        );
+        $patient = $nutritionist->patients()->findOrFail($patientId);
+        return response()->json(['recommendations' => $patient->recommendations], 200);
     }
 
     /**
      * Method for nutritionist to create recommendation related to patient
      *
      * @param RecommendationRequest $request
-     * @param $id_patient
+     * @param $patientId
      * @return JsonResponse
      */
-    public function store(RecommendationRequest $request, $id_patient)
+    public function store(RecommendationRequest $request, $patientId)
     {
         $nutritionist = auth()->user();
-        $patient = $nutritionist->patients()->findOrFail($id_patient);
-        $recommendation = RecommendationRepository::createRecommendation($patient, $request->input('avoid'));
-        return response()->json(
-            [
-                'success' => true,
-                'recommandation' => $recommendation,
-            ],
-            200
-        );
+        $patient = $nutritionist->patients()->findOrFail($patientId);
+        $avoid = $request->input('avoid');
+        $recommendationRepository = new RecommendationRepository();
+        $recommendation = $recommendationRepository->createRecommendation($patient, $avoid);
+        return response()->json(['recommendation' => $recommendation], 200);
     }
 
     /**
      * Method for nutritionist to get only one recommendation related to patient
      *
-     * @param int $patient_id
-     * @param int $id_recommendation
+     * @param int $patientId
+     * @param int $idRecommendation
      * @return JsonResponse
      */
-    public function show($patient_id, $id_recommendation)
+    public function show($patientId, $idRecommendation)
     {
         $nutritionist = auth()->user();
-        $patient = $nutritionist->patients()->findOrFail($patient_id);
-        $recommendation = $patient->recommendations()->findOrFail($id_recommendation);
-        return response()->json(
-            [
-                'success' => true,
-                'recommendation' => $recommendation,
-            ],
-            200
-        );
+        $patient = $nutritionist->patients()->findOrFail($patientId);
+        $recommendation = $patient->recommendations()->findOrFail($idRecommendation);
+        return response()->json(['recommendation' => $recommendation], 200);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param RecommendationRequest $request
-     * @param int $patient_id
-     * @param int $id_recommendation
+     * @param int $patientId
+     * @param int $idRecommendation
      * @return JsonResponse
      */
-    public function update(RecommendationRequest $request, $patient_id, $id_recommendation)
+    public function update(RecommendationRequest $request, $patientId, $idRecommendation)
     {
         $nutritionist = auth()->user();
-        $patient = $nutritionist->patients()->findOrFail($patient_id);
-        $recommendation = $patient->recommendations()->findOrFail($id_recommendation);
-        $recommendation = RecommendationRepository::updateRecommendation($recommendation, $request->input('avoid'));
-        return response()->json(
-            [
-                'success' => true,
-                'recommendation' => $recommendation,
-            ],
-            200
-        );
+        $patient = $nutritionist->patients()->findOrFail($patientId);
+        $recommendation = $patient->recommendations()->findOrFail($idRecommendation);
+        $avoid = $request->input('avoid');
+        $recommendationRepository = new RecommendationRepository();
+        $recommendation = $recommendationRepository->updateRecommendation($recommendation, $avoid);
+        return response()->json(['recommendation' => $recommendation], 200);
     }
 
     /**
      * Method for nutritionist to delete recommendation related to patient
      *
-     * @param int $patient_id
-     * @param int $id_recommendation
+     * @param int $patientId
+     * @param int $idRecommendation
      * @return JsonResponse
      * @throws \Exception
      */
-    public function destroy($patient_id, $id_recommendation)
+    public function destroy($patientId, $idRecommendation)
     {
         $nutritionist = auth()->user();
-        $patient = $nutritionist->patients()->findOrFail($patient_id);
-        $recommendation = $patient->recommendations()->findOrFail($id_recommendation);
-        RecommendationRepository::deleteRecommendation($recommendation);
-        return response()->json(
-            [
-                'success' => true,
-            ],
-            200
-        );
+        $patient = $nutritionist->patients()->findOrFail($patientId);
+        $recommendation = $patient->recommendations()->findOrFail($idRecommendation);
+        $recommendationRepository = new RecommendationRepository();
+        $recommendationRepository->deleteRecommendation($recommendation);
+        return response()->json(['success' => true], 200);
     }
 
     /**
@@ -124,55 +99,46 @@ class RecommendationController extends Controller
      * this recommendation related to patient
      *
      * @param Request $request
-     * @param int $patient_id
-     * @param $id_recommendation
+     * @param int $patientId
+     * @param $idRecommendation
      * @return JsonResponse
      * @throws \Exception
      */
-    public function addMenuToRecommendation(Request $request, $patient_id, $id_recommendation)
+    public function addMenuToRecommendation(Request $request, $patientId, $idRecommendation)
     {
         $nutritionist = auth()->user();
-        $patient = $nutritionist->patients()->findOrFail($patient_id);
-        $recommendation = $patient->recommendations()->findOrFail($id_recommendation);
-        $id_menu = MenuRepository::createMenuWithIngredients(
-            $request->input('StoreMenu.name'),
-            $request->input('StoreMenu.calorie'),
-            $request->input('StoreMenu.type_menu'),
-            $request->input('StoreMenu.ingredients')
-        );
-        $newRecommendation = RecommendationRepository::addMenuToRecommendation($recommendation, $id_menu);
-        return response()->json(
-            [
-                'success' => true,
-                'recommendation' => $newRecommendation,
-            ],
-            200
-        );
+        $patient = $nutritionist->patients()->findOrFail($patientId);
+        $recommendation = $patient->recommendations()->findOrFail($idRecommendation);
+        $name = $request->input('StoreMenu.name');
+        $calorie = $request->input('StoreMenu.calorie');
+        $typeMenu = $request->input('StoreMenu.type_menu');
+        $ingredients = $request->input('StoreMenu.ingredients');
+        $menuRepository = new MenuRepository();
+        $id_menu = $menuRepository->createMenuWithIngredients($name, $calorie, $typeMenu, $ingredients);
+        $recommendationRepository = new RecommendationRepository();
+        $newRecommendation = $recommendationRepository->addMenuToRecommendation($recommendation, $id_menu);
+        return response()->json(['recommendation' => $newRecommendation], 200);
     }
 
 
     /**
      * destroy  a menu related  to recommendation
      *
-     * @param int $patient_id
-     * @param int $id_recommendation
-     * @param int $id_menu
+     * @param int $patientId
+     * @param int $idRecommendation
+     * @param int $idMenu
      * @return JsonResponse
      * @throws \Exception
      */
-    public function destroyMenu($patient_id, $id_recommendation, $id_menu)
+    public function destroyMenu($patientId, $idRecommendation, $idMenu)
     {
         $nutritionist = auth()->user();
-        $patient = $nutritionist->patients()->findOrFail($patient_id);
-        $recommendation = $patient->recommendations()->findOrFail($id_recommendation);
-        $recommendation->menus()->findOrFail($id_menu);
-        RecommendationRepository::destroyMenu($recommendation, $id_menu);
-        return response()->json(
-            [
-                'success' => true,
-            ],
-            200
-        );
+        $patient = $nutritionist->patients()->findOrFail($patientId);
+        $recommendation = $patient->recommendations()->findOrFail($idRecommendation);
+        $recommendation->menus()->findOrFail($idMenu);
+        $recommendationRepository = new RecommendationRepository();
+        $recommendationRepository->destroyMenu($recommendation, $idMenu);
+        return response()->json(['success' => true,], 200);
     }
 
 

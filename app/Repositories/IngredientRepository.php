@@ -4,18 +4,17 @@
 namespace App\Repositories;
 
 use App\Ingredient;
-use App\Nutritionist;
 use Illuminate\Database\Eloquent\Model;
-
 
 class IngredientRepository
 {
-    protected $nutritionist;
+    protected $model;
 
-    public function __construct(Nutritionist $nutritionist)
+    public function __construct(Model $model)
     {
-        $this->nutritionist = $nutritionist;
+        $this->model = $model;
     }
+
     /**
      * Method to create a new Ingredient related to nutritionist
      *
@@ -30,7 +29,7 @@ class IngredientRepository
         $ingredient->name = $name;
         $ingredient->amount = $amount;
         $ingredient->calorie = $calorie;
-        return $this->nutritionist->ingredients()->save($ingredient);
+        return $this->model->ingredients()->save($ingredient);
     }
 
     /**
@@ -41,9 +40,9 @@ class IngredientRepository
      *
      * @throws \Exception
      */
-    public static function deleteIngredient($ingredient)
+    public function deleteIngredient()
     {
-        return $ingredient->delete();
+        return $this->model->delete();
     }
 
     /**
@@ -52,15 +51,15 @@ class IngredientRepository
      * @param $name
      * @param $amount
      * @param $calorie
-     * @param Ingredient $ingredient
-     * @return Ingredient $ingredient
+     *
+     * @return Model
      */
-    public static function updateIngredient($name, $amount, $calorie, $ingredient)
+    public function updateIngredient($name, $amount, $calorie)
     {
-        $ingredient->name = $name;
-        $ingredient->amount = $amount;
-        $ingredient->calorie = $calorie;
-        $ingredient->save();
-        return $ingredient;
+        $this->model->name = $name;
+        $this->model->amount = $amount;
+        $this->model->calorie = $calorie;
+        $this->model->save();
+        return $this->model;
     }
 }

@@ -5,7 +5,7 @@ Route::prefix('patient')->group(
         Route::post('login', 'ApiPatient\AuthController@login');
         Route::middleware('auth:api-patient')->group(function () {
                 Route::get('/', 'ApiPatient\PatientController@index');
-                Route::put('/', 'ApiPatient\PatientController@update')->name('updatePatient');
+                Route::put('/', 'ApiPatient\PatientController@update');
 
                 Route::prefix('recommendation')->group(function () {
                         Route::get('/', 'ApiPatient\RecommendationController@index');

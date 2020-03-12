@@ -7,7 +7,6 @@ use App\Http\Requests\IngredientRequest;
 use App\Repositories\IngredientRepository;
 use Illuminate\Http\JsonResponse;
 
-
 class IngredientConrtoller extends Controller
 {
     /**
@@ -66,7 +65,8 @@ class IngredientConrtoller extends Controller
         $name = $request->input('name');
         $amount = $request->input('amount');
         $calorie = $request->input('calorie');
-        $ingredient = IngredientRepository::updateIngredient($name, $amount, $calorie, $ingredient);
+        $ingredientRepository = new IngredientRepository($ingredient);
+        $ingredient = $ingredientRepository->updateIngredient($name, $amount, $calorie);
         return response()->json(['ingredient' => $ingredient], 200);
     }
 
@@ -81,7 +81,8 @@ class IngredientConrtoller extends Controller
     {
         $nutritionist = auth()->user();
         $ingredient = $nutritionist->ingredients()->findOrFail($id);
-        IngredientRepository::deleteIngredient($ingredient);
+        $ingredientRepository = new IngredientRepository($ingredient);
+        $ingredientRepository->deleteIngredient();
         return response()->json(['success' => true,], 200);
     }
 

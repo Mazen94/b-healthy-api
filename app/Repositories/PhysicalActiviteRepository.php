@@ -10,27 +10,32 @@ use Illuminate\Database\Eloquent\Model;
 
 class PhysicalActiviteRepository
 {
+    protected $model;
+
+    public function __construct(Model $model)
+    {
+        $this->model = $model;
+    }
 
     /**
      * Method to create a new  Activity
      *
      *
-     * @param Patient $patient
      * @param int $distance
-     * @param string $activite_type
-     * @param int $energy_burned
+     * @param $activityType
+     * @param int $energyBurned
      * @param int $duration
      *
      * @return false|\Illuminate\Database\Eloquent\Model
      */
-    public static function createActivity($patient,$distance,$activite_type,$energy_burned,$duration)
+    public function createActivity($distance, $activityType, $energyBurned, $duration)
     {
         $activity = new Activitephysique();
         $activity->distance = $distance;
-        $activity->activite_type = $activite_type;
-        $activity->energy_burned = $energy_burned;
+        $activity->activite_type = $activityType;
+        $activity->energy_burned = $energyBurned;
         $activity->duration = $duration;
-        $patient->physicalActivity()->save($activity);
+        $this->model->physicalActivity()->save($activity);
         return $activity;
     }
 

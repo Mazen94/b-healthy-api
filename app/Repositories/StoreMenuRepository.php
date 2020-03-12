@@ -3,10 +3,6 @@
 
 namespace App\Repositories;
 
-
-use App\Ingredient;
-use App\Menu;
-use App\Nutritionist;
 use App\Storemenu;
 use App\StoremenuIngredient;
 use Illuminate\Database\Eloquent\Collection;
@@ -16,16 +12,21 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class StoreMenuRepository
 {
+    protected $model;
+
+    public function __construct(Model $model)
+    {
+        $this->model = $model;
+    }
 
     /**
      * method to get only one StoreMenu with the ingredients related to nutritionist
-     * @param Nutritionist $nutritionist
      * @param int $age
      * @return Collection
      */
-    public static function getStoreMenuWithIngredientsByAge($nutritionist, $age)
+    public function getStoreMenuWithIngredientsByAge($age)
     {
-        return $nutritionist->storemenus()
+        return $this->model->storemenus()
             ->where('min_age', '<=', $age)
             ->where('max_age', '>=', $age)
             ->get();
@@ -34,78 +35,75 @@ class StoreMenuRepository
     /**
      * Method to create a new store menu related to nutritionist
      *
-     * @param Nutritionist $nutritionist
-     *
      * @param string $name
-     * @param int $max_age
-     * @param int $min_age
+     * @param int $maxAge
+     * @param int $minAge
      * @param int $calorie
-     * @param string $type_menu
+     * @param string $typeMenu
+     *
      * @return false|Model
      */
-    public static function createStoreMenu($nutritionist, $name, $max_age, $calorie, $min_age, $type_menu)
+    public function createStoreMenu($name, $maxAge, $calorie, $minAge, $typeMenu)
     {
         $menu = new Storemenu();
         $menu->name = $name;
-        $menu->max_age = $max_age;
-        $menu->min_age = $min_age;
-        $menu->type_menu = $type_menu;
+        $menu->max_age = $maxAge;
+        $menu->min_age = $minAge;
+        $menu->type_menu = $typeMenu;
         if (!empty($calorie)) {
             $menu->calorie = $calorie;
         }
-        return $nutritionist->storemenus()->save($menu);
+        return $this->model->storemenus()->save($menu);
     }
 
     /**
      * Method to update storeMenu related to nutritionist
      *
-     * @param Storemenu $storeMenu
      * @param string $name
-     * @param int $max_age
+     * @param int $maxAge
      * @param int $calorie
-     * @param int $min_age
-     * @param string $type_menu
+     * @param int $minAge
+     * @param string $typeMenu
      * @return bool|false|Collection|Model|HasMany|HasMany[]
      */
-    public static function updateStoreMenu($storeMenu, $name, $max_age, $calorie, $min_age, $type_menu)
+    public function updateStoreMenu($name, $maxAge, $calorie, $minAge, $typeMenu)
     {
-        $storeMenu->name = $name;
-        $storeMenu->max_age = $max_age;
-        $storeMenu->min_age = $min_age;
-        $storeMenu->type_menu = $type_menu;
+        $this->model->name = $name;
+        $this->model->max_age = $maxAge;
+        $this->model->min_age = $minAge;
+        $this->model->type_menu = $typeMenu;
         if (!empty($calorie)) {
-            $storeMenu->calorie = $calorie;
+            $this->model->calorie = $calorie;
         }
-        $storeMenu->save();
-        return $storeMenu;
+        $this->model->save();
+        return $this->model;
     }
 
     /**
      * Method to delete storeMenu related to nutritionist
      *
-     * @param Storemenu $storeMenu
      * @return bool|mixed|null
      *
      * @throws \Exception
      */
-    public static function deleteStoreMenu($storeMenu)
+    public function deleteStoreMenu()
     {
-        return $storeMenu->delete();
+        return $this->model->delete();
     }
 
     /**
      * Add ingredient to a storeMenu related to nutritionist
      *
-     * @param int $storeMenu_id
-     * @param int $ingredients_id
+     * @param int $storeMenuId
+     * @param int $ingredientsId
      * @param int $amount
      * @return bool|mixed|null
      */
-    public static function addIngredientToStoreMenu($storeMenu_id, $ingredients_id, $amount)
+    public static function addIngredientToStoreMenu($storeMenuId, $ingredientsId, $amount)
     {
         $storeMenu = new StoremenuIngredient();
-        $storeMenu->storemenu_id = $storeMenu_id;
-        $storeMenu->ingredients_id = $ingredients_id;
+        $storeMenu->storemenu_id = $storeMenuId;
+        $storeMenu->ingredients_id = $ingredientsId;
         $storeMenu->amount = $amount;
         $storeMenu->save();
         return $storeMenu;
@@ -114,29 +112,27 @@ class StoreMenuRepository
     /**
      * Method for nutritionist to delete ingredient to the storeMenu.
      *
-     * @param Menu $menu
-     * @param int $id_ingredient
+     * @param int $idIngredient
      * @return bool|mixed|null
      * @throws \Exception
      */
-    public static function deleteIngredientToStoreMenu($menu, $id_ingredient)
+    public function deleteIngredientToStoreMenu($idIngredient)
     {
-        return $menu->ingredients()->detach($id_ingredient);
+        return $this->model->ingredients()->detach($idIngredient);
     }
 
     /**
      * update amount ingredient to a storeMenu
      *
-     * @param Ingredient $ingredient
      * @param string $amount
      * @return bool|mixed|null
      * @throws \Exception
      */
-    public static function updateAmountIngredientInStoreMenu($ingredient, $amount)
+    public function updateAmountIngredientInStoreMenu($amount)
     {
-        $ingredient->pivot->amount = $amount;
-        $ingredient->pivot->save();
-        return $ingredient->pivot;
+        $this->model->pivot->amount = $amount;
+        $this->model->pivot->save();
+        return $this->model->pivot;
     }
 
 }

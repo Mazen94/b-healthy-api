@@ -25,6 +25,7 @@ class NutritionistUpdateRequest extends FormRequest
      */
     public function rules()
     {
+        $user = auth()->user();
         return [
             'email' => [
                 'required',

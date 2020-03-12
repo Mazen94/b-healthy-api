@@ -19,12 +19,7 @@ class NotificationController extends Controller
     {
         $patient = auth()->user();
         $notification = $patient->notifications;
-        return response()->json(
-            [
-                'response' => 'success',
-                'Notifications' => $notification,
-            ]
-        );
+        return response()->json(['Notifications' => $notification], 200);
     }
 
     /**
@@ -36,31 +31,22 @@ class NotificationController extends Controller
     public function store(NotificationRequest $request)
     {
         $patient = auth()->user();
-        $notification = NotificationRepository::postNotification($patient, $request->input('message'));
-        return response()->json(
-            [
-                'response' => 'success',
-                'Notification' => $notification,
-            ]
-        );
+        $message = $request->input('message');
+        $notificationRepository = new NotificationRepository($patient);
+        $notification = $notificationRepository->postNotification($message);
+        return response()->json(['Notification' => $notification], 200);
     }
 
     /**
      * Method to create only one notification related to patient
-     *
+     * @param int $id
      * @return JsonResponse
      */
     public function show($id)
     {
         $patient = auth()->user();
         $notification = $patient->notifications()->findOrfail($id);
-        return response()->json(
-            [
-                'response' => 'success',
-                'Notifications' => $notification,
-
-            ]
-        );
+        return response()->json(['Notifications' => $notification], 200);
     }
 
     /**
@@ -73,12 +59,8 @@ class NotificationController extends Controller
     {
         $patient = auth()->user();
         $notification = $patient->notifications()->findOrfail($id);
-        NotificationRepository::deleteNotification($notification);
-        return response()->json(
-            [
-                'response' => 'success',
-
-            ]
-        );
+        $notificationRepository = new NotificationRepository($notification);
+        $notificationRepository->deleteNotification();
+        return response()->json(['response' => 'success'], 200);
     }
 }

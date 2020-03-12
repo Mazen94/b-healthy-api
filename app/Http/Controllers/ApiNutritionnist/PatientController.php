@@ -40,7 +40,8 @@ class PatientController extends Controller
         $gender = $request->input('gender');
         $numberPhone = $request->input('numberPhone');
         $profession = $request->input('profession');
-        $patientRepository = new PatientRepository(auth()->user());
+        $nutritionist = auth()->user();
+        $patientRepository = new PatientRepository($nutritionist);
         $patient = $patientRepository->createPatient(
             $email,
             $firstName,
@@ -79,9 +80,9 @@ class PatientController extends Controller
         $nutritionist = auth()->user();
         $patient = $nutritionist->patients()->findOrFail($id);
         $recommendations = $patient->recommendations;
-        $recommendationRepository = new RecommendationRepository();
         foreach ($recommendations as $recommendation) {
-            $recommendationRepository->deleteRecommendation($recommendation);
+            $recommendationRepository = new RecommendationRepository($recommendation);
+            $recommendationRepository->deleteRecommendation();
         }
         $patientRepository = new PatientRepository($patient);
         $patientRepository->deletePatient();

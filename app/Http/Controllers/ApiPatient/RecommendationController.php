@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ApiPatient;
 use App\Http\Controllers\Controller;
 use App\Repositories\RecommandationRepository;
 use App\Repositories\RecommendationRepository;
+use Illuminate\Http\JsonResponse;
 use JWTAuth;
 
 class RecommendationController extends Controller
@@ -13,36 +14,26 @@ class RecommendationController extends Controller
     /**
      * Display a listing of the resource.
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function index()
     {
         $patient = auth()->user();
-        $recommendation = RecommendationRepository::getRecommendationByPatient($patient);
-        return response()->json(
-            [
-                'success' => true,
-                'recommandation' => $recommendation,
-            ],
-            200
-        );
+        $recommendationRepository = new RecommendationRepository();
+        $recommendation = $recommendationRepository->getRecommendationByPatient($patient);
+        return response()->json(['recommendation' => $recommendation,], 200);
     }
 
     /**
      * Display a listing of the resource.
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     *
+     * @return JsonResponse
      */
     public function indexMenus()
     {
         $patient = auth()->user();
-        $menus = RecommendationRepository::getRecommendationMenusByPatient($patient);
-        return response()->json(
-            [
-                'success' => true,
-                'Menus' => $menus,
-            ],
-            200
-        );
+        $recommendationRepository = new RecommendationRepository();
+        $menus = $recommendationRepository->getRecommendationMenusByPatient($patient);
+        return response()->json(['Menus' => $menus,], 200);
     }
 }

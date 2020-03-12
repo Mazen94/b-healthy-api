@@ -114,9 +114,9 @@ class RecommendationController extends Controller
         $typeMenu = $request->input('StoreMenu.type_menu');
         $ingredients = $request->input('StoreMenu.ingredients');
         $menuRepository = new MenuRepository();
-        $id_menu = $menuRepository->createMenuWithIngredients($name, $calorie, $typeMenu, $ingredients);
+        $idMenu = $menuRepository->createMenuWithIngredients($name, $calorie, $typeMenu, $ingredients);
         $recommendationRepository = new RecommendationRepository();
-        $newRecommendation = $recommendationRepository->addMenuToRecommendation($recommendation, $id_menu);
+        $newRecommendation = $recommendationRepository->addMenuToRecommendation($recommendation, $idMenu);
         return response()->json(['recommendation' => $newRecommendation], 200);
     }
 

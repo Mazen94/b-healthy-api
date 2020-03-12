@@ -20,22 +20,13 @@ class PhysicalActiviteController extends Controller
     public function store(PhysicalActivityRequest $request)
     {
         $patient = auth()->user();
-
-        $activity = PhysicalActiviteRepository::createActivity(
-            $patient,
-            $request->input('distance'),
-            $request->input('activite_type'),
-            $request->input('energy_burned'),
-            $request->input('duration')
-        );
-
-        return response()->json(
-            [
-                'success' => true,
-                'activity' => $activity,
-            ],
-            200
-        );
+        $distance = $request->input('distance');
+        $activityType = $request->input('activite_type');
+        $energyBurned = $request->input('energy_burned');
+        $duration = $request->input('duration');
+        $physicalActivityRepository = new PhysicalActiviteRepository();
+        $activity = $physicalActivityRepository->createActivity($distance, $activityType, $energyBurned, $duration);
+        return response()->json(['activity' => $activity,], 200);
     }
 
     /**
@@ -47,13 +38,7 @@ class PhysicalActiviteController extends Controller
     public function index()
     {
         $patient = auth()->user();
-        return response()->json(
-            [
-                'success' => true,
-                'activity' => $patient->physicalActivity,
-            ],
-            200
-        );
+        return response()->json(['activity' => $patient->physicalActivity,], 200);
     }
 
 }

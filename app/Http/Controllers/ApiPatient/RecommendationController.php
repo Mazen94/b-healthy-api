@@ -13,7 +13,7 @@ class RecommendationController extends Controller
 
     /**
      * Display a listing of the resource.
-     * @param $id
+     *
      * @return JsonResponse
      */
     public function index()

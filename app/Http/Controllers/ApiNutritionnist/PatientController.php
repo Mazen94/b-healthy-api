@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PatientRequest;
 use App\Repositories\PatientRepository;
 use App\Repositories\RecommendationRepository;
+use App\Repositories\VisitRepository;
 use Illuminate\Http\JsonResponse;
 
 
@@ -83,6 +84,11 @@ class PatientController extends Controller
         foreach ($recommendations as $recommendation) {
             $recommendationRepository = new RecommendationRepository($recommendation);
             $recommendationRepository->deleteRecommendation();
+        }
+        $visits = $patient->visits;
+        foreach ($visits as $visit) {
+            $visitRepository = new VisitRepository($visit);
+            $visitRepository->deleteVisit();
         }
         $patientRepository = new PatientRepository($patient);
         $patientRepository->deletePatient();

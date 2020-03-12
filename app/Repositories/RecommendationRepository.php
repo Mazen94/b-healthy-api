@@ -9,46 +9,53 @@ use Illuminate\Database\Eloquent\Model;
 
 class RecommendationRepository
 {
+    protected $model;
+
+    public function __construct(Model $model)
+    {
+        $this->model = $model;
+    }
+
     /**
      * Method for nutritionist to create a new recommendation related to patient
      *
-     * @param Patient $patient
+     *
      * @param string $avoid
      * @return false|Model
      */
-    public function createRecommendation($patient, $avoid)
+    public function createRecommendation($avoid)
     {
         $recommendation = new Recommandation();
         $recommendation->avoid = $avoid;
         $recommendation->save();
-        $patient->recommendations()->attach($recommendation->id);
+        $this->model->recommendations()->attach($recommendation->id);
         return $recommendation;
     }
 
     /**
      * Method for nutritionist to update recommendation related to patient
      *
-     * @param Recommandation $recommendation
+     *
      * @param string $avoid
      *
      * @return false|Model
      */
-    public function updateRecommendation($recommendation, $avoid)
+    public function updateRecommendation($avoid)
     {
-        $recommendation->avoid = $avoid;
-        $recommendation->save();
-        return $recommendation;
+        $this->model->avoid = $avoid;
+        $this->model->save();
+        return $this->model;
     }
 
     /**
      * Method for nutritionist to delete recommendation related to patient
      *
-     * @param Recommandation $recommendation
+     *
      * @throws \Exception
      */
-    public function deleteRecommendation($recommendation)
+    public function deleteRecommendation()
     {
-        $recommendation->delete();
+        $this->model->delete();
     }
 
     /**
@@ -60,10 +67,10 @@ class RecommendationRepository
      * @return bool|mixed|null
      * @throws \Exception
      */
-    public function addMenuToRecommendation($recommendation, $idMenu)
+    public function addMenuToRecommendation($idMenu)
     {
-        $recommendation->menus()->attach($idMenu);
-        return $recommendation->menus;
+        $this->model->menus()->attach($idMenu);
+        return $this->model->menus;
     }
 
     /**
@@ -73,9 +80,9 @@ class RecommendationRepository
      * @param $idMenu
      * @return mixed
      */
-    public function destroyMenu($recommendation, $idMenu)
+    public function destroyMenu($idMenu)
     {
-        return $recommendation->menus()->detach($idMenu);
+        return $this->model->menus()->detach($idMenu);
     }
 
     /**
@@ -83,9 +90,9 @@ class RecommendationRepository
      * @param Patient $patient
      * @return mixed
      */
-    public function getRecommendationByPatient($patient)
+    public function getRecommendationByPatient()
     {
-        return $patient->recommendations()->latest("updated_at")->first();
+        return $this->model->recommendations()->latest("updated_at")->first();
     }
 
     /**
@@ -93,9 +100,9 @@ class RecommendationRepository
      * @param Patient $patient
      * @return mixed
      */
-    public function getRecommendationMenusByPatient($patient)
+    public function getRecommendationMenusByPatient()
     {
-        $recommendation = $patient->recommendations()->latest("updated_at")->first();
+        $recommendation = $this->model->recommendations()->latest("updated_at")->first();
         return $recommendation->menus;
     }
 }

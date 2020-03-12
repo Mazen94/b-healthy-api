@@ -19,8 +19,8 @@ class RecommendationController extends Controller
     public function index()
     {
         $patient = auth()->user();
-        $recommendationRepository = new RecommendationRepository();
-        $recommendation = $recommendationRepository->getRecommendationByPatient($patient);
+        $recommendationRepository = new RecommendationRepository($patient);
+        $recommendation = $recommendationRepository->getRecommendationByPatient();
         return response()->json(['recommendation' => $recommendation,], 200);
     }
 
@@ -32,8 +32,8 @@ class RecommendationController extends Controller
     public function indexMenus()
     {
         $patient = auth()->user();
-        $recommendationRepository = new RecommendationRepository();
-        $menus = $recommendationRepository->getRecommendationMenusByPatient($patient);
+        $recommendationRepository = new RecommendationRepository($patient);
+        $menus = $recommendationRepository->getRecommendationMenusByPatient();
         return response()->json(['Menus' => $menus,], 200);
     }
 }

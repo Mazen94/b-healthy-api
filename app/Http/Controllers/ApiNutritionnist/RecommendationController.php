@@ -37,8 +37,8 @@ class RecommendationController extends Controller
         $nutritionist = auth()->user();
         $patient = $nutritionist->patients()->findOrFail($patientId);
         $avoid = $request->input('avoid');
-        $recommendationRepository = new RecommendationRepository();
-        $recommendation = $recommendationRepository->createRecommendation($patient, $avoid);
+        $recommendationRepository = new RecommendationRepository($patient);
+        $recommendation = $recommendationRepository->createRecommendation($avoid);
         return response()->json(['recommendation' => $recommendation], 200);
     }
 
@@ -71,8 +71,8 @@ class RecommendationController extends Controller
         $patient = $nutritionist->patients()->findOrFail($patientId);
         $recommendation = $patient->recommendations()->findOrFail($idRecommendation);
         $avoid = $request->input('avoid');
-        $recommendationRepository = new RecommendationRepository();
-        $recommendation = $recommendationRepository->updateRecommendation($recommendation, $avoid);
+        $recommendationRepository = new RecommendationRepository($recommendation);
+        $recommendation = $recommendationRepository->updateRecommendation($avoid);
         return response()->json(['recommendation' => $recommendation], 200);
     }
 
@@ -89,8 +89,8 @@ class RecommendationController extends Controller
         $nutritionist = auth()->user();
         $patient = $nutritionist->patients()->findOrFail($patientId);
         $recommendation = $patient->recommendations()->findOrFail($idRecommendation);
-        $recommendationRepository = new RecommendationRepository();
-        $recommendationRepository->deleteRecommendation($recommendation);
+        $recommendationRepository = new RecommendationRepository($recommendation);
+        $recommendationRepository->deleteRecommendation();
         return response()->json(['success' => true], 200);
     }
 
@@ -115,8 +115,8 @@ class RecommendationController extends Controller
         $ingredients = $request->input('StoreMenu.ingredients');
         $menuRepository = new MenuRepository();
         $idMenu = $menuRepository->createMenuWithIngredients($name, $calorie, $typeMenu, $ingredients);
-        $recommendationRepository = new RecommendationRepository();
-        $newRecommendation = $recommendationRepository->addMenuToRecommendation($recommendation, $idMenu);
+        $recommendationRepository = new RecommendationRepository($recommendation);
+        $newRecommendation = $recommendationRepository->addMenuToRecommendation($idMenu);
         return response()->json(['recommendation' => $newRecommendation], 200);
     }
 
@@ -136,8 +136,8 @@ class RecommendationController extends Controller
         $patient = $nutritionist->patients()->findOrFail($patientId);
         $recommendation = $patient->recommendations()->findOrFail($idRecommendation);
         $recommendation->menus()->findOrFail($idMenu);
-        $recommendationRepository = new RecommendationRepository();
-        $recommendationRepository->destroyMenu($recommendation, $idMenu);
+        $recommendationRepository = new RecommendationRepository($recommendation);
+        $recommendationRepository->destroyMenu($idMenu);
         return response()->json(['success' => true,], 200);
     }
 

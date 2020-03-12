@@ -15,27 +15,22 @@ class MenuController extends Controller
      * Store a newly created menu in storage and give this menu to the recommendation.
      *
      * @param MenuRequest $request
-     * @param int $id_recommendation
+     * @param int $idRecommendation
      * @return JsonResponse
      * @throws \Exception
      */
-    public function store(MenuRequest $request, $id_recommendation)
+    public function store(MenuRequest $request, $idRecommendation)
     {
         $patient = auth()->user();
-        $recommendation = $patient->recommandations()->findOrFail($id_recommendation);
-        $menu = MenuRepository::createMenu(
-            $request->input('name'),
-            $request->input('type_menu'),
-            $request->input('calorie')
-        );
-        RecommendationRepository::addMenuToRecommendation($recommendation, $menu->id);
-        return response()->json(
-            [
-                'success' => true,
-                'menu' => $menu,
-            ],
-            200
-        );
+        $recommendation = $patient->recommandations()->findOrFail($idRecommendation);
+        $name = $request->input('name');
+        $typeMenu = $request->input('type_menu');
+        $calorie = $request->input('calorie');
+        $menuRepository = new MenuRepository();
+        $menu = $menuRepository->createMenu($name, $typeMenu, $calorie);
+        $recommendationRepository = new RecommendationRepository($recommendation);
+        $recommendationRepository->addMenuToRecommendation($menu->id);
+        return response()->json(['menu' => $menu,], 200);
     }
 
 }

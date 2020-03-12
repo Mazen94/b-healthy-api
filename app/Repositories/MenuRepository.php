@@ -3,7 +3,6 @@
 
 namespace App\Repositories;
 
-
 use App\Menu;
 use App\MenuIngredients;
 use Illuminate\Database\Eloquent\Model;
@@ -11,17 +10,6 @@ use Config;
 
 class MenuRepository
 {
-    protected $model;
-
-    /**
-     * RecommandationRepository constructor.
-     * @param Model $model
-     */
-    public function __construct(Model $model)
-    {
-        $this->model = $model;
-    }
-
     /**
      * Method for patient to create a new  menu
      *
@@ -30,7 +18,7 @@ class MenuRepository
      * @param string $calorie
      * @return Menu
      */
-    public static function createMenu($name, $type_menu, $calorie)
+    public function createMenu($name, $type_menu, $calorie)
     {
         $menu = new Menu();
         $menu->name = $name;
@@ -51,7 +39,7 @@ class MenuRepository
      * @param array $ingredients
      * @return int id
      */
-    public static function createMenuWithIngredients($name, $calorie, $type_menu, $ingredients)
+    public function createMenuWithIngredients($name, $calorie, $type_menu, $ingredients)
     {
         $menu = new Menu();
         $menu->name = $name;

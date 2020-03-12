@@ -13,56 +13,60 @@ use Illuminate\Support\Facades\Date;
 
 class VisitRepository
 {
+    protected $model;
+
+    public function __construct(Model $model)
+    {
+        $this->model = $model;
+    }
 
     /**
      * Method for nutritionist to update Visit related to patient
      *
-     * @param Visit $visit
      * @param int $weight
      * @param string $note
-     * @param Date $scheduled_at
-     * @param Date $done_at
+     * @param Date $scheduledAt
+     * @param Date $doneAt
      *
      * @return bool|false|Collection|Model|HasMany|HasMany[]
      */
-    public static function updateVisit($visit, $weight, $note, $scheduled_at, $done_at)
+    public function updateVisit($weight, $note, $scheduledAt, $doneAt)
     {
-        $visit->weight = $weight;
-        $visit->scheduled_at = $scheduled_at;
-        if (!empty($done_at)) {
-            $visit->done_at = $done_at;
+        $this->model->weight = $weight;
+        $this->model->scheduled_at = $scheduledAt;
+        if (!empty($doneAt)) {
+            $this->model->done_at = $doneAt;
         }
         if (!empty($note)) {
-            $visit->note = $note;
+            $this->model->note = $note;
         }
-        $visit->save();
+        $this->model->save();
 
-        return $visit;
+        return $this->model;
     }
 
     /**
      * Method for nutritionist to create a new visit related to patient
      *
-     * @param Patient $patient
      * @param int $weight
      * @param string $note
-     * @param Date $scheduled_at
-     * @param Date $done_at
+     * @param Date $scheduledAt
+     * @param Date $doneAt
      *
      * @return false|Model
      */
-    public static function createVisit($patient, $weight, $note, $scheduled_at, $done_at)
+    public function createVisit($weight, $note, $scheduledAt, $doneAt)
     {
         $visit = new Visit();
         $visit->weight = $weight;
-        $visit->scheduled_at = $scheduled_at;
-        if (!empty($done_at)) {
-            $visit->done_at = $done_at;
+        $visit->scheduled_at = $scheduledAt;
+        if (!empty($doneAt)) {
+            $visit->done_at = $doneAt;
         }
         if (!empty($note)) {
             $visit->note = $note;
         }
-        return $patient->visits()->save($visit);
+        return $this->model->visits()->save($visit);
     }
 
     /**
@@ -74,8 +78,8 @@ class VisitRepository
      *
      * @throws \Exception
      */
-    public static function deleteVisit($visit)
+    public function deleteVisit()
     {
-        return $visit->delete();
+        return $this->model->delete();
     }
 }

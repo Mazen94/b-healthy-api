@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ApiNutritionnist;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PatientRequest;
 use App\Repositories\PatientRepository;
+use App\Repositories\RecommendationRepository;
 use Illuminate\Http\JsonResponse;
 
 
@@ -21,13 +22,7 @@ class PatientController extends Controller
     {
         $nutritionist = auth()->user();
         $patients = $nutritionist->patients()->paginate();
-        return response()->json(
-            [
-                'success' => true,
-                'patients' => $patients,
-            ],
-            200
-        );
+        return response()->json(['patients' => $patients], 200);
     }
 
     /**
@@ -38,24 +33,24 @@ class PatientController extends Controller
      */
     public function store(PatientRequest $request)
     {
-        $nutritionist = auth()->user();
-        $patient = PatientRepository::createPatient(
-            $nutritionist,
-            $request->input('email'),
-            $request->input('firstName'),
-            $request->input('lastName'),
-            $request->input('password'),
-            $request->input('gender'),
-            $request->input('numberPhone'),
-            $request->input('profession')
+        $email = $request->input('email');
+        $firstName = $request->input('firstName');
+        $lastName = $request->input('lastName');
+        $password = $request->input('password');
+        $gender = $request->input('gender');
+        $numberPhone = $request->input('numberPhone');
+        $profession = $request->input('profession');
+        $patientRepository = new PatientRepository(auth()->user());
+        $patient = $patientRepository->createPatient(
+            $email,
+            $firstName,
+            $lastName,
+            $password,
+            $gender,
+            $numberPhone,
+            $profession
         );
-        return response()->json(
-            [
-                'success' => true,
-                'patient' => $patient,
-            ],
-            200
-        );
+        return response()->json(['patient' => $patient], 200);
     }
 
     /**
@@ -68,18 +63,12 @@ class PatientController extends Controller
     {
         $nutritionist = auth()->user();
         $patient = $nutritionist->patients()->findOrFail($id);
-        return response()->json(
-            [
-                'success' => true,
-                'patient' => $patient,
-            ],
-            200
-        );
+        return response()->json(['patient' => $patient], 200);
     }
 
 
     /**
-     * Remove patient related to nutritionist from storage.
+     * Remove patient with recommendations related to nutritionist from storage.
      *
      * @param int $id
      * @return JsonResponse
@@ -89,12 +78,13 @@ class PatientController extends Controller
     {
         $nutritionist = auth()->user();
         $patient = $nutritionist->patients()->findOrFail($id);
-        PatientRepository::deletePatient($patient);
-        return response()->json(
-            [
-                'success' => true,
-            ],
-            200
-        );
+        $recommendations = $patient->recommendations;
+        $recommendationRepository = new RecommendationRepository();
+        foreach ($recommendations as $recommendation) {
+            $recommendationRepository->deleteRecommendation($recommendation);
+        }
+        $patientRepository = new PatientRepository($patient);
+        $patientRepository->deletePatient();
+        return response()->json(['success' => true], 200);
     }
 }

@@ -4,16 +4,23 @@
 namespace App\Repositories;
 
 
-use App\Nutritionist;
 use App\Patient;
+use Illuminate\Database\Eloquent\Model;
 
 
 class PatientRepository
 {
+    protected $model;
+
+    public function __construct(Model $model)
+    {
+        $this->model = $model;
+    }
+
     /**
      * Method to create a new patient related to patient
      *
-     * @param Nutritionist $nutritionist
+     *
      * @param string $email
      * @param string $firstName
      * @param string $lastName
@@ -21,10 +28,9 @@ class PatientRepository
      * @param string $gender
      * @param string $numberPhone
      * @param string $profession
-     * @return false|\Illuminate\Database\Eloquent\Model
+     * @return false|Model
      */
-    public static function createPatient(
-        $nutritionist,
+    public function createPatient(
         $email,
         $firstName,
         $lastName,
@@ -41,25 +47,23 @@ class PatientRepository
         $patient->numberPhone = $numberPhone;
         $patient->profession = $profession;
         $patient->password = bcrypt($password);
-        return $nutritionist->patients()->save($patient);
+        return $this->model->patients()->save($patient);
     }
 
     /**
      * Method to delete patient related to nutritionist
      *
-     * @param Patient $patient
      * @return bool|mixed|null
      * @throws \Exception
      */
-    public static function deletePatient($patient)
+    public function deletePatient()
     {
-        return $patient->delete();
+        return $this->model->delete();
     }
 
     /**
-     * Method to update patient connected
+     * Method for patient to update patient connected
      *
-     * @param Patient $patient
      * @param string $email
      * @param string $firstName
      * @param string $lastName
@@ -68,8 +72,7 @@ class PatientRepository
      * @param string $profession
      * @return bool|mixed|null
      */
-    public static function updatePatient(
-        $patient,
+    public function updatePatient(
         $email,
         $firstName,
         $lastName,
@@ -77,15 +80,15 @@ class PatientRepository
         $numberPhone,
         $profession
     ) {
-        $patient->email = $email;
-        $patient->firstName = $firstName;
-        $patient->lastName = $lastName;
-        //$patient->password = bcrypt($password);
-        $patient->gender = $gender;
-        $patient->profession = $numberPhone;
-        $patient->numberPhone = $profession;
-        $patient->save();
-        return $patient;
+        $this->model->email = $email;
+        $this->model->firstName = $firstName;
+        $this->model->lastName = $lastName;
+        //$this->model->password = bcrypt($password);
+        $this->model->gender = $gender;
+        $this->model->profession = $numberPhone;
+        $this->model->numberPhone = $profession;
+        $this->model->save();
+        return $this->model;
     }
 
 }

@@ -14,36 +14,7 @@ use JWTAuth;
 
 class PatientController extends Controller
 {
-    /**
-     * Login Patient
-     * @param LoginRequest $request
-     *
-     * @return JsonResponse
-     */
-    public function login(LoginRequest $request)
-    {
-        $credentials = $request->only('email', 'password');
-        $token = null;
 
-        if (!$token = auth('api-patient')->attempt($credentials)) {
-            return response()->json(
-                [
-                    'response' => 'error',
-                    'message' => 'invalid_email_or_password',
-                ]
-            );
-        }
-
-
-        return response()->json(
-            [
-                'response' => 'success',
-
-                'token' => $token,
-
-            ]
-        );
-    }
 
     /**
      * Display the specified resource.
@@ -52,13 +23,7 @@ class PatientController extends Controller
      */
     public function index()
     {
-        return response()->json(
-            [
-                'success' => true,
-                'patient' => auth()->user(),
-            ],
-            200
-        );
+        return response()->json(['patient' => auth()->user()], 200);
     }
 
 
@@ -72,22 +37,22 @@ class PatientController extends Controller
     public function update(PatientRequest $request)
     {
         $patientConnected = auth()->user();
-        $patient = PatientRepository::updatePatient(
-            $patientConnected,
-            $request->input('email'),
-            $request->input('firstName'),
-            $request->input('lastName'),
-            $request->input('gender'),
-            $request->input('numberPhone'),
-            $request->input('profession')
+        $email = $request->input('email');
+        $firstName = $request->input('firstName');
+        $lastName = $request->input('lastName');
+        $gender = $request->input('gender');
+        $numberPhone = $request->input('numberPhone');
+        $profession = $request->input('profession');
+        $patientRepository = new PatientRepository($patientConnected);
+        $patient = $patientRepository->updatePatient(
+            $email,
+            $firstName,
+            $lastName,
+            $gender,
+            $numberPhone,
+            $profession
         );
-        return response()->json(
-            [
-                'success' => true,
-                'patient' => $patient,
-            ],
-            200
-        );
+        return response()->json(['patient' => $patient], 200);
     }
 
 

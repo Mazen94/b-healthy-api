@@ -3,7 +3,6 @@
 
 namespace App\Repositories;
 
-use App\Patient;
 use App\Recommandation;
 use Illuminate\Database\Eloquent\Model;
 
@@ -59,7 +58,7 @@ class RecommendationRepository
     }
 
     /**
-     * Method for nutritionist to add menu to recommendation related to patient
+     * Method to add menu to recommendation related to patient
      *
      * @param Recommandation $recommendation
      * @param int $idMenu
@@ -74,9 +73,9 @@ class RecommendationRepository
     }
 
     /**
-     * Method for nutritionist to detach menu related to patient
+     * Method  to detach menu related to patient
      *
-     * @param Recommandation $recommendation
+     *
      * @param $idMenu
      * @return mixed
      */
@@ -87,7 +86,7 @@ class RecommendationRepository
 
     /**
      * Patient : Get the last recommendation
-     * @param Patient $patient
+     *
      * @return mixed
      */
     public function getRecommendationByPatient()
@@ -97,7 +96,7 @@ class RecommendationRepository
 
     /**
      * Patient : Get the list of menus linked to a recommendation
-     * @param Patient $patient
+     *
      * @return mixed
      */
     public function getRecommendationMenusByPatient()

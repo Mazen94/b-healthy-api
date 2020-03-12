@@ -9,7 +9,6 @@ use App\Repositories\RecommendationRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-
 class RecommendationController extends Controller
 {
 

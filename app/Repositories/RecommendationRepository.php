@@ -16,7 +16,7 @@ class RecommendationRepository
      * @param string $avoid
      * @return false|Model
      */
-    public static function createRecommendation($patient, $avoid)
+    public function createRecommendation($patient, $avoid)
     {
         $recommendation = new Recommandation();
         $recommendation->avoid = $avoid;
@@ -33,7 +33,7 @@ class RecommendationRepository
      *
      * @return false|Model
      */
-    public static function updateRecommendation($recommendation, $avoid)
+    public function updateRecommendation($recommendation, $avoid)
     {
         $recommendation->avoid = $avoid;
         $recommendation->save();
@@ -46,7 +46,7 @@ class RecommendationRepository
      * @param Recommandation $recommendation
      * @throws \Exception
      */
-    public static function deleteRecommendation($recommendation)
+    public function deleteRecommendation($recommendation)
     {
         $recommendation->delete();
     }
@@ -55,45 +55,45 @@ class RecommendationRepository
      * Method for nutritionist to add menu to recommendation related to patient
      *
      * @param Recommandation $recommendation
-     * @param int $id_menu
+     * @param int $idMenu
      *
      * @return bool|mixed|null
      * @throws \Exception
      */
-    public static function addMenuToRecommendation($recommendation, $id_menu)
+    public function addMenuToRecommendation($recommendation, $idMenu)
     {
-        $recommendation->menus()->attach($id_menu);
+        $recommendation->menus()->attach($idMenu);
         return $recommendation->menus;
     }
 
     /**
-     *   Method for nutritionist to detach menu related to patient
+     * Method for nutritionist to detach menu related to patient
      *
      * @param Recommandation $recommendation
-     * @param $id_menu
+     * @param $idMenu
      * @return mixed
      */
-    public static function destroyMenu($recommendation, $id_menu)
+    public function destroyMenu($recommendation, $idMenu)
     {
-        return $recommendation->menus()->detach($id_menu);
+        return $recommendation->menus()->detach($idMenu);
     }
 
     /**
-     *  Patient : Get the last recommendation
+     * Patient : Get the last recommendation
      * @param Patient $patient
      * @return mixed
      */
-    public static function getRecommendationByPatient($patient)
+    public function getRecommendationByPatient($patient)
     {
         return $patient->recommendations()->latest("updated_at")->first();
     }
 
     /**
-     *  Patient : Get the list of menus linked to a recommendation
+     * Patient : Get the list of menus linked to a recommendation
      * @param Patient $patient
      * @return mixed
      */
-    public static function getRecommendationMenusByPatient($patient)
+    public function getRecommendationMenusByPatient($patient)
     {
         $recommendation = $patient->recommendations()->latest("updated_at")->first();
         return $recommendation->menus;

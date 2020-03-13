@@ -67,7 +67,7 @@ class Patient extends Authenticatable implements JWTSubject
      */
     public function physicalActivity()
     {
-        return $this->hasMany('App\Activitephysique');
+        return $this->hasMany('App\PhysicalActivity');
     }
 
     /**

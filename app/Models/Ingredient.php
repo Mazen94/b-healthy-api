@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Class Ingredient
@@ -23,7 +25,7 @@ class Ingredient extends Model
 
     /**
      * One To Many (Inverse)
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function nutritionist()
     {
@@ -32,22 +34,16 @@ class Ingredient extends Model
 
     /**
      * ManyToMany
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function storemenus()
+    public function mealStore()
     {
-        return $this->belongsToMany(
-            'App\Storemenu',
-            'storemenus_ingredients',
-            'ingredients_id',
-            'storemenu_id'
-        )->withPivot('amount')
-            ->using('App\StoremenuIngredient');
+        return $this->belongsToMany('App\MealStore')->withPivot('amount');
     }
 
     /**
      * Many To Many RelationShip between menu et ingredients
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function menus()
     {

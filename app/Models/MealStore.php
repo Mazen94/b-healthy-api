@@ -36,11 +36,6 @@ class MealStore extends Model
      */
     public function ingredients()
     {
-        return $this->belongsToMany(
-            'App\Ingredient',
-            'storemenus_ingredients',
-            'storemenu_id',
-            'ingredients_id'
-        )->withPivot('amount');
+        return $this->belongsToMany('App\Ingredient')->withPivot('amount');
     }
 }

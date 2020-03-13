@@ -4,6 +4,7 @@
 namespace App\Repositories;
 
 use App\Recommandation;
+use App\Recommendation;
 use Illuminate\Database\Eloquent\Model;
 
 class RecommendationRepository
@@ -24,7 +25,7 @@ class RecommendationRepository
      */
     public function createRecommendation($avoid)
     {
-        $recommendation = new Recommandation();
+        $recommendation = new Recommendation();
         $recommendation->avoid = $avoid;
         $recommendation->save();
         $this->model->recommendations()->attach($recommendation->id);
@@ -60,7 +61,7 @@ class RecommendationRepository
     /**
      * Method to add menu to recommendation related to patient
      *
-     * @param Recommandation $recommendation
+     *
      * @param int $idMenu
      *
      * @return bool|mixed|null

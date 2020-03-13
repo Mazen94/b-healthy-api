@@ -72,20 +72,20 @@ Route::prefix('nutritionist')->group(
                 });
 
 
-                Route::prefix('storemenus')->group(function () {
-                        Route::get('/', 'ApiNutritionnist\StoreMenuController@index');
-                        Route::get('/ages', 'ApiNutritionnist\StoreMenuController@showByAge');
-                        Route::post('/', 'ApiNutritionnist\StoreMenuController@store');
-                        Route::get('/{idStoreMenu}', 'ApiNutritionnist\StoreMenuController@show');
-                        Route::put('/{idStoreMenu}', 'ApiNutritionnist\StoreMenuController@update');
-                        Route::delete('/{idStoreMenu}', 'ApiNutritionnist\StoreMenuController@destroy');
+                Route::prefix('mealStore')->group(function () {
+                        Route::get('/', 'ApiNutritionnist\MealStoreController@index');
+                        Route::get('/ages', 'ApiNutritionnist\MealStoreController@showByAge');
+                        Route::post('/', 'ApiNutritionnist\MealStoreController@store');
+                        Route::get('/{idStoreMenu}', 'ApiNutritionnist\MealStoreController@show');
+                        Route::put('/{idStoreMenu}', 'ApiNutritionnist\MealStoreController@update');
+                        Route::delete('/{idStoreMenu}', 'ApiNutritionnist\MealStoreController@destroy');
                         Route::prefix('{idStoreMenu}/ingredients')->group(function () {
-                                Route::post('/', 'ApiNutritionnist\StoreMenuController@addIngredient');
+                                Route::post('/', 'ApiNutritionnist\MealStoreController@addIngredient');
                                 Route::delete(
                                     '{idIngredient}',
-                                    'ApiNutritionnist\StoreMenuController@deleteIngredient'
+                                    'ApiNutritionnist\MealStoreController@deleteIngredient'
                                 );
-                                Route::put('{idIngredient}', 'ApiNutritionnist\StoreMenuController@updateAmountPivotIngredient');
+                                Route::put('{idIngredient}', 'ApiNutritionnist\MealStoreController@updateAmountPivotIngredient');
                         });
                 });
         });

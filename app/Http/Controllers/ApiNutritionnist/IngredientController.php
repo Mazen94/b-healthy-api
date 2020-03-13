@@ -7,7 +7,7 @@ use App\Http\Requests\IngredientRequest;
 use App\Repositories\IngredientRepository;
 use Illuminate\Http\JsonResponse;
 
-class IngredientConrtoller extends Controller
+class IngredientController extends Controller
 {
     /**
      * Display a listing of the resource.

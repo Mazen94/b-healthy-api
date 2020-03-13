@@ -41,9 +41,9 @@ class Nutritionist extends Authenticatable implements JWTSubject
      * the has many relationship
      * @return HasMany
      */
-    public function storemenus()
+    public function mealStore()
     {
-        return $this->hasMany('App\Storemenu');
+        return $this->hasMany('App\MealStore');
     }
 
     /**

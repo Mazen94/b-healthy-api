@@ -22,7 +22,7 @@ class MenuController extends Controller
     public function store(MenuRequest $request, $idRecommendation)
     {
         $patient = auth()->user();
-        $recommendation = $patient->recommandations()->findOrFail($idRecommendation);
+        $recommendation = $patient->recommendations()->findOrFail($idRecommendation);
         $name = $request->input('name');
         $typeMenu = $request->input('type_menu');
         $calorie = $request->input('calorie');

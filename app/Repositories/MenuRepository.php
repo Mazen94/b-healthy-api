@@ -7,6 +7,7 @@ use App\Menu;
 use App\MenuIngredients;
 use Illuminate\Database\Eloquent\Model;
 use Config;
+use Illuminate\Support\Facades\DB;
 
 class MenuRepository
 {
@@ -48,11 +49,13 @@ class MenuRepository
         $menu->save();
         // linked the ingredients with the menus in the table pivot menus_ingredients
         foreach ($ingredients as $ingredient) {
-            $menuIngredients = new MenuIngredients();
-            $menuIngredients->menu_id = $menu->id;
-            $menuIngredients->ingredients_id = $ingredient['id'];
-            $menuIngredients->amount = $ingredient['pivot']['amount'];
-            $menuIngredients->save();
+            DB::table('ingredient_menu')->insert(
+                [
+                    'menu_id' => $menu->id,
+                    'ingredient_id' => $ingredient['id'],
+                    'amount' => $ingredient['pivot']['amount']
+                ]
+            );
         }
         return $menu->id;
     }

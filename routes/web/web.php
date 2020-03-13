@@ -64,11 +64,11 @@ Route::prefix('nutritionist')->group(
 
 
                 Route::prefix('ingredients')->group(function () {
-                        Route::post('/', 'ApiNutritionnist\IngredientConrtoller@store');
-                        Route::delete('/{id}', 'ApiNutritionnist\IngredientConrtoller@destroy');
-                        Route::get('/{id}', 'ApiNutritionnist\IngredientConrtoller@show');
-                        Route::get('/', 'ApiNutritionnist\IngredientConrtoller@index');
-                        Route::put('/{id}', 'ApiNutritionnist\IngredientConrtoller@update');
+                        Route::post('/', 'ApiNutritionnist\IngredientController@store');
+                        Route::delete('/{id}', 'ApiNutritionnist\IngredientController@destroy');
+                        Route::get('/{id}', 'ApiNutritionnist\IngredientController@show');
+                        Route::get('/', 'ApiNutritionnist\IngredientController@index');
+                        Route::put('/{id}', 'ApiNutritionnist\IngredientController@update');
                 });
 
 

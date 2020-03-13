@@ -47,7 +47,6 @@ class Ingredient extends Model
      */
     public function menus()
     {
-        return $this->belongsToMany('App\Menu')
-            ->using('App\MenuIngredients');
+        return $this->belongsToMany('App\Menu')->withPivot('amount');;
     }
 }

@@ -85,12 +85,7 @@ class Patient extends Authenticatable implements JWTSubject
      */
     public function recommendations()
     {
-        return $this->belongsToMany(
-            'App\Recommandation',
-            'patients_recommandations',
-            'patient_id',
-            'recommandation_id'
-        )->using('App\PatientRecommandation');
+        return $this->belongsToMany('App\Recommendation');
     }
 
     /**

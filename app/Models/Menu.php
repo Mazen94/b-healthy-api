@@ -25,14 +25,9 @@ class Menu extends Model
      * Many To Many RelationShip between menu et recommendation
      * @return BelongsToMany
      */
-    public function recommandations()
+    public function recommendations()
     {
-        return $this->belongsToMany(
-            'App\Recommandation',
-            'menus_recommandations',
-            'menu_id',
-            'recommandation_id'
-        )->using('App\RecommandationMenu');
+        return $this->belongsToMany('App\Recommendation');
     }
 
     /**
@@ -41,13 +36,7 @@ class Menu extends Model
      */
     public function ingredients()
     {
-        return $this->belongsToMany(
-            'App\Ingredient',
-            'menus_ingredients',
-            'menu_id',
-            'ingredients_id'
-        )->withPivot('amount')
-            ->using('App\MenuIngredients');
+        return $this->belongsToMany('App\Ingredient')->withPivot('amount');
     }
 
 }

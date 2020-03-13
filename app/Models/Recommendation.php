@@ -29,16 +29,11 @@ class Recommendation extends Model
     }
 
     /**
-     * Many To Many RelationShip between menu et recommandetion
+     * Many To Many RelationShip between menu et recommendation
      * @return BelongsToMany
      */
     public function menus()
     {
-        return $this->belongsToMany(
-            'App\Menu',
-            'menus_recommandations',
-            'recommandation_id',
-            'menu_id'
-        )->using('App\RecommandationMenu');
+        return $this->belongsToMany('App\Menu');
     }
 }

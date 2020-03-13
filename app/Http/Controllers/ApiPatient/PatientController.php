@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ApiPatient;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\PatientRequest;
+use App\Http\Requests\PatientUpdateRequest;
 use App\Http\Requests\RegisterPatient;
 use App\Repositories\PatientRepository;
 use Illuminate\Http\JsonResponse;
@@ -30,11 +31,11 @@ class PatientController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param PatientRequest $request
+     * @param PatientUpdateRequest $request
      * @return JsonResponse
      * @throws \Exception
      */
-    public function update(PatientRequest $request)
+    public function update(PatientUpdateRequest $request)
     {
         $patientConnected = auth()->user();
         $email = $request->input('email');

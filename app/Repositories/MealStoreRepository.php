@@ -4,11 +4,10 @@
 namespace App\Repositories;
 
 use App\MealStore;
-use App\Storemenu;
-use App\StoremenuIngredient;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\DB;
 
 
 class MealStoreRepository
@@ -95,19 +94,17 @@ class MealStoreRepository
     /**
      * Add ingredient to a storeMenu related to nutritionist
      *
-     * @param int $storeMenuId
-     * @param int $ingredientsId
+     * @param int $mealStoreId
+     * @param int $ingredientId
      * @param int $amount
      * @return bool|mixed|null
      */
-    public static function addIngredientToMealStore($storeMenuId, $ingredientsId, $amount)
+    public static function addIngredientToMealStore($mealStoreId, $ingredientId, $amount)
     {
-        $storeMenu = new StoremenuIngredient();
-        $storeMenu->storemenu_id = $storeMenuId;
-        $storeMenu->ingredients_id = $ingredientsId;
-        $storeMenu->amount = $amount;
-        $storeMenu->save();
-        return $storeMenu;
+
+        return DB::table('ingredient_meal_store')->insert(
+            ['meal_store_id' => $mealStoreId, 'ingredient_id' => $ingredientId, 'amount' => $amount]
+        );
     }
 
     /**

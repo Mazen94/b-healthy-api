@@ -85,11 +85,7 @@ class PatientController extends Controller
             $recommendationRepository = new RecommendationRepository($recommendation);
             $recommendationRepository->deleteRecommendation();
         }
-        $visits = $patient->visits;
-        foreach ($visits as $visit) {
-            $visitRepository = new VisitRepository($visit);
-            $visitRepository->deleteVisit();
-        }
+        $patient->visits()->delete();
         $patientRepository = new PatientRepository($patient);
         $patientRepository->deletePatient();
         return response()->json(['success' => true], 200);

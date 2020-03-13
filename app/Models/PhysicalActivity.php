@@ -3,32 +3,29 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Class Activitephysique
+ * Class PhysicalActivity
  * @package App
  * @property int $id
  * @property int $distance
  * @property int $duration
- * @property string $activite_type
+ * @property string $typical_activity
  * @property int $energy_burned
  */
-class Activitephysique extends Model
+class PhysicalActivity extends Model
 {
-
     /**
      * @var string
      */
-    protected $table = 'physicalactivitys';
-
+    protected $table = 'physicalActivity';
     /**
      * One To Many (Inverse)
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function patient()
     {
         return $this->belongsTo('App\Patient');
     }
-
-
 }

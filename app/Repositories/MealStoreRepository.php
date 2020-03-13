@@ -3,6 +3,7 @@
 
 namespace App\Repositories;
 
+use App\MealStore;
 use App\Storemenu;
 use App\StoremenuIngredient;
 use Illuminate\Database\Eloquent\Collection;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
-class StoreMenuRepository
+class MealStoreRepository
 {
     protected $model;
 
@@ -24,9 +25,9 @@ class StoreMenuRepository
      * @param int $age
      * @return Collection
      */
-    public function getStoreMenuWithIngredientsByAge($age)
+    public function getMealStoreWithIngredientsByAge($age)
     {
-        return $this->model->storemenus()
+        return $this->model->mealStore()
             ->where('min_age', '<=', $age)
             ->where('max_age', '>=', $age)
             ->get();
@@ -43,9 +44,9 @@ class StoreMenuRepository
      *
      * @return false|Model
      */
-    public function createStoreMenu($name, $maxAge, $calorie, $minAge, $typeMenu)
+    public function createMealStore($name, $maxAge, $calorie, $minAge, $typeMenu)
     {
-        $menu = new Storemenu();
+        $menu = new MealStore();
         $menu->name = $name;
         $menu->max_age = $maxAge;
         $menu->min_age = $minAge;
@@ -53,7 +54,7 @@ class StoreMenuRepository
         if (!empty($calorie)) {
             $menu->calorie = $calorie;
         }
-        return $this->model->storemenus()->save($menu);
+        return $this->model->mealStore()->save($menu);
     }
 
     /**
@@ -66,7 +67,7 @@ class StoreMenuRepository
      * @param string $typeMenu
      * @return bool|false|Collection|Model|HasMany|HasMany[]
      */
-    public function updateStoreMenu($name, $maxAge, $calorie, $minAge, $typeMenu)
+    public function updateMealStore($name, $maxAge, $calorie, $minAge, $typeMenu)
     {
         $this->model->name = $name;
         $this->model->max_age = $maxAge;
@@ -86,7 +87,7 @@ class StoreMenuRepository
      *
      * @throws \Exception
      */
-    public function deleteStoreMenu()
+    public function deleteMealStore()
     {
         return $this->model->delete();
     }
@@ -99,7 +100,7 @@ class StoreMenuRepository
      * @param int $amount
      * @return bool|mixed|null
      */
-    public static function addIngredientToStoreMenu($storeMenuId, $ingredientsId, $amount)
+    public static function addIngredientToMealStore($storeMenuId, $ingredientsId, $amount)
     {
         $storeMenu = new StoremenuIngredient();
         $storeMenu->storemenu_id = $storeMenuId;
@@ -116,7 +117,7 @@ class StoreMenuRepository
      * @return bool|mixed|null
      * @throws \Exception
      */
-    public function deleteIngredientToStoreMenu($idIngredient)
+    public function deleteIngredientToMealStore($idIngredient)
     {
         return $this->model->ingredients()->detach($idIngredient);
     }
@@ -128,7 +129,7 @@ class StoreMenuRepository
      * @return bool|mixed|null
      * @throws \Exception
      */
-    public function updateAmountIngredientInStoreMenu($amount)
+    public function updateAmountIngredientInMealStore($amount)
     {
         $this->model->pivot->amount = $amount;
         $this->model->pivot->save();

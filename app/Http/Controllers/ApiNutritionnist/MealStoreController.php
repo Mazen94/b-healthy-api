@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\ApiNutritionnist;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreMenuIngredientRequest;
-use App\Http\Requests\StoreMenuRequest;
-use App\Repositories\StoreMenuRepository;
+use App\Http\Requests\MealStoreIngredientRequest;
+use App\Http\Requests\MealStoreRequest;
+use App\Repositories\MealStoreRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class StoreMenuController extends Controller
+class MealStoreController extends Controller
 {
     /**
      * Display a listing of the storeMenus related to nutritionist.
@@ -19,18 +19,18 @@ class StoreMenuController extends Controller
     public function index()
     {
         $nutritionist = auth()->user();
-        $storeMenus = $nutritionist->storemenus()->paginate();
-        return response()->json(['StoreMenus' => $storeMenus,], 200);
+        $mealStores = $nutritionist->mealStore()->paginate();
+        return response()->json(['MealStore' => $mealStores,], 200);
     }
 
     /**
      * Store a newly created storeMenus related to nutritionist in storage.
      *
-     * @param StoreMenuRequest $request
+     * @param MealStoreRequest $request
      *
      * @return JsonResponse
      */
-    public function store(StoreMenuRequest $request)
+    public function store(MealStoreRequest $request)
     {
         $nutritionist = auth()->user();
         $name = $request->input('name');
@@ -38,9 +38,9 @@ class StoreMenuController extends Controller
         $calorie = $request->input('calorie');
         $minAge = $request->input('min_age');
         $typeMenu = $request->input('type_menu');
-        $storeMenuRepository = new StoreMenuRepository($nutritionist);
-        $storeMenu = $storeMenuRepository->createStoreMenu($name, $maxAge, $calorie, $minAge, $typeMenu);
-        return response()->json(['StoreMenu' => $storeMenu,], 200);
+        $mealStoreRepository = new MealStoreRepository($nutritionist);
+        $mealStore = $mealStoreRepository->createMealStore($name, $maxAge, $calorie, $minAge, $typeMenu);
+        return response()->json(['MealStore' => $mealStore,], 200);
     }
 
     /**
@@ -53,9 +53,9 @@ class StoreMenuController extends Controller
     public function show($id)
     {
         $nutritionist = auth()->user();
-        $storeMenu = $nutritionist->storemenus()->findOrFail($id);
-        $storeMenu['ingredients'] = $storeMenu->ingredients;
-        return response()->json(['StoreMenu' => $storeMenu,], 200);
+        $mealStore = $nutritionist->mealStore()->findOrFail($id);
+        $mealStore['ingredients'] = $mealStore->ingredients;
+        return response()->json(['StoreMenu' => $mealStore,], 200);
     }
 
     /**
@@ -69,31 +69,31 @@ class StoreMenuController extends Controller
     {
         $nutritionist = auth()->user();
         $age = $request->input('age');
-        $storeMenuRepository = new StoreMenuRepository($nutritionist);
-        $storeMenuWithIngredients = $storeMenuRepository->getStoreMenuWithIngredientsByAge($age);
-        return response()->json(['StoreMenu' => $storeMenuWithIngredients,], 200);
+        $mealStoreRepository = new MealStoreRepository($nutritionist);
+        $mealStoreWithIngredients = $mealStoreRepository->getMealStoreWithIngredientsByAge($age);
+        return response()->json(['MealStore' => $mealStoreWithIngredients,], 200);
     }
 
     /**
      * Method to update storeMenu related to nutritionist
      *
-     * @param StoreMenuRequest $request
+     * @param MealStoreRequest $request
      * @param int $id
      *
      * @return JsonResponse
      */
-    public function update(StoreMenuRequest $request, $id)
+    public function update(MealStoreRequest $request, $id)
     {
         $nutritionist = auth()->user();
-        $storeMenu = $nutritionist->storemenus()->findOrFail($id);
+        $mealStore = $nutritionist->mealStore()->findOrFail($id);
         $name = $request->input('name');
         $maxAge = $request->input('max_age');
         $calorie = $request->input('calorie');
         $minAge = $request->input('min_age');
         $typeMenu = $request->input('type_menu');
-        $storeMenuRepository = new StoreMenuRepository($storeMenu);
-        $menuUpdated = $storeMenuRepository->updateStoreMenu($name, $maxAge, $calorie, $minAge, $typeMenu);
-        return response()->json(['StoreMenu' => $menuUpdated,], 200);
+        $mealStoreRepository = new MealStoreRepository($mealStore);
+        $menuUpdated = $mealStoreRepository->updateMealStore($name, $maxAge, $calorie, $minAge, $typeMenu);
+        return response()->json(['MealStore' => $menuUpdated,], 200);
     }
 
     /**
@@ -108,28 +108,28 @@ class StoreMenuController extends Controller
     public function destroy($id)
     {
         $nutritionist = auth()->user();
-        $storeMenu = $nutritionist->storemenus()->findOrFail($id);
-        $storeMenuRepository = new StoreMenuRepository($storeMenu);
-        $storeMenuRepository->deleteStoreMenu();
+        $mealStore = $nutritionist->mealStore()->findOrFail($id);
+        $mealStoreRepository = new MealStoreRepository($mealStore);
+        $mealStoreRepository->deleteMealStore();
         return response()->json(['success' => true,], 200);
     }
 
     /**
      * Method for nutritionist add ingredient to the storeMenu.
      *
-     * @param StoreMenuIngredientRequest $request
+     * @param MealStoreIngredientRequest $request
      * @param int $idStoreMenu
      *
      * @return JsonResponse
      *
      * @throws \Exception
      */
-    public function addIngredient(StoreMenuIngredientRequest $request, $idStoreMenu)
+    public function addIngredient(MealStoreIngredientRequest $request, $idStoreMenu)
     {
         $idIngredient = $request->input('id');
         $amount = $request->input('amount');
-        $storeMenu = StoreMenuRepository::addIngredientToStoreMenu($idStoreMenu, $idIngredient, $amount);
-        return response()->json(['storeMenu' => $storeMenu,], 200);
+        $mealStore = MealStoreRepository::addIngredientToMealStore($idStoreMenu, $idIngredient, $amount);
+        return response()->json(['storeMenu' => $mealStore,], 200);
     }
 
     /**
@@ -145,10 +145,10 @@ class StoreMenuController extends Controller
     public function deleteIngredient($idStoreMenu, $idIngredient)
     {
         $nutritionist = auth()->user();
-        $storeMenu = $nutritionist->storemenus()->findOrFail($idStoreMenu);
-        $storeMenu->ingredients()->findOrFail($idIngredient);
-        $storeMenuRepository = new StoreMenuRepository($storeMenu);
-        $storeMenuRepository->deleteIngredientToStoreMenu($idIngredient);
+        $mealStore = $nutritionist->mealStore()->findOrFail($idStoreMenu);
+        $mealStore->ingredients()->findOrFail($idIngredient);
+        $mealStoreRepository = new MealStoreRepository($mealStore);
+        $mealStoreRepository->deleteIngredientToMealStore($idIngredient);
         return response()->json(['success' => true,], 200);
     }
 
@@ -166,11 +166,11 @@ class StoreMenuController extends Controller
     public static function updateAmountPivotIngredient(StoreMenuIngredientRequest $request, $idStoreMenu, $idIngredient)
     {
         $nutritionist = auth()->user();
-        $menu = $nutritionist->storemenus()->findOrFail($idStoreMenu);
+        $menu = $nutritionist->mealStore()->findOrFail($idStoreMenu);
         $ingredient = $menu->ingredients()->findOrFail($idIngredient);
         $amount = $request->input('amount');
-        $storeMenuRepository = new StoreMenuRepository($ingredient);
-        $amountUpdated = $storeMenuRepository->updateAmountIngredientInStoreMenu($amount);
+        $mealStoreRepository = new MealStoreRepository($ingredient);
+        $amountUpdated = $mealStoreRepository->updateAmountIngredientInMealStore($amount);
         return response()->json(['amount' => $amountUpdated,], 200);
     }
 

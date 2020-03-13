@@ -155,7 +155,7 @@ class MealStoreController extends Controller
     /**
      * update amount ingredient to the storeMenu.
      *
-     * @param StoreMenuIngredientRequest $request
+     * @param MealStoreIngredientRequest $request
      * @param int $idStoreMenu
      * @param int $idIngredient
      *
@@ -163,7 +163,7 @@ class MealStoreController extends Controller
      *
      * @throws \Exception
      */
-    public static function updateAmountPivotIngredient(StoreMenuIngredientRequest $request, $idStoreMenu, $idIngredient)
+    public static function updateAmountPivotIngredient(MealStoreIngredientRequest $request, $idStoreMenu, $idIngredient)
     {
         $nutritionist = auth()->user();
         $menu = $nutritionist->mealStore()->findOrFail($idStoreMenu);

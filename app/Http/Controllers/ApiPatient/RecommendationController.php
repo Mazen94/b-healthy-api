@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ApiPatient;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\PatientRepository;
 use App\Repositories\RecommandationRepository;
 use App\Repositories\RecommendationRepository;
 use Illuminate\Http\JsonResponse;
@@ -19,8 +20,8 @@ class RecommendationController extends Controller
     public function index()
     {
         $patient = auth()->user();
-        $recommendationRepository = new RecommendationRepository($patient);
-        $recommendation = $recommendationRepository->getRecommendationByPatient();
+        $patientRepository = new PatientRepository($patient);
+        $recommendation = $patientRepository->getRecommendationByPatient();
         return response()->json(['recommendation' => $recommendation,], 200);
     }
 
@@ -32,8 +33,8 @@ class RecommendationController extends Controller
     public function indexMenus()
     {
         $patient = auth()->user();
-        $recommendationRepository = new RecommendationRepository($patient);
-        $menus = $recommendationRepository->getRecommendationMenusByPatient();
+        $patientRepository = new PatientRepository($patient);
+        $menus = $patientRepository->getRecommendationMenusByPatient();
         return response()->json(['Menus' => $menus,], 200);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ApiNutritionnist;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RecommendationRequest;
 use App\Repositories\MenuRepository;
+use App\Repositories\PatientRepository;
 use App\Repositories\RecommendationRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -36,8 +37,8 @@ class RecommendationController extends Controller
         $nutritionist = auth()->user();
         $patient = $nutritionist->patients()->findOrFail($patientId);
         $avoid = $request->input('avoid');
-        $recommendationRepository = new RecommendationRepository($patient);
-        $recommendation = $recommendationRepository->createRecommendation($avoid);
+        $patientRepository = new PatientRepository($patient);
+        $recommendation = $patientRepository->createRecommendation($avoid);
         return response()->json(['recommendation' => $recommendation], 200);
     }
 

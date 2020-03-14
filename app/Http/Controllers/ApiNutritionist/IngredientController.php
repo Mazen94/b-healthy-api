@@ -8,7 +8,6 @@ use App\Http\Requests\PaginationRequest;
 use App\Repositories\IngredientRepository;
 use App\Repositories\NutritionistRepository;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class IngredientController extends Controller
 {

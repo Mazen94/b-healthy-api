@@ -18,8 +18,6 @@ class NotificationRepository
 
     /**
      * Method to delete notification
-     * @param Notification $notification
-     *
      * @return mixed
      *
      * @throws \Exception

@@ -9,6 +9,7 @@ use App\Patient;
 use App\PhysicalActivity;
 use App\Recommendation;
 use App\Visit;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
 
@@ -100,6 +101,23 @@ class PatientRepository
     {
         $recommendation = $this->patient->recommendations()->latest("updated_at")->first();
         return $recommendation->menus;
+    }
+
+    /**
+     * show Visits related to patient
+     * @param int $page
+     * @param int $perPage
+     * @param string $orderBy
+     * @param string $orderDirection
+     * @return LengthAwarePaginator
+     */
+    public function paginateVisits($page, $perPage, $orderBy, $orderDirection)
+    {
+        $VisitsGroups = $this->patient->visits();
+        if (isset($orderBy) && isset($orderDirection)) {
+            $VisitsGroups->orderBy($orderBy, $orderDirection);
+        }
+        return $VisitsGroups->paginate($perPage, ['*'], 'page', $page);
     }
 
     /**

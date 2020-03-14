@@ -162,7 +162,7 @@ class NutritionistRepository
 
 
     /**
-     * show MealStore related to nutritionist
+     * show Patients related to nutritionist
      * @param int $page
      * @param int $perPage
      * @param string $orderBy

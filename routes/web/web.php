@@ -8,54 +8,54 @@
 */
 Route::prefix('nutritionist')->group(
     function () {
-        Route::post('register', 'ApiNutritionnist\NutritionistController@register');
-        Route::post('login', 'ApiNutritionnist\NutritionistController@login');
+        Route::post('register', 'ApiNutritionist\NutritionistController@register');
+        Route::post('login', 'ApiNutritionist\NutritionistController@login');
         Route::middleware('auth:api')->group(function () {
-                Route::get('/', 'ApiNutritionnist\NutritionistController@index');
-                Route::put('/', 'ApiNutritionnist\NutritionistController@update');
+                Route::get('/', 'ApiNutritionist\NutritionistController@index');
+                Route::put('/', 'ApiNutritionist\NutritionistController@update');
 
                 Route::prefix('patients')->group(function () {
-                        Route::post('/', 'ApiNutritionnist\PatientController@store');
-                        Route::get('/', 'ApiNutritionnist\PatientController@index');
+                        Route::post('/', 'ApiNutritionist\PatientController@store');
+                        Route::get('/', 'ApiNutritionist\PatientController@index');
 
 
                         Route::prefix('{idPatient}')->group(function () {
-                                Route::delete('/', 'ApiNutritionnist\PatientController@destroy');
-                                Route::get('/', 'ApiNutritionnist\PatientController@show');
+                                Route::delete('/', 'ApiNutritionist\PatientController@destroy');
+                                Route::get('/', 'ApiNutritionist\PatientController@show');
 
 
                                 Route::prefix('visits')->group(function () {
-                                        Route::get('/', 'ApiNutritionnist\VisitController@index');
-                                        Route::post('/', 'ApiNutritionnist\VisitController@store');
-                                        Route::get('/{idVisit}', 'ApiNutritionnist\VisitController@show');
-                                        Route::put('/{idVisit}', 'ApiNutritionnist\VisitController@update');
-                                        Route::delete('/{idVisit}', 'ApiNutritionnist\VisitController@destroy');
+                                        Route::get('/', 'ApiNutritionist\VisitController@index');
+                                        Route::post('/', 'ApiNutritionist\VisitController@store');
+                                        Route::get('/{idVisit}', 'ApiNutritionist\VisitController@show');
+                                        Route::put('/{idVisit}', 'ApiNutritionist\VisitController@update');
+                                        Route::delete('/{idVisit}', 'ApiNutritionist\VisitController@destroy');
                                     });
 
 
                                 Route::prefix('recommendations')->group(function () {
-                                        Route::get('/', 'ApiNutritionnist\RecommendationController@index');
-                                        Route::post('/', 'ApiNutritionnist\RecommendationController@store');
+                                        Route::get('/', 'ApiNutritionist\RecommendationController@index');
+                                        Route::post('/', 'ApiNutritionist\RecommendationController@store');
                                         Route::get(
                                             '/{idRecommendation}',
-                                            'ApiNutritionnist\RecommendationController@show'
+                                            'ApiNutritionist\RecommendationController@show'
                                         );
                                         Route::put(
                                             '/{idRecommendation}',
-                                            'ApiNutritionnist\RecommendationController@update'
+                                            'ApiNutritionist\RecommendationController@update'
                                         );
                                         Route::delete(
                                             '/{idRecommendation}',
-                                            'ApiNutritionnist\RecommendationController@destroy'
+                                            'ApiNutritionist\RecommendationController@destroy'
                                         );
                                         Route::prefix('{idRecommendation}/menus')->group(function () {
                                                 Route::post(
                                                     '/',
-                                                    'ApiNutritionnist\RecommendationController@addMenuToRecommendation'
+                                                    'ApiNutritionist\RecommendationController@addMenuToRecommendation'
                                                 );
                                                 Route::delete(
                                                     '/{idMenu}',
-                                                    'ApiNutritionnist\RecommendationController@destroyMenu'
+                                                    'ApiNutritionist\RecommendationController@destroyMenu'
                                                 );
                                         });
                                 });
@@ -64,28 +64,28 @@ Route::prefix('nutritionist')->group(
 
 
                 Route::prefix('ingredients')->group(function () {
-                        Route::post('/', 'ApiNutritionnist\IngredientController@store');
-                        Route::delete('/{id}', 'ApiNutritionnist\IngredientController@destroy');
-                        Route::get('/{id}', 'ApiNutritionnist\IngredientController@show');
-                        Route::get('/', 'ApiNutritionnist\IngredientController@index');
-                        Route::put('/{id}', 'ApiNutritionnist\IngredientController@update');
+                        Route::post('/', 'ApiNutritionist\IngredientController@store');
+                        Route::delete('/{id}', 'ApiNutritionist\IngredientController@destroy');
+                        Route::get('/{id}', 'ApiNutritionist\IngredientController@show');
+                        Route::get('/', 'ApiNutritionist\IngredientController@index');
+                        Route::put('/{id}', 'ApiNutritionist\IngredientController@update');
                 });
 
 
                 Route::prefix('mealStore')->group(function () {
-                        Route::get('/', 'ApiNutritionnist\MealStoreController@index');
-                        Route::get('/ages', 'ApiNutritionnist\MealStoreController@showByAge');
-                        Route::post('/', 'ApiNutritionnist\MealStoreController@store');
-                        Route::get('/{idStoreMenu}', 'ApiNutritionnist\MealStoreController@show');
-                        Route::put('/{idStoreMenu}', 'ApiNutritionnist\MealStoreController@update');
-                        Route::delete('/{idStoreMenu}', 'ApiNutritionnist\MealStoreController@destroy');
+                        Route::get('/', 'ApiNutritionist\MealStoreController@index');
+                        Route::get('/ages', 'ApiNutritionist\MealStoreController@showByAge');
+                        Route::post('/', 'ApiNutritionist\MealStoreController@store');
+                        Route::get('/{idStoreMenu}', 'ApiNutritionist\MealStoreController@show');
+                        Route::put('/{idStoreMenu}', 'ApiNutritionist\MealStoreController@update');
+                        Route::delete('/{idStoreMenu}', 'ApiNutritionist\MealStoreController@destroy');
                         Route::prefix('{idStoreMenu}/ingredients')->group(function () {
-                                Route::post('/', 'ApiNutritionnist\MealStoreController@addIngredient');
+                                Route::post('/', 'ApiNutritionist\MealStoreController@addIngredient');
                                 Route::delete(
                                     '{idIngredient}',
-                                    'ApiNutritionnist\MealStoreController@deleteIngredient'
+                                    'ApiNutritionist\MealStoreController@deleteIngredient'
                                 );
-                                Route::put('{idIngredient}', 'ApiNutritionnist\MealStoreController@updateAmountPivotIngredient');
+                                Route::put('{idIngredient}', 'ApiNutritionist\MealStoreController@updateAmountPivotIngredient');
                         });
                 });
         });

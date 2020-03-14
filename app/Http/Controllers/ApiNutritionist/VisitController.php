@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ApiNutritionnist;
+namespace App\Http\Controllers\ApiNutritionist;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\VisitPostRequest;

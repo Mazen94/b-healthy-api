@@ -71,6 +71,16 @@ class NutritionistRepository
         return $this->nutritionist->delete();
     }
 
+    public function paginateIngredients($page, $perPage, $orderBy, $orderDirection)
+    {
+        $ingredientGroups = $this->nutritionist->ingredients();
+        if (isset($orderBy) && isset($orderDirection)) {
+            $ingredientGroups->orderBy($orderBy, $orderDirection);
+        }
+
+        return $ingredientGroups->paginate($perPage, ['*'], 'page', $page);
+    }
+
     /**
      * Method to create a new Ingredient related to nutritionist
      *

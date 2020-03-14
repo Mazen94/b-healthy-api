@@ -18,8 +18,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Visit extends Model
 {
 
-
-    protected $fillable = ['poids', 'note', 'scheduled_at', 'done_at'];
     protected $table = 'visits';
 
     /**

@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class Conversation
@@ -20,7 +22,7 @@ class Conversation extends Model
 
     /**
      * One To Many (Inverse)
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function nutritionist()
     {
@@ -29,7 +31,7 @@ class Conversation extends Model
 
     /**
      * One To one (Inverse)
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function patient()
     {
@@ -38,7 +40,7 @@ class Conversation extends Model
 
     /**
      * the has many relationship
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function message()
     {

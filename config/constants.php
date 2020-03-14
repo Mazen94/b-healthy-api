@@ -4,7 +4,10 @@
 /* Contains constants used globally in the application*/
 
 return [
-
+    //minimum current_page (pagination)
+    'MIN_CURRENT_PAGE' => 1 ,
+    //minimum Number of data per page
+    'MIN_PER_PAGE' => 1,
     //maximum length of a password
     'MAX_PASSWORD_LENGTH' => 25,
 

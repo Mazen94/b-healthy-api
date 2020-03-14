@@ -4,22 +4,29 @@ namespace App\Http\Controllers\ApiNutritionist;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\IngredientRequest;
+use App\Http\Requests\PaginationRequest;
 use App\Repositories\IngredientRepository;
 use App\Repositories\NutritionistRepository;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class IngredientController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param PaginationRequest $request
      * @return JsonResponse
-     *
      */
-    public function index()
+    public function index(PaginationRequest $request)
     {
+        $page = $request->input('page', 1);
+        $perPage = $request->input('perPage', 10);
+        $orderBy = $request->input('orderBy', null);
+        $orderDirection = $request->input('orderDirection', 'asc');
         $nutritionist = auth()->user();
-        $ingredients = $nutritionist->ingredients()->paginate();
+        $nutritionistRepository = new NutritionistRepository($nutritionist);
+        $ingredients = $nutritionistRepository->paginateIngredients($page, $perPage, $orderBy, $orderDirection);
         return response()->json(['ingredients' => $ingredients], 200);
     }
 

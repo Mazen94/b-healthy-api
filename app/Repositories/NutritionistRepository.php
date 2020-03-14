@@ -160,6 +160,24 @@ class NutritionistRepository
         return $this->nutritionist->mealStore()->save($menu);
     }
 
+
+    /**
+     * show MealStore related to nutritionist
+     * @param int $page
+     * @param int $perPage
+     * @param string $orderBy
+     * @param string $orderDirection
+     * @return LengthAwarePaginator
+     */
+    public function paginatePatient($page, $perPage, $orderBy, $orderDirection)
+    {
+        $mealStoreGroups = $this->nutritionist->patients();
+        if (isset($orderBy) && isset($orderDirection)) {
+            $mealStoreGroups->orderBy($orderBy, $orderDirection);
+        }
+        return $mealStoreGroups->paginate($perPage, ['*'], 'page', $page);
+    }
+
     /**
      * Method to create a new patient related to patient
      *

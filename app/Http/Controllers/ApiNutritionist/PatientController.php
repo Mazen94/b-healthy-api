@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ApiNutritionist;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PaginationRequest;
 use App\Http\Requests\PatientRequest;
 use App\Repositories\NutritionistRepository;
 use App\Repositories\PatientRepository;
@@ -16,13 +17,18 @@ class PatientController extends Controller
     /**
      * Method to get all patients related to nutritionist
      *
+     * @param PaginationRequest $request
      * @return JsonResponse
-     *
      */
-    public function index()
+    public function index(PaginationRequest $request)
     {
+        $page = $request->input('page', 1);
+        $perPage = $request->input('perPage', 10);
+        $orderBy = $request->input('orderBy', null);
+        $orderDirection = $request->input('orderDirection', 'asc');
         $nutritionist = auth()->user();
-        $patients = $nutritionist->patients()->paginate();
+        $nutritionistRepository = new NutritionistRepository($nutritionist);
+        $patients = $nutritionistRepository->paginatePatient($page, $perPage, $orderBy, $orderDirection);
         return response()->json(['patients' => $patients], 200);
     }
 

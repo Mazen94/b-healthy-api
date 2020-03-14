@@ -4,9 +4,9 @@ namespace App\Http\Controllers\ApiNutritionnist;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PatientRequest;
+use App\Repositories\NutritionistRepository;
 use App\Repositories\PatientRepository;
 use App\Repositories\RecommendationRepository;
-use App\Repositories\VisitRepository;
 use Illuminate\Http\JsonResponse;
 
 
@@ -42,8 +42,8 @@ class PatientController extends Controller
         $numberPhone = $request->input('numberPhone');
         $profession = $request->input('profession');
         $nutritionist = auth()->user();
-        $patientRepository = new PatientRepository($nutritionist);
-        $patient = $patientRepository->createPatient(
+        $nutritionistRepository = new NutritionistRepository($nutritionist);
+        $patient = $nutritionistRepository->createPatient(
             $email,
             $firstName,
             $lastName,

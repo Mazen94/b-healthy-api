@@ -7,10 +7,11 @@ namespace App\Repositories;
 use App\Ingredient;
 use App\MealStore;
 use App\Nutritionist;
+use App\Patient;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-class NutritionnistRepository
+class NutritionistRepository
 {
     protected $nutritionist;
 
@@ -122,6 +123,39 @@ class NutritionnistRepository
             $menu->calorie = $calorie;
         }
         return $this->nutritionist->mealStore()->save($menu);
+    }
+
+    /**
+     * Method to create a new patient related to patient
+     *
+     *
+     * @param string $email
+     * @param string $firstName
+     * @param string $lastName
+     * @param string $password
+     * @param string $gender
+     * @param string $numberPhone
+     * @param string $profession
+     * @return false|Model
+     */
+    public function createPatient(
+        $email,
+        $firstName,
+        $lastName,
+        $password,
+        $gender,
+        $numberPhone,
+        $profession
+    ) {
+        $patient = new Patient();
+        $patient->email = $email;
+        $patient->firstName = $firstName;
+        $patient->lastName = $lastName;
+        $patient->gender = $gender;
+        $patient->numberPhone = $numberPhone;
+        $patient->profession = $profession;
+        $patient->password = bcrypt($password);
+        return $this->nutritionist->patients()->save($patient);
     }
 
 }

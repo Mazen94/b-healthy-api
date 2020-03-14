@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\NutritionistCreateRequest;
 use App\Http\Requests\NutritionistUpdateRequest;
-use App\Repositories\NutritionnistRepository;
+use App\Repositories\NutritionistRepository;
 use Illuminate\Http\JsonResponse;
 use JWTAuth;
 
@@ -32,7 +32,7 @@ class NutritionistController extends Controller
      */
     public function update(NutritionistUpdateRequest $request)
     {
-        $nutritionistRepository = new NutritionnistRepository(auth()->user());
+        $nutritionistRepository = new NutritionistRepository(auth()->user());
         $email = $request->input('email');
         $firstName = $request->input('firstName');
         $lastName = $request->input('lastName');
@@ -50,7 +50,7 @@ class NutritionistController extends Controller
      */
     public function destroy()
     {
-        $nutritionistRepository = new NutritionnistRepository(auth()->user());
+        $nutritionistRepository = new NutritionistRepository(auth()->user());
         $nutritionistRepository->deleteNutritionist();
         return response()->json(['success' => true,], 200);
     }
@@ -66,7 +66,7 @@ class NutritionistController extends Controller
         $firstName = $request->input('firstName');
         $lastName = $request->input('lastName');
         $password = $request->input('password');
-        $nutritionist = NutritionnistRepository::register($email, $firstName, $lastName, $password);
+        $nutritionist = NutritionistRepository::register($email, $firstName, $lastName, $password);
         $token = JWTAuth::fromUser($nutritionist);
         return response()->json(['token' => $token,], 200);
     }

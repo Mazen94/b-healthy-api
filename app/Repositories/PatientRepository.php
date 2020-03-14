@@ -10,45 +10,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class PatientRepository
 {
-    protected $model;
+    protected $patient;
 
-    public function __construct(Model $model)
+    public function __construct(Patient $patient)
     {
-        $this->model = $model;
+        $this->patient = $patient;
     }
 
-    /**
-     * Method to create a new patient related to patient
-     *
-     *
-     * @param string $email
-     * @param string $firstName
-     * @param string $lastName
-     * @param string $password
-     * @param string $gender
-     * @param string $numberPhone
-     * @param string $profession
-     * @return false|Model
-     */
-    public function createPatient(
-        $email,
-        $firstName,
-        $lastName,
-        $password,
-        $gender,
-        $numberPhone,
-        $profession
-    ) {
-        $patient = new Patient();
-        $patient->email = $email;
-        $patient->firstName = $firstName;
-        $patient->lastName = $lastName;
-        $patient->gender = $gender;
-        $patient->numberPhone = $numberPhone;
-        $patient->profession = $profession;
-        $patient->password = bcrypt($password);
-        return $this->model->patients()->save($patient);
-    }
 
     /**
      * Method to delete patient related to nutritionist
@@ -58,7 +26,7 @@ class PatientRepository
      */
     public function deletePatient()
     {
-        return $this->model->delete();
+        return $this->patient->delete();
     }
 
     /**
@@ -80,15 +48,15 @@ class PatientRepository
         $numberPhone,
         $profession
     ) {
-        $this->model->email = $email;
-        $this->model->firstName = $firstName;
-        $this->model->lastName = $lastName;
-        //$this->model->password = bcrypt($password);
-        $this->model->gender = $gender;
-        $this->model->profession = $numberPhone;
-        $this->model->numberPhone = $profession;
-        $this->model->save();
-        return $this->model;
+        $this->patient->email = $email;
+        $this->patient->firstName = $firstName;
+        $this->patient->lastName = $lastName;
+        //$this->patient->password = bcrypt($password);
+        $this->patient->gender = $gender;
+        $this->patient->profession = $numberPhone;
+        $this->patient->numberPhone = $profession;
+        $this->patient->save();
+        return $this->patient;
     }
 
 }

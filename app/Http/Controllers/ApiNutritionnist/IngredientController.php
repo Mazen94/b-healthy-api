@@ -5,7 +5,7 @@ namespace App\Http\Controllers\ApiNutritionnist;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\IngredientRequest;
 use App\Repositories\IngredientRepository;
-use App\Repositories\NutritionnistRepository;
+use App\Repositories\NutritionistRepository;
 use Illuminate\Http\JsonResponse;
 
 class IngredientController extends Controller
@@ -35,7 +35,7 @@ class IngredientController extends Controller
         $name = $request->input('name');
         $amount = $request->input('amount');
         $calorie = $request->input('calorie');
-        $nutritionistRepository = new NutritionnistRepository($nutritionist);
+        $nutritionistRepository = new NutritionistRepository($nutritionist);
         $ingredient = $nutritionistRepository->createIngredient($name, $amount, $calorie);
         return response()->json(['ingredient' => $ingredient], 200);
     }

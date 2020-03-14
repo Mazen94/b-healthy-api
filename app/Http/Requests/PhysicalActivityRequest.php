@@ -25,7 +25,7 @@ class PhysicalActivityRequest extends FormRequest
     {
         return [
             'distance' => 'required|integer',
-            'activite_type' => 'required|string',
+            'typical_activity' => 'required|string',
             'energy_burned' => 'required|integer',
             'duration' => 'required|integer',
         ];

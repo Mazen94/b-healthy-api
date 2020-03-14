@@ -6,6 +6,7 @@ namespace App\Repositories;
 
 use App\Notification;
 use App\Patient;
+use App\PhysicalActivity;
 use App\Recommendation;
 use App\Visit;
 use Illuminate\Database\Eloquent\Model;
@@ -138,5 +139,27 @@ class PatientRepository
         $notification->message = $message;
         $this->patient->notifications()->save($notification);
         return $notification;
+    }
+
+    /**
+     * Method to create a new  Activity
+     *
+     *
+     * @param int $distance
+     * @param $activityType
+     * @param int $energyBurned
+     * @param int $duration
+     *
+     * @return false|Model
+     */
+    public function createActivity($distance, $activityType, $energyBurned, $duration)
+    {
+        $activity = new PhysicalActivity();
+        $activity->distance = $distance;
+        $activity->typical_activity = $activityType;
+        $activity->energy_burned = $energyBurned;
+        $activity->duration = $duration;
+        $this->patient->physicalActivity()->save($activity);
+        return $activity;
     }
 }

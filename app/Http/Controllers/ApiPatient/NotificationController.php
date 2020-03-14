@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ApiPatient;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\NotificationRequest;
 use App\Repositories\NotificationRepository;
+use App\Repositories\PatientRepository;
 use Illuminate\Http\JsonResponse;
 
 
@@ -32,9 +33,9 @@ class NotificationController extends Controller
     {
         $patient = auth()->user();
         $message = $request->input('message');
-        $notificationRepository = new NotificationRepository($patient);
-        $notification = $notificationRepository->postNotification($message);
-        return response()->json(['Notification' => $notification], 200);
+        $patientRepository = new PatientRepository($patient);
+        $patient = $patientRepository->postNotification($message);
+        return response()->json(['Notification' => $patient], 200);
     }
 
     /**

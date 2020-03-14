@@ -4,33 +4,17 @@
 namespace App\Repositories;
 
 use App\Notification;
-use Illuminate\Database\Eloquent\Model;
 
 
 class NotificationRepository
 {
-    protected $model;
+    protected $notification;
 
-    public function __construct(Model $model)
+    public function __construct(Notification $notification)
     {
-        $this->model = $model;
+        $this->notification = $notification;
     }
 
-
-    /**
-     * Method to post notification
-     *
-     * @param String $message
-     *
-     * @return mixed
-     */
-    public function postNotification($message)
-    {
-        $notification = new Notification();
-        $notification->message = $message;
-        $this->model->notifications()->save($notification);
-        return $notification;
-    }
 
     /**
      * Method to delete notification
@@ -42,7 +26,7 @@ class NotificationRepository
      */
     public function deleteNotification()
     {
-        return $this->model->delete();
+        return $this->notification->delete();
     }
 
 }

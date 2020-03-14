@@ -4,6 +4,7 @@
 namespace App\Repositories;
 
 
+use App\Notification;
 use App\Patient;
 use App\Recommendation;
 use App\Visit;
@@ -122,5 +123,20 @@ class PatientRepository
             $visit->note = $note;
         }
         return $this->patient->visits()->save($visit);
+    }
+
+    /**
+     * Method to post notification
+     *
+     * @param String $message
+     *
+     * @return mixed
+     */
+    public function postNotification($message)
+    {
+        $notification = new Notification();
+        $notification->message = $message;
+        $this->patient->notifications()->save($notification);
+        return $notification;
     }
 }

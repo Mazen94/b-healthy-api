@@ -138,15 +138,8 @@ class NutritionistRepository
      * @param string $profession
      * @return false|Model
      */
-    public function createPatient(
-        $email,
-        $firstName,
-        $lastName,
-        $password,
-        $gender,
-        $numberPhone,
-        $profession
-    ) {
+    public function createPatient($email, $firstName, $lastName, $password, $gender, $numberPhone, $profession)
+    {
         $patient = new Patient();
         $patient->email = $email;
         $patient->firstName = $firstName;

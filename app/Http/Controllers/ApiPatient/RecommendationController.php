@@ -4,8 +4,6 @@ namespace App\Http\Controllers\ApiPatient;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\PatientRepository;
-use App\Repositories\RecommandationRepository;
-use App\Repositories\RecommendationRepository;
 use Illuminate\Http\JsonResponse;
 use JWTAuth;
 

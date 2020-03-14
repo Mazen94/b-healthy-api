@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\ApiPatient;
 
-use App\Activitephysique;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PhysicalActivityRequest;
 use App\Repositories\PatientRepository;
-use App\Repositories\PhysicalActiviteRepository;
 use Illuminate\Http\JsonResponse;
-use JWTAuth;
 
-class PhysicalActiviteController extends Controller
+
+class PhysicalActivityController extends Controller
 {
     /**
      * Store a newly created resource in storage.

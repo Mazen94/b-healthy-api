@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MealStoreIngredientRequest;
 use App\Http\Requests\MealStoreRequest;
 use App\Repositories\MealStoreRepository;
+use App\Repositories\NutritionnistRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -38,8 +39,8 @@ class MealStoreController extends Controller
         $calorie = $request->input('calorie');
         $minAge = $request->input('min_age');
         $typeMenu = $request->input('type_menu');
-        $mealStoreRepository = new MealStoreRepository($nutritionist);
-        $mealStore = $mealStoreRepository->createMealStore($name, $maxAge, $calorie, $minAge, $typeMenu);
+        $nutritionistRepository = new NutritionnistRepository($nutritionist);
+        $mealStore = $nutritionistRepository->createMealStore($name, $maxAge, $calorie, $minAge, $typeMenu);
         return response()->json(['MealStore' => $mealStore,], 200);
     }
 
@@ -69,8 +70,8 @@ class MealStoreController extends Controller
     {
         $nutritionist = auth()->user();
         $age = $request->input('age');
-        $mealStoreRepository = new MealStoreRepository($nutritionist);
-        $mealStoreWithIngredients = $mealStoreRepository->getMealStoreWithIngredientsByAge($age);
+        $nutritionistRepository = new NutritionnistRepository($nutritionist);
+        $mealStoreWithIngredients = $nutritionistRepository->getMealStoreWithIngredientsByAge($age);
         return response()->json(['MealStore' => $mealStoreWithIngredients,], 200);
     }
 

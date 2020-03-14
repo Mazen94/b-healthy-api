@@ -12,48 +12,11 @@ use Illuminate\Support\Facades\DB;
 
 class MealStoreRepository
 {
-    protected $model;
+    protected $mealStore;
 
-    public function __construct(Model $model)
+    public function __construct(MealStore $mealStore)
     {
-        $this->model = $model;
-    }
-
-    /**
-     * method to get only one StoreMenu with the ingredients related to nutritionist
-     * @param int $age
-     * @return Collection
-     */
-    public function getMealStoreWithIngredientsByAge($age)
-    {
-        return $this->model->mealStore()
-            ->where('min_age', '<=', $age)
-            ->where('max_age', '>=', $age)
-            ->get();
-    }
-
-    /**
-     * Method to create a new store menu related to nutritionist
-     *
-     * @param string $name
-     * @param int $maxAge
-     * @param int $minAge
-     * @param int $calorie
-     * @param string $typeMenu
-     *
-     * @return false|Model
-     */
-    public function createMealStore($name, $maxAge, $calorie, $minAge, $typeMenu)
-    {
-        $menu = new MealStore();
-        $menu->name = $name;
-        $menu->max_age = $maxAge;
-        $menu->min_age = $minAge;
-        $menu->type_menu = $typeMenu;
-        if (!empty($calorie)) {
-            $menu->calorie = $calorie;
-        }
-        return $this->model->mealStore()->save($menu);
+        $this->mealStore = $mealStore;
     }
 
     /**
@@ -68,15 +31,15 @@ class MealStoreRepository
      */
     public function updateMealStore($name, $maxAge, $calorie, $minAge, $typeMenu)
     {
-        $this->model->name = $name;
-        $this->model->max_age = $maxAge;
-        $this->model->min_age = $minAge;
-        $this->model->type_menu = $typeMenu;
+        $this->mealStore->name = $name;
+        $this->mealStore->max_age = $maxAge;
+        $this->mealStore->min_age = $minAge;
+        $this->mealStore->type_menu = $typeMenu;
         if (!empty($calorie)) {
-            $this->model->calorie = $calorie;
+            $this->mealStore->calorie = $calorie;
         }
-        $this->model->save();
-        return $this->model;
+        $this->mealStore->save();
+        return $this->mealStore;
     }
 
     /**
@@ -88,7 +51,7 @@ class MealStoreRepository
      */
     public function deleteMealStore()
     {
-        return $this->model->delete();
+        return $this->mealStore->delete();
     }
 
     /**
@@ -101,7 +64,6 @@ class MealStoreRepository
      */
     public static function addIngredientToMealStore($mealStoreId, $ingredientId, $amount)
     {
-
         return DB::table('ingredient_meal_store')->insert(
             ['meal_store_id' => $mealStoreId, 'ingredient_id' => $ingredientId, 'amount' => $amount]
         );
@@ -116,7 +78,7 @@ class MealStoreRepository
      */
     public function deleteIngredientToMealStore($idIngredient)
     {
-        return $this->model->ingredients()->detach($idIngredient);
+        return $this->mealStore->ingredients()->detach($idIngredient);
     }
 
     /**
@@ -128,9 +90,9 @@ class MealStoreRepository
      */
     public function updateAmountIngredientInMealStore($amount)
     {
-        $this->model->pivot->amount = $amount;
-        $this->model->pivot->save();
-        return $this->model->pivot;
+        $this->mealStore->pivot->amount = $amount;
+        $this->mealStore->pivot->save();
+        return $this->mealStore->pivot;
     }
 
 }

@@ -8,41 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class IngredientRepository
 {
-    protected $model;
+    protected $ingredient;
 
-    public function __construct(Model $model)
+    public function __construct(Ingredient $ingredient)
     {
-        $this->model = $model;
-    }
-
-    /**
-     * Method to create a new Ingredient related to nutritionist
-     *
-     * @param $name
-     * @param $amount
-     * @param $calorie
-     * @return false|Model
-     */
-    public function createIngredient($name, $amount, $calorie)
-    {
-        $ingredient = new Ingredient();
-        $ingredient->name = $name;
-        $ingredient->amount = $amount;
-        $ingredient->calorie = $calorie;
-        return $this->model->ingredients()->save($ingredient);
+        $this->ingredient = $ingredient;
     }
 
     /**
      * Method to delete Ingredient
      *
-     * @param Ingredient $ingredient
      * @return bool
      *
      * @throws \Exception
      */
     public function deleteIngredient()
     {
-        return $this->model->delete();
+        return $this->ingredient->delete();
     }
 
     /**
@@ -56,10 +38,10 @@ class IngredientRepository
      */
     public function updateIngredient($name, $amount, $calorie)
     {
-        $this->model->name = $name;
-        $this->model->amount = $amount;
-        $this->model->calorie = $calorie;
-        $this->model->save();
-        return $this->model;
+        $this->ingredient->name = $name;
+        $this->ingredient->amount = $amount;
+        $this->ingredient->calorie = $calorie;
+        $this->ingredient->save();
+        return $this->ingredient;
     }
 }

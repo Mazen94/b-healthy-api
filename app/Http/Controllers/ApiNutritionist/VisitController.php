@@ -3,13 +3,10 @@
 namespace App\Http\Controllers\ApiNutritionist;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\VisitPostRequest;
-use App\Http\Requests\VisitPutRequest;
 use App\Http\Requests\VisitRequest;
 use App\Repositories\PatientRepository;
 use App\Repositories\VisitRepository;
 use Illuminate\Http\JsonResponse;
-use JWTAuth;
 
 class VisitController extends Controller
 {

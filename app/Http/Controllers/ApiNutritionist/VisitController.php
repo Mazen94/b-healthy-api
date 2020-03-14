@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\VisitPostRequest;
 use App\Http\Requests\VisitPutRequest;
 use App\Http\Requests\VisitRequest;
+use App\Repositories\PatientRepository;
 use App\Repositories\VisitRepository;
 use Illuminate\Http\JsonResponse;
 use JWTAuth;
@@ -43,8 +44,8 @@ class VisitController extends Controller
         $note = $request->input('note');
         $scheduledAt = $request->input('scheduled_at');
         $doneAt = $request->input('done_at');
-        $visitRepository = new VisitRepository($patient);
-        $visit = $visitRepository->createVisit($weight, $note, $scheduledAt, $doneAt);
+        $patientRepository = new PatientRepository($patient);
+        $visit = $patientRepository->createVisit($weight, $note, $scheduledAt, $doneAt);
         return response()->json(['visits' => $visit], 200);
     }
 

@@ -3,7 +3,6 @@
 
 namespace App\Repositories;
 
-use App\Patient;
 use App\Visit;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -13,11 +12,11 @@ use Illuminate\Support\Facades\Date;
 
 class VisitRepository
 {
-    protected $model;
+    protected $visit;
 
-    public function __construct(Model $model)
+    public function __construct(Visit $visit)
     {
-        $this->model = $model;
+        $this->visit = $visit;
     }
 
     /**
@@ -32,42 +31,19 @@ class VisitRepository
      */
     public function updateVisit($weight, $note, $scheduledAt, $doneAt)
     {
-        $this->model->weight = $weight;
-        $this->model->scheduled_at = $scheduledAt;
+        $this->visit->weight = $weight;
+        $this->visit->scheduled_at = $scheduledAt;
         if (!empty($doneAt)) {
-            $this->model->done_at = $doneAt;
+            $this->visit->done_at = $doneAt;
         }
         if (!empty($note)) {
-            $this->model->note = $note;
+            $this->visit->note = $note;
         }
-        $this->model->save();
+        $this->visit->save();
 
-        return $this->model;
+        return $this->visit;
     }
 
-    /**
-     * Method for nutritionist to create a new visit related to patient
-     *
-     * @param int $weight
-     * @param string $note
-     * @param Date $scheduledAt
-     * @param Date $doneAt
-     *
-     * @return false|Model
-     */
-    public function createVisit($weight, $note, $scheduledAt, $doneAt)
-    {
-        $visit = new Visit();
-        $visit->weight = $weight;
-        $visit->scheduled_at = $scheduledAt;
-        if (!empty($doneAt)) {
-            $visit->done_at = $doneAt;
-        }
-        if (!empty($note)) {
-            $visit->note = $note;
-        }
-        return $this->model->visits()->save($visit);
-    }
 
     /**
      * Method to delete visit related to patient
@@ -80,6 +56,6 @@ class VisitRepository
      */
     public function deleteVisit()
     {
-        return $this->model->delete();
+        return $this->visit->delete();
     }
 }

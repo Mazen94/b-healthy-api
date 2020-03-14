@@ -6,7 +6,9 @@ namespace App\Repositories;
 
 use App\Patient;
 use App\Recommendation;
+use App\Visit;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Date;
 
 
 class PatientRepository
@@ -96,5 +98,29 @@ class PatientRepository
     {
         $recommendation = $this->patient->recommendations()->latest("updated_at")->first();
         return $recommendation->menus;
+    }
+
+    /**
+     * Method for nutritionist to create a new visit related to patient
+     *
+     * @param int $weight
+     * @param string $note
+     * @param Date $scheduledAt
+     * @param Date $doneAt
+     *
+     * @return false|Model
+     */
+    public function createVisit($weight, $note, $scheduledAt, $doneAt)
+    {
+        $visit = new Visit();
+        $visit->weight = $weight;
+        $visit->scheduled_at = $scheduledAt;
+        if (!empty($doneAt)) {
+            $visit->done_at = $doneAt;
+        }
+        if (!empty($note)) {
+            $visit->note = $note;
+        }
+        return $this->patient->visits()->save($visit);
     }
 }

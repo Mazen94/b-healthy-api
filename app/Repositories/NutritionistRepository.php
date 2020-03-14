@@ -8,6 +8,7 @@ use App\Ingredient;
 use App\MealStore;
 use App\Nutritionist;
 use App\Patient;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -71,13 +72,20 @@ class NutritionistRepository
         return $this->nutritionist->delete();
     }
 
+    /**
+     * show ingredients related to nutritionist
+     * @param int $page
+     * @param int $perPage
+     * @param string $orderBy
+     * @param string $orderDirection
+     * @return LengthAwarePaginator
+     */
     public function paginateIngredients($page, $perPage, $orderBy, $orderDirection)
     {
         $ingredientGroups = $this->nutritionist->ingredients();
         if (isset($orderBy) && isset($orderDirection)) {
             $ingredientGroups->orderBy($orderBy, $orderDirection);
         }
-
         return $ingredientGroups->paginate($perPage, ['*'], 'page', $page);
     }
 
@@ -96,6 +104,23 @@ class NutritionistRepository
         $ingredient->amount = $amount;
         $ingredient->calorie = $calorie;
         return $this->nutritionist->ingredients()->save($ingredient);
+    }
+
+    /**
+     * show MealStore related to nutritionist
+     * @param int $page
+     * @param int $perPage
+     * @param string $orderBy
+     * @param string $orderDirection
+     * @return LengthAwarePaginator
+     */
+    public function paginateMealStore($page, $perPage, $orderBy, $orderDirection)
+    {
+        $mealStoreGroups = $this->nutritionist->mealStore();
+        if (isset($orderBy) && isset($orderDirection)) {
+            $mealStoreGroups->orderBy($orderBy, $orderDirection);
+        }
+        return $mealStoreGroups->paginate($perPage, ['*'], 'page', $page);
     }
 
     /**

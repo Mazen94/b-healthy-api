@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ApiNutritionist;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MealStoreIngredientRequest;
 use App\Http\Requests\MealStoreRequest;
+use App\Http\Requests\PaginationRequest;
 use App\Repositories\MealStoreRepository;
 use App\Repositories\NutritionistRepository;
 use Illuminate\Http\JsonResponse;
@@ -15,12 +16,18 @@ class MealStoreController extends Controller
     /**
      * Display a listing of the storeMenus related to nutritionist.
      *
+     * @param PaginationRequest $request
      * @return JsonResponse
      */
-    public function index()
+    public function index(PaginationRequest $request)
     {
+        $page = $request->input('page', 1);
+        $perPage = $request->input('perPage', 10);
+        $orderBy = $request->input('orderBy', null);
+        $orderDirection = $request->input('orderDirection', 'asc');
         $nutritionist = auth()->user();
-        $mealStores = $nutritionist->mealStore()->paginate();
+        $nutritionistRepository = new NutritionistRepository($nutritionist);
+        $mealStores = $nutritionistRepository->paginateMealStore($page, $perPage, $orderBy, $orderDirection);
         return response()->json(['MealStore' => $mealStores,], 200);
     }
 

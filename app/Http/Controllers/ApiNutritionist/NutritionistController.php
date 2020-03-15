@@ -8,7 +8,7 @@ use App\Http\Requests\NutritionistCreateRequest;
 use App\Http\Requests\NutritionistUpdateRequest;
 use App\Repositories\NutritionistRepository;
 use Illuminate\Http\JsonResponse;
-
+use JWTAuth;
 
 class NutritionistController extends Controller
 {

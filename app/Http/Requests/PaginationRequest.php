@@ -28,7 +28,7 @@ class PaginationRequest extends FormRequest
             'page' => 'integer|min: ' . Config::get('constants.MIN_CURRENT_PAGE'),
             'perPage' => 'integer|min: ' . Config::get('constants.MIN_PER_PAGE'),
             'orderBy' => 'string',
-            'orderDirection' => 'string',
+            'orderDirection' => 'string|in:asc,desc',
             'search' => 'string'
         ];
     }

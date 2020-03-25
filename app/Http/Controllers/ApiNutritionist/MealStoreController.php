@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MealStoreIngredientRequest;
 use App\Http\Requests\MealStoreRequest;
 use App\Http\Requests\PaginationRequest;
+use App\Repositories\IngredientRepository;
 use App\Repositories\MealStoreRepository;
 use App\Repositories\NutritionistRepository;
 use Illuminate\Http\JsonResponse;
@@ -177,8 +178,8 @@ class MealStoreController extends Controller
         $menu = $nutritionist->mealStore()->findOrFail($idStoreMenu);
         $ingredient = $menu->ingredients()->findOrFail($idIngredient);
         $amount = $request->input('amount');
-        $mealStoreRepository = new MealStoreRepository($ingredient);
-        $amountUpdated = $mealStoreRepository->updateAmountIngredientInMealStore($amount);
+        $ingredientRepository = new IngredientRepository($ingredient);
+        $amountUpdated = $ingredientRepository->updateAmountIngredientInMealStore($amount);
         return response()->json(['amount' => $amountUpdated,], 200);
     }
 

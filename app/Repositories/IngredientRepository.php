@@ -44,4 +44,17 @@ class IngredientRepository
         $this->ingredient->save();
         return $this->ingredient;
     }
+    /**
+     * update amount ingredient to a storeMenu
+     *
+     * @param string $amount
+     * @return bool|mixed|null
+     * @throws \Exception
+     */
+    public function updateAmountIngredientInMealStore($amount)
+    {
+        $this->ingredient->pivot->amount = $amount;
+        $this->ingredient->pivot->save();
+        return $this->ingredient->pivot;
+    }
 }

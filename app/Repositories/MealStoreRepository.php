@@ -81,18 +81,6 @@ class MealStoreRepository
         return $this->mealStore->ingredients()->detach($idIngredient);
     }
 
-    /**
-     * update amount ingredient to a storeMenu
-     *
-     * @param string $amount
-     * @return bool|mixed|null
-     * @throws \Exception
-     */
-    public function updateAmountIngredientInMealStore($amount)
-    {
-        $this->mealStore->pivot->amount = $amount;
-        $this->mealStore->pivot->save();
-        return $this->mealStore->pivot;
-    }
+
 
 }

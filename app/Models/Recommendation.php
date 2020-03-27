@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @package App
  *
  * @property int $id
+ * @property string $name
  * @property string $avoid
  */
 class Recommendation extends Model

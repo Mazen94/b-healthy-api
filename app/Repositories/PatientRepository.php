@@ -70,13 +70,15 @@ class PatientRepository
      * Method for nutritionist to create a new recommendation related to patient
      *
      *
+     * @param String $name
      * @param string $avoid
      * @return false|Model
      */
-    public function createRecommendation($avoid)
+    public function createRecommendation($name,$avoid)
     {
         $recommendation = new Recommendation();
         $recommendation->avoid = $avoid;
+        $recommendation->name = $name;
         $recommendation->save();
         $this->patient->recommendations()->attach($recommendation->id);
         return $recommendation;

@@ -25,6 +25,8 @@ class RecommendationRequest extends FormRequest
     {
         return [
             'avoid' => 'required|string',
+            'name' => 'required|string'
+
         ];
     }
 }

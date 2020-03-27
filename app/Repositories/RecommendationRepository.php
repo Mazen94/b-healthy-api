@@ -20,13 +20,15 @@ class RecommendationRepository
      * Method for nutritionist to update recommendation related to patient
      *
      *
+     * @param String $name
      * @param string $avoid
      *
      * @return false|Model
      */
-    public function updateRecommendation($avoid)
+    public function updateRecommendation($name,$avoid)
     {
         $this->recommendation->avoid = $avoid;
+        $this->recommendation->name = $name;
         $this->recommendation->save();
         return $this->recommendation;
     }

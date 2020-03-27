@@ -10,6 +10,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @package App
  * @property int $id
  * @property int $weight
+ * @property int $belly
+ * @property int $chest
+ * @property int $legs
+ * @property int $neck
+ * @property int $tall
  * @property string $note
  * @property  $scheduled_at
  * @property  $done_at

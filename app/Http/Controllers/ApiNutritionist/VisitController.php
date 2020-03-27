@@ -46,10 +46,15 @@ class VisitController extends Controller
         $patient = $nutritionist->patients()->findOrFail($idPatient);
         $weight = $request->input('weight');
         $note = $request->input('note');
+        $belly = $request->input('belly');
+        $chest = $request->input('chest');
+        $legs = $request->input('legs');
+        $neck = $request->input('neck');
+        $tall = $request->input('tall');
         $scheduledAt = $request->input('scheduled_at');
         $doneAt = $request->input('done_at');
         $patientRepository = new PatientRepository($patient);
-        $visit = $patientRepository->createVisit($weight, $note, $scheduledAt, $doneAt);
+        $visit = $patientRepository->createVisit($weight, $note,$belly, $chest,$legs, $neck,$tall,$scheduledAt, $doneAt);
         return response()->json(['visits' => $visit], 200);
     }
 

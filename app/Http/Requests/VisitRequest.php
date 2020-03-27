@@ -28,6 +28,11 @@ class VisitRequest extends FormRequest
             'weight' => 'required|integer|min:' . Config::get('constants.MIN_WEIGHT_LENGTH') . '|max:' . Config::get(
                     'constants.MAX_WEIGHT_LENGTH'
                 ),
+            'belly' => 'nullable|integer',
+            'chest' => 'nullable|integer',
+            'legs' => 'nullable|integer',
+            'neck' => 'nullable|integer',
+            'tall' => 'nullable|integer',
             'scheduled_at' => 'required|date',
             'done_at' => 'nullable|date',
             'note' => 'nullable|string'

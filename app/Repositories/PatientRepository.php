@@ -125,18 +125,38 @@ class PatientRepository
      *
      * @param int $weight
      * @param string $note
+     * @param int $belly
+     * @param int $chest
+     * @param int $legs
+     * @param int $neck
+     * @param int $tall
      * @param Date $scheduledAt
      * @param Date $doneAt
      *
      * @return false|Model
      */
-    public function createVisit($weight, $note, $scheduledAt, $doneAt)
+    public function createVisit($weight, $note,$belly, $chest,$legs, $neck,$tall, $scheduledAt, $doneAt)
     {
         $visit = new Visit();
         $visit->weight = $weight;
         $visit->scheduled_at = $scheduledAt;
         if (!empty($doneAt)) {
             $visit->done_at = $doneAt;
+        }
+        if (!empty($belly)) {
+            $visit->belly = $belly;
+        }
+        if (!empty($chest)) {
+            $visit->chest = $chest;
+        }
+        if (!empty($legs)) {
+            $visit->legs = $legs;
+        }
+        if (!empty($neck)) {
+            $visit->neck = $neck;
+        }
+        if (!empty($tall)) {
+            $visit->tall = $tall;
         }
         if (!empty($note)) {
             $visit->note = $note;

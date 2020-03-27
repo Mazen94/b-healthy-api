@@ -33,7 +33,7 @@ class VisitRequest extends FormRequest
             'legs' => 'nullable|integer',
             'neck' => 'nullable|integer',
             'tall' => 'nullable|integer',
-            'scheduled_at' => 'required|date',
+            'scheduled_at' => 'date',
             'done_at' => 'nullable|date',
             'note' => 'nullable|string'
         ];

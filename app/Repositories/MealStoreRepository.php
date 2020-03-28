@@ -58,29 +58,33 @@ class MealStoreRepository
      * Add ingredient to a storeMenu related to nutritionist
      *
      * @param int $mealStoreId
+     * @param int $caloriesOfMealStore
      * @param int $ingredientId
      * @param int $amount
      * @return bool|mixed|null
      */
-    public static function addIngredientToMealStore($mealStoreId, $ingredientId, $amount)
+    public function addIngredientToMealStore($mealStoreId, $caloriesOfMealStore, $ingredientId, $amount)
     {
-        return DB::table('ingredient_meal_store')->insert(
+        $this->mealStore->calorie = $caloriesOfMealStore;
+        DB::table('ingredient_meal_store')->insert(
             ['meal_store_id' => $mealStoreId, 'ingredient_id' => $ingredientId, 'amount' => $amount]
         );
+        return $this->mealStore;
     }
 
     /**
      * Method for nutritionist to delete ingredient to the storeMenu.
      *
      * @param int $idIngredient
+     * @param int $mealStoreCalorie
      * @return bool|mixed|null
-     * @throws \Exception
      */
-    public function deleteIngredientToMealStore($idIngredient)
+    public function deleteIngredientToMealStore($idIngredient, $mealStoreCalorie)
     {
-        return $this->mealStore->ingredients()->detach($idIngredient);
+        $this->mealStore->calorie = $mealStoreCalorie;
+        $this->mealStore->ingredients()->detach($idIngredient);
+        return $this->mealStore;
     }
-
 
 
 }

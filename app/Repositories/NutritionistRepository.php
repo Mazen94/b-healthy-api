@@ -154,9 +154,8 @@ class NutritionistRepository
         $menu->max_age = $maxAge;
         $menu->min_age = $minAge;
         $menu->type_menu = $typeMenu;
-        if (!empty($calorie)) {
-            $menu->calorie = $calorie;
-        }
+        $menu->calorie = $calorie;
+
         return $this->nutritionist->mealStore()->save($menu);
     }
 

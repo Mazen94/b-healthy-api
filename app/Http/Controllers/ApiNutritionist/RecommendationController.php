@@ -39,7 +39,7 @@ class RecommendationController extends Controller
         $avoid = $request->input('avoid');
         $name = $request->input('name');
         $patientRepository = new PatientRepository($patient);
-        $recommendation = $patientRepository->createRecommendation($name,$avoid);
+        $recommendation = $patientRepository->createRecommendation($name, $avoid);
         return response()->json(['recommendation' => $recommendation], 200);
     }
 
@@ -55,7 +55,7 @@ class RecommendationController extends Controller
         $nutritionist = auth()->user();
         $patient = $nutritionist->patients()->findOrFail($patientId);
         $recommendation = $patient->recommendations()->findOrFail($idRecommendation);
-        $recommendation['menu'] =$recommendation->menus;
+        $recommendation['menu'] = $recommendation->menus;
         return response()->json(['recommendation' => $recommendation], 200);
     }
 
@@ -75,7 +75,7 @@ class RecommendationController extends Controller
         $avoid = $request->input('avoid');
         $name = $request->input('name');
         $recommendationRepository = new RecommendationRepository($recommendation);
-        $recommendation = $recommendationRepository->updateRecommendation($name,$avoid);
+        $recommendation = $recommendationRepository->updateRecommendation($name, $avoid);
         return response()->json(['recommendation' => $recommendation], 200);
     }
 

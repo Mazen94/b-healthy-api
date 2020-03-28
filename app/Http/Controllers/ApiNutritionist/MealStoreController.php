@@ -44,7 +44,7 @@ class MealStoreController extends Controller
         $nutritionist = auth()->user();
         $name = $request->input('name');
         $maxAge = $request->input('max_age');
-        $calorie = $request->input('calorie');
+        $calorie = $request->input('calorie', 0);
         $minAge = $request->input('min_age');
         $typeMenu = $request->input('type_menu');
         $nutritionistRepository = new NutritionistRepository($nutritionist);
@@ -124,7 +124,7 @@ class MealStoreController extends Controller
     }
 
     /**
-     * Method for nutritionist add ingredient to the storeMenu.
+     * Method for nutritionist add ingredient to the storeMenu and update the calories of mealStore .
      *
      * @param MealStoreIngredientRequest $request
      * @param int $idStoreMenu
@@ -137,12 +137,25 @@ class MealStoreController extends Controller
     {
         $idIngredient = $request->input('id');
         $amount = $request->input('amount');
-        $mealStore = MealStoreRepository::addIngredientToMealStore($idStoreMenu, $idIngredient, $amount);
+        $nutritionist = auth()->user();
+        $mealStore = $nutritionist->mealStore()->findOrFail($idStoreMenu);
+        $ingredient = $mealStore->ingredients()->findOrFail($idIngredient);
+        $caloriesOfIngredient = $ingredient->calorie;
+        $caloriesOfMealStore = $mealStore->calorie;
+        $defaultAmount = $ingredient->amount;
+        $caloriesOfMealStore = $caloriesOfMealStore + (($amount / $defaultAmount) * $caloriesOfIngredient);
+        $mealStoreRepository = new MealStoreRepository($mealStore);
+        $mealStore = $mealStoreRepository->addIngredientToMealStore(
+            $idStoreMenu,
+            $caloriesOfMealStore,
+            $idIngredient,
+            $amount
+        );
         return response()->json(['storeMenu' => $mealStore,], 200);
     }
 
     /**
-     * Method for nutritionist to delete ingredient to the storeMenu.
+     * Method for nutritionist to delete ingredient to the storeMenu and update the calories of mealStore .
      *
      * @param int $idStoreMenu
      * @param int $idIngredient
@@ -155,10 +168,15 @@ class MealStoreController extends Controller
     {
         $nutritionist = auth()->user();
         $mealStore = $nutritionist->mealStore()->findOrFail($idStoreMenu);
-        $mealStore->ingredients()->findOrFail($idIngredient);
+        $ingredient = $mealStore->ingredients()->findOrFail($idIngredient);
+        $mealStoreCalorie = $mealStore->calorie;
+        $defaultAmount = $ingredient->amount;
+        $ingredientCalorie = $ingredient->calorie;
+        $amount = $ingredient->pivot->amount;
+        $mealStoreCalorie = $mealStoreCalorie - (($amount / $defaultAmount) * $ingredientCalorie);
         $mealStoreRepository = new MealStoreRepository($mealStore);
-        $mealStoreRepository->deleteIngredientToMealStore($idIngredient);
-        return response()->json(['success' => true,], 200);
+        $menu = $mealStoreRepository->deleteIngredientToMealStore($idIngredient, $mealStoreCalorie);
+        return response()->json(['mealStore' => $menu,], 200);
     }
 
     /**

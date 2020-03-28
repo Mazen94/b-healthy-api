@@ -25,7 +25,7 @@ class RecommendationRepository
      *
      * @return false|Model
      */
-    public function updateRecommendation($name,$avoid)
+    public function updateRecommendation($name, $avoid)
     {
         $this->recommendation->avoid = $avoid;
         $this->recommendation->name = $name;

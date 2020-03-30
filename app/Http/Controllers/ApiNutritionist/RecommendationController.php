@@ -123,7 +123,23 @@ class RecommendationController extends Controller
         return response()->json(['recommendation' => $newRecommendation], 200);
     }
 
+    /**
+     * get a menus posted by patient related  to recommendation
+     *
+     * @param int $patientId
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function getPatientMenus($patientId)
+    {
+       $nutritionist = auth()->user();
+        $patient = $nutritionist->patients()->findOrFail($patientId);
+        $recommendation = $patient->recommendations()->orderBy('id','desc')->first();;
 
+       $recommendationRepository = new RecommendationRepository($recommendation);
+
+        return response()->json(['success' =>  $recommendationRepository->menusOfPatient(),], 200);
+    }
     /**
      * destroy  a menu related  to recommendation
      *

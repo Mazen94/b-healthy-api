@@ -35,6 +35,7 @@ Route::prefix('nutritionist')->group(
 
                                 Route::prefix('recommendations')->group(function () {
                                         Route::get('/', 'ApiNutritionist\RecommendationController@index');
+                                    Route::get('/menus', 'ApiNutritionist\RecommendationController@getPatientMenus');
                                         Route::post('/', 'ApiNutritionist\RecommendationController@store');
                                         Route::get(
                                             '/{idRecommendation}',

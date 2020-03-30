@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 use App\Recommendation;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class RecommendationRepository
 {
@@ -57,6 +58,27 @@ class RecommendationRepository
     {
         $this->recommendation->menus()->attach($idMenu);
         return $this->recommendation->menus;
+    }
+
+    /**
+     * Method  to get menus posted by  patient
+     *
+     * @return mixed
+     */
+    public function menusOfPatient()
+    {
+        $menus = $this->recommendation->menus;
+        $menu = $menus->whereIn(
+            'type_menu',
+            array(
+                'suppCollations2',
+                'suppCollation1',
+                'suppPetit-Déjeuner',
+                'suppDéjeuner',
+                'suppDiner'
+            )
+        );
+        return $menu;
     }
 
     /**

@@ -145,6 +145,22 @@ class RecommendationController extends Controller
     }
 
     /**
+     * get a only one menu (with ingredients ) posted by patient related  to recommendation
+     *
+     * @param int $patientId
+     * @param int $idMenu
+     * @return JsonResponse
+     */
+    public function getMenuWithIngredients($patientId,$idMenu)
+    {
+        $nutritionist = auth()->user();
+        $patient = $nutritionist->patients()->findOrFail($patientId);
+        $recommendation = $patient->recommendations()->orderBy('id', 'desc')->first();
+        $menus = $recommendation->menus()->findOrFail($idMenu);
+        $menus['ingredients'] = $menus->ingredients;
+        return response()->json(['menus' =>$menus ], 200);
+    }
+    /**
      * destroy  a menu related  to recommendation
      *
      * @param int $patientId

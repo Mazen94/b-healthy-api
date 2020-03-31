@@ -132,14 +132,18 @@ class RecommendationController extends Controller
      */
     public function getPatientMenus($patientId)
     {
-       $nutritionist = auth()->user();
+        $nutritionist = auth()->user();
         $patient = $nutritionist->patients()->findOrFail($patientId);
-        $recommendation = $patient->recommendations()->orderBy('id','desc')->first();;
-
-       $recommendationRepository = new RecommendationRepository($recommendation);
-
-        return response()->json(['success' =>  $recommendationRepository->menusOfPatient(),], 200);
+        $recommendation = $patient->recommendations()->orderBy('id', 'desc')->first();;
+        $recommendationRepository = new RecommendationRepository($recommendation);
+        $menus = $recommendationRepository->menusOfPatient();
+        foreach ($menus as $menu)
+        {
+                $listMenus [] = $menu;
+        }
+        return response()->json(['menus' => $listMenus], 200);
     }
+
     /**
      * destroy  a menu related  to recommendation
      *

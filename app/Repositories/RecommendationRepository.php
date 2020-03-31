@@ -68,7 +68,7 @@ class RecommendationRepository
     public function menusOfPatient()
     {
         $menus = $this->recommendation->menus;
-        $menu = $menus->whereIn(
+        return $menus->whereIn(
             'type_menu',
             array(
                 'suppCollations2',
@@ -78,7 +78,7 @@ class RecommendationRepository
                 'suppDiner'
             )
         );
-        return $menu;
+
     }
 
     /**

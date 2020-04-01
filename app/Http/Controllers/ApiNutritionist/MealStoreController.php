@@ -139,7 +139,7 @@ class MealStoreController extends Controller
         $amount = $request->input('amount');
         $nutritionist = auth()->user();
         $mealStore = $nutritionist->mealStore()->findOrFail($idStoreMenu);
-        $ingredient = $mealStore->ingredients()->findOrFail($idIngredient);
+        $ingredient = $nutritionist->ingredients()->findOrFail($idIngredient);
         $caloriesOfIngredient = $ingredient->calorie;
         $caloriesOfMealStore = $mealStore->calorie;
         $defaultAmount = $ingredient->amount;

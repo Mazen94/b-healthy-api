@@ -66,6 +66,7 @@ class MealStoreRepository
     public function addIngredientToMealStore($mealStoreId, $caloriesOfMealStore, $ingredientId, $amount)
     {
         $this->mealStore->calorie = $caloriesOfMealStore;
+        $this->mealStore->save();
         DB::table('ingredient_meal_store')->insert(
             ['meal_store_id' => $mealStoreId, 'ingredient_id' => $ingredientId, 'amount' => $amount]
         );
@@ -82,6 +83,7 @@ class MealStoreRepository
     public function deleteIngredientToMealStore($idIngredient, $mealStoreCalorie)
     {
         $this->mealStore->calorie = $mealStoreCalorie;
+        $this->mealStore->save();
         $this->mealStore->ingredients()->detach($idIngredient);
         return $this->mealStore;
     }

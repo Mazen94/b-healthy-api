@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ApiNutritionist;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\NutritionistRepository;
 use Illuminate\Http\Request;
 
 class StatisticalController extends Controller
@@ -26,6 +27,17 @@ class StatisticalController extends Controller
         $nutritionist = auth()->user();
         $countOfMenus = $nutritionist->mealStore()->count();
         return response()->json(['countOfMenus' => $countOfMenus], 200);
+    }
+    /**
+     * Display the number of menus
+     *
+     */
+    public function genderPatient()
+    {
+        $nutritionist = auth()->user();
+        $nutritionistRepository = new NutritionistRepository($nutritionist);
+        $patient = $nutritionistRepository->countGenderPatient();
+        return response()->json(['countGender' => $patient], 200);
     }
 
 }

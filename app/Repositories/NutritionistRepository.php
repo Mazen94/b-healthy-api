@@ -202,5 +202,13 @@ class NutritionistRepository
         $patient->password = bcrypt($password);
         return $this->nutritionist->patients()->save($patient);
     }
-
+    /**
+     * get the number of men and women
+     */
+    public function countGenderPatient()
+    {
+        $patients['male'] = $this->nutritionist->patients()->where('gender','male')->count();
+        $patients['female']  = $this->nutritionist->patients()->where('gender','female')->count();
+        return $patients;
+    }
 }

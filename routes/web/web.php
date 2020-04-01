@@ -83,6 +83,7 @@ Route::prefix('nutritionist')->group(
                 Route::prefix('statistics')->group(
                     function () {
                         Route::get('/ingredients', 'ApiNutritionist\StatisticalController@countIngredients');
+                        Route::get('/menus', 'ApiNutritionist\StatisticalController@countMenus');
                     }
                 );
 

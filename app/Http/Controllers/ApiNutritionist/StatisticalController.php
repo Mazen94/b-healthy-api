@@ -17,5 +17,15 @@ class StatisticalController extends Controller
         $countOfIngredient = $nutritionist->ingredients()->count();
         return response()->json(['countOfIngredient' => $countOfIngredient], 200);
     }
+    /**
+     * Display the number of menus
+     *
+     */
+    public function countMenus()
+    {
+        $nutritionist = auth()->user();
+        $countOfMenus = $nutritionist->mealStore()->count();
+        return response()->json(['countOfMenus' => $countOfMenus], 200);
+    }
 
 }

@@ -80,7 +80,11 @@ Route::prefix('nutritionist')->group(
                         );
                     }
                 );
-
+                Route::prefix('statistics')->group(
+                    function () {
+                        Route::get('/ingredients', 'ApiNutritionist\StatisticalController@countIngredients');
+                    }
+                );
 
                 Route::prefix('ingredients')->group(
                     function () {

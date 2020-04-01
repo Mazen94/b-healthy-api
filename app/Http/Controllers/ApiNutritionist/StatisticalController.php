@@ -39,5 +39,17 @@ class StatisticalController extends Controller
         $patient = $nutritionistRepository->countGenderPatient();
         return response()->json(['countGender' => $patient], 200);
     }
+    /**
+     * get the number of patients by age group
+     *
+     */
+
+    public function rangeAgePatient()
+    {
+        $nutritionist = auth()->user();
+        $nutritionistRepository = new NutritionistRepository($nutritionist);
+        $patient = $nutritionistRepository->rangeAgePatient();
+        return response()->json(['countGender' => $patient], 200);
+    }
 
 }

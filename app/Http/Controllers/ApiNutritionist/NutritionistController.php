@@ -19,7 +19,7 @@ class NutritionistController extends Controller
      *
      * @return JsonResponse
      */
-    public function index()
+    public function connectedUser()
     {
         return response()->json(['nutritionist' => auth()->user(),], 200);
     }

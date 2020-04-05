@@ -3,8 +3,8 @@
 
 namespace App\Repositories;
 
+use App\IngredientMenu;
 use App\Menu;
-use App\MenuIngredients;
 use Illuminate\Database\Eloquent\Model;
 use Config;
 use Illuminate\Support\Facades\DB;
@@ -49,13 +49,11 @@ class MenuRepository
         $menu->save();
         // linked the ingredients with the menus in the table pivot menus_ingredients
         foreach ($ingredients as $ingredient) {
-            DB::table('ingredient_menu')->insert(
-                [
-                    'menu_id' => $menu->id,
-                    'ingredient_id' => $ingredient['id'],
-                    'amount' => $ingredient['pivot']['amount']
-                ]
-            );
+            $ingredientMenu = new IngredientMenu();
+            $ingredientMenu->menu_id= $menu->id;
+            $ingredientMenu->ingredient_id = $ingredient['id'];
+            $ingredientMenu->amount = $ingredient['pivot']['amount'];
+            $ingredientMenu->save();
         }
         return $menu->id;
     }

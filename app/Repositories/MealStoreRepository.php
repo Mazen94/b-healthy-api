@@ -3,11 +3,11 @@
 
 namespace App\Repositories;
 
+use App\IngredientMealStore;
 use App\MealStore;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Facades\DB;
 
 
 class MealStoreRepository
@@ -67,9 +67,11 @@ class MealStoreRepository
     {
         $this->mealStore->calorie = $caloriesOfMealStore;
         $this->mealStore->save();
-        DB::table('ingredient_meal_store')->insert(
-            ['meal_store_id' => $mealStoreId, 'ingredient_id' => $ingredientId, 'amount' => $amount]
-        );
+        $ingredientMealStore = new IngredientMealStore();
+        $ingredientMealStore->ingredient_id = $ingredientId;
+        $ingredientMealStore->meal_store_id = $mealStoreId;
+        $ingredientMealStore->amount = $amount;
+        $ingredientMealStore->save();
         return $this->mealStore;
     }
 

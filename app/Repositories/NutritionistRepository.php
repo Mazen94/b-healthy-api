@@ -190,7 +190,7 @@ class NutritionistRepository
      * @param string $profession
      * @return false|Model
      */
-    public function createPatient($email, $firstName, $lastName, $password, $gender, $numberPhone, $profession)
+    public function createPatient($email, $firstName, $lastName, $password, $gender, $numberPhone, $profession,$age)
     {
         $patient = new Patient();
         $patient->email = $email;
@@ -199,6 +199,7 @@ class NutritionistRepository
         $patient->gender = $gender;
         $patient->numberPhone = $numberPhone;
         $patient->profession = $profession;
+        $patient->age =  $age;
         $patient->password = bcrypt($password);
         return $this->nutritionist->patients()->save($patient);
     }

@@ -47,6 +47,7 @@ class PatientController extends Controller
         $gender = $request->input('gender');
         $numberPhone = $request->input('numberPhone');
         $profession = $request->input('profession');
+        $age = $request->input('age');
         $nutritionist = auth()->user();
         $nutritionistRepository = new NutritionistRepository($nutritionist);
         $patient = $nutritionistRepository->createPatient(
@@ -56,7 +57,8 @@ class PatientController extends Controller
             $password,
             $gender,
             $numberPhone,
-            $profession
+            $profession,
+            $age
         );
         return response()->json(['patient' => $patient], 200);
     }

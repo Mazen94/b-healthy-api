@@ -23,6 +23,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property string $gender
  * @property string $profession
  * @property string $numberPhone
+ * @property int $age
  */
 class Patient extends Authenticatable implements JWTSubject
 {

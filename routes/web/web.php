@@ -12,7 +12,7 @@ Route::prefix('nutritionist')->group(
         Route::post('login', 'ApiNutritionist\NutritionistController@login');
         Route::middleware('auth:api')->group(
             function () {
-                Route::get('/', 'ApiNutritionist\NutritionistController@index');
+                Route::get('/', 'ApiNutritionist\NutritionistController@connectedUser');
                 Route::put('/', 'ApiNutritionist\NutritionistController@update');
 
                 Route::prefix('patients')->group(

@@ -132,6 +132,7 @@ class RecommendationController extends Controller
      */
     public function getPatientMenus($patientId)
     {
+        $listMenus = [];
         $nutritionist = auth()->user();
         $patient = $nutritionist->patients()->findOrFail($patientId);
         $recommendation = $patient->recommendations()->orderBy('id', 'desc')->first();;

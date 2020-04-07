@@ -166,14 +166,25 @@ class NutritionistRepository
      * @param int $perPage
      * @param string $orderBy
      * @param string $orderDirection
+     * @param string $search
      * @return LengthAwarePaginator
      */
-    public function paginatePatient($page, $perPage, $orderBy, $orderDirection)
+    public function paginatePatient($page, $perPage, $orderBy, $orderDirection, $search)
     {
         $mealStoreGroups = $this->nutritionist->patients();
+        if (isset($search)) {
+            $data = explode(' ', $search, 2);
+            if (isset($data[1])) {
+                $mealStoreGroups->where('firstName', 'like', '%' . $data[0] . '%')
+                    ->where('lastName', 'like', '%' . $data[1] . '%');
+            } else {
+                $mealStoreGroups->where('firstName', 'like', '%' . $data[0] . '%');
+            }
+        }
         if (isset($orderBy) && isset($orderDirection)) {
             $mealStoreGroups->orderBy($orderBy, $orderDirection);
         }
+
         return $mealStoreGroups->paginate($perPage, ['*'], 'page', $page);
     }
 
@@ -190,7 +201,7 @@ class NutritionistRepository
      * @param string $profession
      * @return false|Model
      */
-    public function createPatient($email, $firstName, $lastName, $password, $gender, $numberPhone, $profession,$age)
+    public function createPatient($email, $firstName, $lastName, $password, $gender, $numberPhone, $profession, $age)
     {
         $patient = new Patient();
         $patient->email = $email;
@@ -199,17 +210,18 @@ class NutritionistRepository
         $patient->gender = $gender;
         $patient->numberPhone = $numberPhone;
         $patient->profession = $profession;
-        $patient->age =  $age;
+        $patient->age = $age;
         $patient->password = bcrypt($password);
         return $this->nutritionist->patients()->save($patient);
     }
+
     /**
      * get the number of men and women
      */
     public function countGenderPatient()
     {
-        $patients['male'] = $this->nutritionist->patients()->where('gender','male')->count();
-        $patients['female']  = $this->nutritionist->patients()->where('gender','female')->count();
+        $patients['male'] = $this->nutritionist->patients()->where('gender', 'male')->count();
+        $patients['female'] = $this->nutritionist->patients()->where('gender', 'female')->count();
         return $patients;
     }
 
@@ -219,26 +231,26 @@ class NutritionistRepository
 
     public function rangeAgePatient()
     {
-        $patients['[10-15]'] = $this->nutritionist->patients()->where('age','>=','10')
-            ->where('age','<=','15')->count();
-        $patients['[16-20]'] = $this->nutritionist->patients()->where('age','>=','16')
-            ->where('age','<=','20')->count();
-        $patients['[21-25]'] = $this->nutritionist->patients()->where('age','>=','21')
-            ->where('age','<=','25')->count();
-        $patients['[26-30]'] = $this->nutritionist->patients()->where('age','>=','26')
-            ->where('age','<=','30')->count();
-        $patients['[31-35]'] = $this->nutritionist->patients()->where('age','>=','31')
-            ->where('age','<=','35')->count();
-        $patients['[36-40]'] = $this->nutritionist->patients()->where('age','>=','36')
-            ->where('age','<=','40')->count();
-        $patients['[41-45]'] = $this->nutritionist->patients()->where('age','>=','41')
-            ->where('age','<=','45')->count();
-        $patients['[46-50]'] = $this->nutritionist->patients()->where('age','>=','46')
-            ->where('age','<=','50')->count();
-        $patients['[51-55]'] = $this->nutritionist->patients()->where('age','>=','51')
-            ->where('age','<=','55')->count();
-        $patients['[56-60]'] = $this->nutritionist->patients()->where('age','>=','56')
-            ->where('age','<=','60')->count();
+        $patients['[10-15]'] = $this->nutritionist->patients()->where('age', '>=', '10')
+            ->where('age', '<=', '15')->count();
+        $patients['[16-20]'] = $this->nutritionist->patients()->where('age', '>=', '16')
+            ->where('age', '<=', '20')->count();
+        $patients['[21-25]'] = $this->nutritionist->patients()->where('age', '>=', '21')
+            ->where('age', '<=', '25')->count();
+        $patients['[26-30]'] = $this->nutritionist->patients()->where('age', '>=', '26')
+            ->where('age', '<=', '30')->count();
+        $patients['[31-35]'] = $this->nutritionist->patients()->where('age', '>=', '31')
+            ->where('age', '<=', '35')->count();
+        $patients['[36-40]'] = $this->nutritionist->patients()->where('age', '>=', '36')
+            ->where('age', '<=', '40')->count();
+        $patients['[41-45]'] = $this->nutritionist->patients()->where('age', '>=', '41')
+            ->where('age', '<=', '45')->count();
+        $patients['[46-50]'] = $this->nutritionist->patients()->where('age', '>=', '46')
+            ->where('age', '<=', '50')->count();
+        $patients['[51-55]'] = $this->nutritionist->patients()->where('age', '>=', '51')
+            ->where('age', '<=', '55')->count();
+        $patients['[56-60]'] = $this->nutritionist->patients()->where('age', '>=', '56')
+            ->where('age', '<=', '60')->count();
         return $patients;
     }
 }

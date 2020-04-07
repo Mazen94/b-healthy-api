@@ -26,9 +26,10 @@ class PatientController extends Controller
         $perPage = $request->input('perPage', 10);
         $orderBy = $request->input('orderBy', null);
         $orderDirection = $request->input('orderDirection', 'asc');
+        $search =$request->input('search', '');
         $nutritionist = auth()->user();
         $nutritionistRepository = new NutritionistRepository($nutritionist);
-        $patients = $nutritionistRepository->paginatePatient($page, $perPage, $orderBy, $orderDirection);
+        $patients = $nutritionistRepository->paginatePatient($page, $perPage, $orderBy, $orderDirection,$search);
         return response()->json(['patients' => $patients], 200);
     }
 

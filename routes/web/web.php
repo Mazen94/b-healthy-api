@@ -91,6 +91,7 @@ Route::prefix('nutritionist')->group(
 
                 Route::prefix('ingredients')->group(
                     function () {
+                        Route::get('/all', 'ApiNutritionist\IngredientController@getAll');
                         Route::post('/', 'ApiNutritionist\IngredientController@store');
                         Route::delete('/{id}', 'ApiNutritionist\IngredientController@destroy');
                         Route::get('/{id}', 'ApiNutritionist\IngredientController@show');

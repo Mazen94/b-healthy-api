@@ -103,6 +103,7 @@ Route::prefix('nutritionist')->group(
 
                 Route::prefix('mealStore')->group(
                     function () {
+                        Route::get('/all', 'ApiNutritionist\MealStoreController@getAll');
                         Route::get('/', 'ApiNutritionist\MealStoreController@index');
                         Route::get('/ages', 'ApiNutritionist\MealStoreController@showByAge');
                         Route::post('/', 'ApiNutritionist\MealStoreController@store');

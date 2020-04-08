@@ -31,6 +31,17 @@ class MealStoreController extends Controller
         $mealStores = $nutritionistRepository->paginateMealStore($page, $perPage, $orderBy, $orderDirection);
         return response()->json(['MealStore' => $mealStores,], 200);
     }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return JsonResponse
+     */
+    public function getAll()
+    {
+        $nutritionist = auth()->user();
+        $mealStore = $nutritionist->mealStore;
+        return response()->json(['mealStore' => $mealStore], 200);
+    }
 
     /**
      * Store a newly created storeMenus related to nutritionist in storage.

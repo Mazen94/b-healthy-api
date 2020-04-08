@@ -28,19 +28,19 @@ class IngredientController extends Controller
         $ingredients = $nutritionistRepository->paginateIngredients($page, $perPage, $orderBy, $orderDirection);
         return response()->json(['ingredients' => $ingredients], 200);
     }
+
     /**
      * Display a listing of the resource.
      *
-     * @param PaginationRequest $request
      * @return JsonResponse
      */
-    public function getAll( )
+    public function getAll()
     {
-
         $nutritionist = auth()->user();
         $ingredients = $nutritionist->ingredients;
         return response()->json(['ingredients' => $ingredients], 200);
     }
+
     /**
      * Store a newly created resource in storage.
      *

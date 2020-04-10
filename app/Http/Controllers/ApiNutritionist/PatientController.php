@@ -89,14 +89,8 @@ class PatientController extends Controller
     {
         $nutritionist = auth()->user();
         $patient = $nutritionist->patients()->findOrFail($id);
-        $recommendations = $patient->recommendations;
-        foreach ($recommendations as $recommendation) {
-            $recommendationRepository = new RecommendationRepository($recommendation);
-            $recommendationRepository->deleteRecommendation();
-        }
-        $patient->visits()->delete();
         $patientRepository = new PatientRepository($patient);
         $patientRepository->deletePatient();
-        return response()->json(['success' => true], 200);
+        return response()->json(['data' => true], 200);
     }
 }

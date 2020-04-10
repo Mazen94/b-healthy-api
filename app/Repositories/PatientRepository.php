@@ -32,9 +32,23 @@ class PatientRepository
      */
     public function deletePatient()
     {
+        $this->deleteAllRecommendation($this->patient->recommendations);
+        $this->patient->visits()->delete();
         return $this->patient->delete();
     }
 
+    /**
+     * Method to delete all the recommendation
+     * @param $recommendations
+     * @throws \Exception
+     *
+     */
+    public function deleteAllRecommendation($recommendations) {
+        foreach ($recommendations as $recommendation) {
+            $recommendationRepository = new RecommendationRepository($recommendation);
+            $recommendationRepository->deleteRecommendation();
+        }
+    }
     /**
      * Method for patient to update patient connected
      *

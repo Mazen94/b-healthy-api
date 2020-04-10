@@ -91,7 +91,6 @@ Route::prefix('nutritionist')->group(
 
                 Route::prefix('ingredients')->group(
                     function () {
-                        Route::get('/all', 'ApiNutritionist\IngredientController@getAll');
                         Route::post('/', 'ApiNutritionist\IngredientController@store');
                         Route::delete('/{id}', 'ApiNutritionist\IngredientController@destroy');
                         Route::get('/{id}', 'ApiNutritionist\IngredientController@show');
@@ -103,7 +102,6 @@ Route::prefix('nutritionist')->group(
 
                 Route::prefix('mealStore')->group(
                     function () {
-                        Route::get('/all', 'ApiNutritionist\MealStoreController@getAll');
                         Route::get('/', 'ApiNutritionist\MealStoreController@index');
                         Route::get('/ages', 'ApiNutritionist\MealStoreController@showByAge');
                         Route::post('/', 'ApiNutritionist\MealStoreController@store');
@@ -112,14 +110,14 @@ Route::prefix('nutritionist')->group(
                         Route::delete('/{idStoreMenu}', 'ApiNutritionist\MealStoreController@destroy');
                         Route::prefix('{idStoreMenu}/ingredients')->group(
                             function () {
-                                Route::post('/', 'ApiNutritionist\MealStoreController@addIngredient');
+                                Route::post('/', 'ApiNutritionist\IngredientController@addIngredientToMealStore');
                                 Route::delete(
                                     '{idIngredient}',
-                                    'ApiNutritionist\MealStoreController@deleteIngredient'
+                                    'ApiNutritionist\IngredientController@deleteIngredientMealStore'
                                 );
                                 Route::put(
                                     '{idIngredient}',
-                                    'ApiNutritionist\MealStoreController@updateAmountPivotIngredient'
+                                    'ApiNutritionist\IngredientController@updateAmountPivotIngredient'
                                 );
                             }
                         );

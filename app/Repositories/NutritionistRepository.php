@@ -232,16 +232,16 @@ class NutritionistRepository
 
     public function rangeAgePatient()
     {
- 
-        $patient =[];
-    $data = Config::get('constants.ARRAY_OF_AGE');
-    foreach ($data as $age){
-        $patient ["[$age[0]-$age[1]]"] = $this->rageAge($age[0],$age[1]) ;
-    }
+        $patient = [];
+        $data = Config::get('constants.ARRAY_OF_AGE');
+        foreach ($data as $age) {
+            $patient ["[$age[0]-$age[1]]"] = $this->rangeAge($age[0], $age[1]);
+        }
         return $patient;
     }
 
-    public  function rageAge($minAge,$maxAge){
+    public function rangeAge($minAge, $maxAge)
+    {
         return $this->nutritionist->patients()->where('age', '>=', $minAge)
             ->where('age', '<=', $maxAge)->count();
     }

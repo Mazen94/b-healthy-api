@@ -55,33 +55,5 @@ class NutritionistController extends Controller
         return response()->json(['success' => true,], 200);
     }
 
-    /**
-     * Nutritionist Register
-     * @param NutritionistCreateRequest $request
-     * @return JsonResponse
-     */
-    public function register(NutritionistCreateRequest $request)
-    {
-        $email = $request->input('email');
-        $firstName = $request->input('firstName');
-        $lastName = $request->input('lastName');
-        $password = $request->input('password');
-        $nutritionist = NutritionistRepository::register($email, $firstName, $lastName, $password);
-        $token = JWTAuth::fromUser($nutritionist);
-        return response()->json(['token' => $token,], 200);
-    }
 
-    /**
-     * Login Nutritionist
-     * @param LoginRequest $request
-     * @return JsonResponse
-     */
-    public function login(LoginRequest $request)
-    {
-        $credentials = $request->only('email', 'password');
-        if (!$token = auth('api')->attempt($credentials)) {
-            return response()->json(['message' => __('messages.login')], 401);
-        }
-        return response()->json(['token' => $token,], 200);
-    }
 }

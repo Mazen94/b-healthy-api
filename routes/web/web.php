@@ -8,8 +8,8 @@
 */
 Route::prefix('nutritionist')->group(
     function () {
-        Route::post('register', 'ApiNutritionist\NutritionistController@register');
-        Route::post('login', 'ApiNutritionist\NutritionistController@login');
+        Route::post('register', 'ApiNutritionist\AuthController@register');
+        Route::post('login', 'ApiNutritionist\AuthController@login');
         Route::middleware('auth:api')->group(
             function () {
                 Route::get('/', 'ApiNutritionist\NutritionistController@connectedUser');

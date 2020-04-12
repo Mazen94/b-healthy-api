@@ -97,89 +97,9 @@ class RecommendationController extends Controller
         return response()->json(['success' => true], 200);
     }
 
-    /**
-     * add a menu to a recommendation
-     * this recommendation related to patient
-     *
-     * @param Request $request
-     * @param int $patientId
-     * @param $idRecommendation
-     * @return JsonResponse
-     * @throws \Exception
-     */
-    public function addMenuToRecommendation(Request $request, $patientId, $idRecommendation)
-    {
-        $nutritionist = auth()->user();
-        $patient = $nutritionist->patients()->findOrFail($patientId);
-        $recommendation = $patient->recommendations()->findOrFail($idRecommendation);
-        $name = $request->input('StoreMenu.name');
-        $calorie = $request->input('StoreMenu.calorie');
-        $typeMenu = $request->input('StoreMenu.type_menu');
-        $ingredients = $request->input('StoreMenu.ingredients');
-        $menuRepository = new MenuRepository();
-        $idMenu = $menuRepository->createMenuWithIngredients($name, $calorie, $typeMenu, $ingredients);
-        $recommendationRepository = new RecommendationRepository($recommendation);
-        $newRecommendation = $recommendationRepository->addMenuToRecommendation($idMenu);
-        return response()->json(['recommendation' => $newRecommendation], 200);
-    }
 
-    /**
-     * get a menus posted by patient related  to recommendation
-     *
-     * @param int $patientId
-     * @return JsonResponse
-     * @throws \Exception
-     */
-    public function getPatientMenus($patientId)
-    {
-        $listMenus = [];
-        $nutritionist = auth()->user();
-        $patient = $nutritionist->patients()->findOrFail($patientId);
-        $recommendation = $patient->recommendations()->orderBy('id', 'desc')->first();;
-        $recommendationRepository = new RecommendationRepository($recommendation);
-        $menus = $recommendationRepository->menusOfPatient();
-        foreach ($menus as $menu)
-        {
-                $listMenus [] = $menu;
-        }
-        return response()->json(['menus' => $listMenus], 200);
-    }
 
-    /**
-     * get a only one menu (with ingredients ) posted by patient related  to recommendation
-     *
-     * @param int $patientId
-     * @param int $idMenu
-     * @return JsonResponse
-     */
-    public function getMenuWithIngredients($patientId,$idMenu)
-    {
-        $nutritionist = auth()->user();
-        $patient = $nutritionist->patients()->findOrFail($patientId);
-        $recommendation = $patient->recommendations()->orderBy('id', 'desc')->first();
-        $menus = $recommendation->menus()->findOrFail($idMenu);
-        $menus['ingredients'] = $menus->ingredients;
-        return response()->json(['menus' =>$menus ], 200);
-    }
-    /**
-     * destroy  a menu related  to recommendation
-     *
-     * @param int $patientId
-     * @param int $idRecommendation
-     * @param int $idMenu
-     * @return JsonResponse
-     * @throws \Exception
-     */
-    public function destroyMenu($patientId, $idRecommendation, $idMenu)
-    {
-        $nutritionist = auth()->user();
-        $patient = $nutritionist->patients()->findOrFail($patientId);
-        $recommendation = $patient->recommendations()->findOrFail($idRecommendation);
-        $recommendation->menus()->findOrFail($idMenu);
-        $recommendationRepository = new RecommendationRepository($recommendation);
-        $recommendationRepository->destroyMenu($idMenu);
-        return response()->json(['success' => true,], 200);
-    }
+
 
 
 }

@@ -43,11 +43,11 @@ Route::prefix('nutritionist')->group(
                                         Route::get('/', 'ApiNutritionist\RecommendationController@index');
                                         Route::get(
                                             '/menus',
-                                            'ApiNutritionist\RecommendationController@getPatientMenus'
+                                            'ApiNutritionist\MenuController@getPatientMenus'
                                         );
                                         Route::get(
                                             '/menus/{idMenu}',
-                                            'ApiNutritionist\RecommendationController@getMenuWithIngredients'
+                                            'ApiNutritionist\MenuController@show'
                                         );
                                         Route::post('/', 'ApiNutritionist\RecommendationController@store');
                                         Route::get(
@@ -66,11 +66,11 @@ Route::prefix('nutritionist')->group(
                                             function () {
                                                 Route::post(
                                                     '/',
-                                                    'ApiNutritionist\RecommendationController@addMenuToRecommendation'
+                                                    'ApiNutritionist\MenuController@store'
                                                 );
                                                 Route::delete(
                                                     '/{idMenu}',
-                                                    'ApiNutritionist\RecommendationController@destroyMenu'
+                                                    'ApiNutritionist\MenuController@destroy'
                                                 );
                                             }
                                         );

@@ -49,13 +49,19 @@ class RecommendationRepository
      * Method to add menu to recommendation related to patient
      *
      *
-     * @param int $idMenu
+     * @param  $mealStore
      *
      * @return bool|mixed|null
      * @throws \Exception
      */
-    public function addMenuToRecommendation($idMenu)
+    public function addMenuToRecommendation($mealStore)
     {
+        $name =  $mealStore->name;
+        $calorie = $mealStore->calorie;
+        $typeMenu = $mealStore->type_menu;
+        $ingredients = $mealStore->ingredients;
+        $menuRepository = new MenuRepository();
+        $idMenu = $menuRepository->createMenuWithIngredients($name, $calorie, $typeMenu, $ingredients);
         $this->recommendation->menus()->attach($idMenu);
         return $this->recommendation->menus;
     }
@@ -67,6 +73,7 @@ class RecommendationRepository
      */
     public function menusOfPatient()
     {
+        //TODO return all the menus
         $menus = $this->recommendation->menus;
         return $menus->whereIn(
             'type_menu',

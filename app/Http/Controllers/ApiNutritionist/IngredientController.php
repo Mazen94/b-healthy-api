@@ -105,7 +105,6 @@ class IngredientController extends Controller
      *
      * @throws \Exception
      */
-    //TODO Change this method to IngredientController
     public function addIngredientToMealStore(MealStoreIngredientRequest $request, $idStoreMenu)
     {
         $idIngredient = $request->input('id');

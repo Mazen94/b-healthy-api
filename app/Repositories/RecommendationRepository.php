@@ -66,27 +66,6 @@ class RecommendationRepository
         return $this->recommendation->menus;
     }
 
-    /**
-     * Method  to get menus posted by  patient
-     *
-     * @return mixed
-     */
-    public function menusOfPatient()
-    {
-        //TODO return all the menus
-        $menus = $this->recommendation->menus;
-        return $menus->whereIn(
-            'type_menu',
-            array(
-                'suppCollations2',
-                'suppCollation1',
-                'suppPetit-Déjeuner',
-                'suppDéjeuner',
-                'suppDiner'
-            )
-        );
-
-    }
 
     /**
      * Method  to detach menu related to patient

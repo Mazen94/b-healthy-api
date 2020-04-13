@@ -28,8 +28,9 @@ class MenuController extends Controller
         $mealStore = $nutritionist->mealStore()->findOrFail($id);
         $recommendationRepository = new RecommendationRepository($recommendation);
         $newRecommendation = $recommendationRepository->addMenuToRecommendation($mealStore);
-        return response()->json(['recommendation' => $newRecommendation], 200);
+        return response()->json(['data' => $newRecommendation], 200);
     }
+
     /**
      * get a menus posted by patient related  to recommendation
      *
@@ -37,15 +38,14 @@ class MenuController extends Controller
      * @return JsonResponse
      * @throws \Exception
      */
-    public function getPatientMenus($patientId)
+    public function getMenus($patientId)
     {
         $nutritionist = auth()->user();
         $patient = $nutritionist->patients()->findOrFail($patientId);
-        $recommendation = $patient->recommendations()->orderBy('id', 'desc')->first();;
-        $recommendationRepository = new RecommendationRepository($recommendation);
-        $menus = $recommendationRepository->menusOfPatient();
-        return response()->json(['menus' => $menus], 200);
+        $recommendation = $patient->recommendations()->latest()->first();
+        return response()->json(['data' => $recommendation->menus], 200);
     }
+
     /**
      * get a only one menu (with ingredients ) posted by patient related  to recommendation
      *
@@ -53,16 +53,16 @@ class MenuController extends Controller
      * @param int $idMenu
      * @return JsonResponse
      */
-    public function show($patientId,$idMenu)
+    public function show($patientId, $idMenu)
     {
         $nutritionist = auth()->user();
         $patient = $nutritionist->patients()->findOrFail($patientId);
-        //TODO change to repo
         $recommendation = $patient->recommendations()->orderBy('id', 'desc')->first();
         $menus = $recommendation->menus()->findOrFail($idMenu);
         $menus['ingredients'] = $menus->ingredients;
-        return response()->json(['menus' =>$menus ], 200);
+        return response()->json(['menus' => $menus], 200);
     }
+
     /**
      * destroy  a menu related  to recommendation
      *

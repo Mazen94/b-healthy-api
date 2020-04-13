@@ -4,11 +4,10 @@ namespace App\Http\Controllers\ApiNutritionist;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RecommendationRequest;
-use App\Repositories\MenuRepository;
 use App\Repositories\PatientRepository;
 use App\Repositories\RecommendationRepository;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+
 
 class RecommendationController extends Controller
 {
@@ -22,7 +21,7 @@ class RecommendationController extends Controller
     {
         $nutritionist = auth()->user();
         $patient = $nutritionist->patients()->findOrFail($patientId);
-        return response()->json(['recommendations' => $patient->recommendations], 200);
+        return response()->json(['data' => $patient->recommendations], 200);
     }
 
     /**
@@ -40,7 +39,7 @@ class RecommendationController extends Controller
         $name = $request->input('name');
         $patientRepository = new PatientRepository($patient);
         $recommendation = $patientRepository->createRecommendation($name, $avoid);
-        return response()->json(['recommendation' => $recommendation], 200);
+        return response()->json(['data' => $recommendation], 200);
     }
 
     /**
@@ -56,7 +55,7 @@ class RecommendationController extends Controller
         $patient = $nutritionist->patients()->findOrFail($patientId);
         $recommendation = $patient->recommendations()->findOrFail($idRecommendation);
         $recommendation['menu'] = $recommendation->menus;
-        return response()->json(['recommendation' => $recommendation], 200);
+        return response()->json(['data' => $recommendation], 200);
     }
 
     /**
@@ -76,7 +75,7 @@ class RecommendationController extends Controller
         $name = $request->input('name');
         $recommendationRepository = new RecommendationRepository($recommendation);
         $recommendation = $recommendationRepository->updateRecommendation($name, $avoid);
-        return response()->json(['recommendation' => $recommendation], 200);
+        return response()->json(['data' => $recommendation], 200);
     }
 
     /**
@@ -94,12 +93,8 @@ class RecommendationController extends Controller
         $recommendation = $patient->recommendations()->findOrFail($idRecommendation);
         $recommendationRepository = new RecommendationRepository($recommendation);
         $recommendationRepository->deleteRecommendation();
-        return response()->json(['success' => true], 200);
+        return response()->json(['data' => true], 200);
     }
-
-
-
-
 
 
 }

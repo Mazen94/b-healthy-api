@@ -27,8 +27,9 @@ class MealStoreController extends Controller
         $nutritionist = auth()->user();
         $nutritionistRepository = new NutritionistRepository($nutritionist);
         $mealStores = $nutritionistRepository->paginateMealStore($page, $perPage, $orderBy, $orderDirection);
-        return response()->json(['MealStore' => $mealStores,], 200);
+        return response()->json(['data' => $mealStores,], 200);
     }
+
     /**
      * Store a newly created storeMenus related to nutritionist in storage.
      *
@@ -46,7 +47,7 @@ class MealStoreController extends Controller
         $typeMenu = $request->input('type_menu');
         $nutritionistRepository = new NutritionistRepository($nutritionist);
         $mealStore = $nutritionistRepository->createMealStore($name, $maxAge, $calorie, $minAge, $typeMenu);
-        return response()->json(['MealStore' => $mealStore,], 200);
+        return response()->json(['data' => $mealStore,], 200);
     }
 
     /**
@@ -61,7 +62,7 @@ class MealStoreController extends Controller
         $nutritionist = auth()->user();
         $mealStore = $nutritionist->mealStore()->findOrFail($id);
         $mealStore['ingredients'] = $mealStore->ingredients;
-        return response()->json(['StoreMenu' => $mealStore,], 200);
+        return response()->json(['data' => $mealStore,], 200);
     }
 
     /**
@@ -77,7 +78,7 @@ class MealStoreController extends Controller
         $age = $request->input('age');
         $nutritionistRepository = new NutritionistRepository($nutritionist);
         $mealStoreWithIngredients = $nutritionistRepository->getMealStoreWithIngredientsByAge($age);
-        return response()->json(['MealStore' => $mealStoreWithIngredients,], 200);
+        return response()->json(['data' => $mealStoreWithIngredients,], 200);
     }
 
     /**
@@ -99,7 +100,7 @@ class MealStoreController extends Controller
         $typeMenu = $request->input('type_menu');
         $mealStoreRepository = new MealStoreRepository($mealStore);
         $menuUpdated = $mealStoreRepository->updateMealStore($name, $maxAge, $calorie, $minAge, $typeMenu);
-        return response()->json(['MealStore' => $menuUpdated,], 200);
+        return response()->json(['data' => $menuUpdated,], 200);
     }
 
     /**
@@ -117,12 +118,8 @@ class MealStoreController extends Controller
         $mealStore = $nutritionist->mealStore()->findOrFail($id);
         $mealStoreRepository = new MealStoreRepository($mealStore);
         $mealStoreRepository->deleteMealStore();
-        return response()->json(['success' => true,], 200);
+        return response()->json(['data' => true,], 200);
     }
-
-
-
-
 
 
 }

@@ -57,10 +57,10 @@ class MenuController extends Controller
     {
         $nutritionist = auth()->user();
         $patient = $nutritionist->patients()->findOrFail($patientId);
-        $recommendation = $patient->recommendations()->orderBy('id', 'desc')->first();
+        $recommendation = $patient->recommendations()->latest()->first();
         $menus = $recommendation->menus()->findOrFail($idMenu);
         $menus['ingredients'] = $menus->ingredients;
-        return response()->json(['menus' => $menus], 200);
+        return response()->json(['data' => $menus], 200);
     }
 
     /**
@@ -80,7 +80,7 @@ class MenuController extends Controller
         $recommendation->menus()->findOrFail($idMenu);
         $recommendationRepository = new RecommendationRepository($recommendation);
         $recommendationRepository->destroyMenu($idMenu);
-        return response()->json(['success' => true,], 200);
+        return response()->json(['data' => true,], 200);
     }
 
 }

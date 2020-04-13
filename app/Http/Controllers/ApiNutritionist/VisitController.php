@@ -29,7 +29,7 @@ class VisitController extends Controller
         $orderDirection = $request->input('orderDirection', 'asc');
         $patientRepository = new PatientRepository($patient);
         $visits = $patientRepository->paginateVisits($page, $perPage, $orderBy, $orderDirection);
-        return response()->json(['visits' => $visits], 200);
+        return response()->json(['data' => $visits], 200);
     }
 
     /**
@@ -55,7 +55,7 @@ class VisitController extends Controller
         $doneAt = $request->input('done_at');
         $patientRepository = new PatientRepository($patient);
         $visit = $patientRepository->createVisit($weight, $note,$belly, $chest,$legs, $neck,$tall,$scheduledAt, $doneAt);
-        return response()->json(['visits' => $visit], 200);
+        return response()->json(['data' => $visit], 200);
     }
 
     /**
@@ -70,7 +70,7 @@ class VisitController extends Controller
         $nutritionist = auth()->user();
         $patient = $nutritionist->patients()->findOrFail($idPatient);
         $visit = $patient->visits()->findOrFail($idVisit);
-        return response()->json(['visit' => $visit], 200);
+        return response()->json(['data' => $visit], 200);
     }
 
     /**
@@ -92,7 +92,7 @@ class VisitController extends Controller
         $doneAt = $request->input('done_at');
         $visitRepository = new VisitRepository($visit);
         $visitUpdated = $visitRepository->updateVisit($weight, $note, $scheduledAt, $doneAt);
-        return response()->json(['visit' => $visitUpdated], 200);
+        return response()->json(['data' => $visitUpdated], 200);
     }
 
     /**
@@ -109,7 +109,7 @@ class VisitController extends Controller
         $visit = $patient->visits()->findOrFail($idVisit);
         $visitRepository = new VisitRepository($visit);
         $visitRepository->deleteVisit();
-        return response()->json(['success' => true], 200);
+        return response()->json(['data' => true], 200);
     }
 
 }

@@ -21,7 +21,7 @@ class NutritionistController extends Controller
      */
     public function connectedUser()
     {
-        return response()->json(['nutritionist' => auth()->user(),], 200);
+        return response()->json(['data' => auth()->user(),], 200);
     }
 
     /**
@@ -39,7 +39,7 @@ class NutritionistController extends Controller
         $password = $request->input('password');
         $picture = $request->input('picture');
         $nutritionist = $nutritionistRepository->updateNutritionist($email, $firstName, $lastName, $password, $picture);
-        return response()->json(['nutritionist' => $nutritionist,], 200);
+        return response()->json(['data' => $nutritionist,], 200);
     }
 
     /**
@@ -52,7 +52,7 @@ class NutritionistController extends Controller
     {
         $nutritionistRepository = new NutritionistRepository(auth()->user());
         $nutritionistRepository->deleteNutritionist();
-        return response()->json(['success' => true,], 200);
+        return response()->json(['data' => true,], 200);
     }
 
 

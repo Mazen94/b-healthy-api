@@ -16,7 +16,7 @@ class StatisticalController extends Controller
     {
         $nutritionist = auth()->user();
         $countOfIngredient = $nutritionist->ingredients()->count();
-        return response()->json(['countOfIngredient' => $countOfIngredient], 200);
+        return response()->json(['data' => $countOfIngredient], 200);
     }
     /**
      * Display the number of menus
@@ -26,7 +26,7 @@ class StatisticalController extends Controller
     {
         $nutritionist = auth()->user();
         $countOfMenus = $nutritionist->mealStore()->count();
-        return response()->json(['countOfMenus' => $countOfMenus], 200);
+        return response()->json(['data' => $countOfMenus], 200);
     }
     /**
      * Display the number of menus
@@ -37,7 +37,7 @@ class StatisticalController extends Controller
         $nutritionist = auth()->user();
         $nutritionistRepository = new NutritionistRepository($nutritionist);
         $patient = $nutritionistRepository->countGenderPatient();
-        return response()->json(['countGender' => $patient], 200);
+        return response()->json(['data' => $patient], 200);
     }
     /**
      * get the number of patients by age group
@@ -49,7 +49,7 @@ class StatisticalController extends Controller
         $nutritionist = auth()->user();
         $nutritionistRepository = new NutritionistRepository($nutritionist);
         $patient = $nutritionistRepository->rangeAgePatient();
-        return response()->json(['countGender' => $patient], 200);
+        return response()->json(['data' => $patient], 200);
     }
 
 }

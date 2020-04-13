@@ -28,7 +28,7 @@ class IngredientController extends Controller
         $nutritionist = auth()->user();
         $nutritionistRepository = new NutritionistRepository($nutritionist);
         $ingredients = $nutritionistRepository->paginateIngredients($page, $perPage, $orderBy, $orderDirection);
-        return response()->json(['ingredients' => $ingredients], 200);
+        return response()->json(['data' => $ingredients], 200);
     }
 
 
@@ -46,7 +46,7 @@ class IngredientController extends Controller
         $calorie = $request->input('calorie');
         $nutritionistRepository = new NutritionistRepository($nutritionist);
         $ingredient = $nutritionistRepository->createIngredient($name, $amount, $calorie);
-        return response()->json(['ingredient' => $ingredient], 200);
+        return response()->json(['data' => $ingredient], 200);
     }
 
     /**
@@ -58,7 +58,7 @@ class IngredientController extends Controller
     public function show($id)
     {
         $ingredient = auth()->user()->ingredients()->findOrFail($id);
-        return response()->json(['ingredient' => $ingredient], 200);
+        return response()->json(['data' => $ingredient], 200);
     }
 
     /**
@@ -77,7 +77,7 @@ class IngredientController extends Controller
         $calorie = $request->input('calorie');
         $ingredientRepository = new IngredientRepository($ingredient);
         $ingredient = $ingredientRepository->updateIngredient($name, $amount, $calorie);
-        return response()->json(['ingredient' => $ingredient], 200);
+        return response()->json(['data' => $ingredient], 200);
     }
 
     /**
@@ -93,7 +93,7 @@ class IngredientController extends Controller
         $ingredient = $nutritionist->ingredients()->findOrFail($id);
         $ingredientRepository = new IngredientRepository($ingredient);
         $ingredientRepository->deleteIngredient();
-        return response()->json(['success' => true,], 200);
+        return response()->json(['data' => true,], 200);
     }
     /**
      * Method for nutritionist add ingredient to the storeMenu and update the calories of mealStore .
@@ -123,7 +123,7 @@ class IngredientController extends Controller
             $idIngredient,
             $amount
         );
-        return response()->json(['storeMenu' => $mealStore,], 200);
+        return response()->json(['data' => $mealStore,], 200);
     }
     /**
      * Method for nutritionist to delete ingredient to the storeMenu and update the calories of mealStore .
@@ -147,7 +147,7 @@ class IngredientController extends Controller
         $mealStoreCalorie = $mealStoreCalorie - (($amount / $defaultAmount) * $ingredientCalorie);
         $mealStoreRepository = new MealStoreRepository($mealStore);
         $menu = $mealStoreRepository->deleteIngredientToMealStore($idIngredient, $mealStoreCalorie);
-        return response()->json(['mealStore' => $menu,], 200);
+        return response()->json(['data' => $menu,], 200);
     }
     /**
      * update amount ingredient to the storeMenu.
@@ -168,6 +168,6 @@ class IngredientController extends Controller
         $amount = $request->input('amount');
         $ingredientRepository = new IngredientRepository($ingredient);
         $amountUpdated = $ingredientRepository->updateAmountIngredientInMealStore($amount);
-        return response()->json(['amount' => $amountUpdated,], 200);
+        return response()->json(['data' => $amountUpdated,], 200);
     }
 }

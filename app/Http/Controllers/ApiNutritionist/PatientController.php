@@ -30,7 +30,7 @@ class PatientController extends Controller
         $nutritionist = auth()->user();
         $nutritionistRepository = new NutritionistRepository($nutritionist);
         $patients = $nutritionistRepository->paginatePatient($page, $perPage, $orderBy, $orderDirection,$search);
-        return response()->json(['patients' => $patients], 200);
+        return response()->json(['data' => $patients], 200);
     }
 
     /**
@@ -61,7 +61,7 @@ class PatientController extends Controller
             $profession,
             $age
         );
-        return response()->json(['patient' => $patient], 200);
+        return response()->json(['data' => $patient], 200);
     }
 
     /**
@@ -74,7 +74,7 @@ class PatientController extends Controller
     {
         $nutritionist = auth()->user();
         $patient = $nutritionist->patients()->findOrFail($id);
-        return response()->json(['patient' => $patient], 200);
+        return response()->json(['data' => $patient], 200);
     }
 
 

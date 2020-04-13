@@ -25,7 +25,7 @@ class MealStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'type_menu' => 'required|string',
+            'type_menu' => 'required|integer',
             'name' => 'required|string',
             'max_age' => 'required|integer|between:' . Config::get('constants.MIN_AGE_LENGTH') . ',' . Config::get(
                     'constants.MAX_AGE_LENGTH'

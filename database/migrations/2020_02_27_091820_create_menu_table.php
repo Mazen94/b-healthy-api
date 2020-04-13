@@ -19,10 +19,7 @@ class CreateMenuTable extends Migration
             $table->integer('max_age');
             $table->integer('min_age');
             $table->integer('calorie');
-            $table->string('type_menu');
-            $table->integer('petit_dej_supp');
-            $table->integer('dej_supp');
-            $table->integer('dinner_supp');
+            $table->integer('type_menu');
             $table->timestamps();
         });
     }

@@ -15,7 +15,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Menu extends Model
 {
-
+    const TYPE_MENU = [
+        'BREAKFAST' => 0,
+        'FIRST_SNAKE' => 1,
+        'LUNCH' => 2,
+        'SECOND_SNAKE' => 3,
+        'DINNER' => 4,
+        'SUPP_BREAKFAST' => 5,
+        'SUPP_FIRST_SNAKE' => 6,
+        'SUPP_LUNCH' => 7,
+        'SUPP_SECOND_SNAKE' => 8,
+        'SUPP_DINNER' => 9,
+    ];
     /**
      * @var string
      */

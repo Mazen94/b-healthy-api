@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Menu;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class MenuRequest extends FormRequest
 {
@@ -24,7 +26,7 @@ class MenuRequest extends FormRequest
     public function rules()
     {
         return [
-            'type_menu' => 'required|string',
+            'type_menu' => Rule::in(Menu::TYPE_MENU) . 'required|integer',
             'name' => 'required|string',
         ];
     }

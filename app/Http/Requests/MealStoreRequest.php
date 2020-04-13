@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\MealStore;
 use Illuminate\Foundation\Http\FormRequest;
 use Config;
+use Illuminate\Validation\Rule;
 
 class MealStoreRequest extends FormRequest
 {
@@ -25,7 +27,7 @@ class MealStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'type_menu' => 'required|integer',
+            'type_menu' => Rule::in(MealStore::TYPE_MENU) . 'required|integer',
             'name' => 'required|string',
             'max_age' => 'required|integer|between:' . Config::get('constants.MIN_AGE_LENGTH') . ',' . Config::get(
                     'constants.MAX_AGE_LENGTH'

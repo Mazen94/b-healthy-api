@@ -19,7 +19,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class MealStore extends Model
 {
+    const  TYPE_MENU = [
+        'BREAKFAST' => 0,
+        'FIRST_SNAKE' => 1,
+        'LUNCH' => 2,
+        'SECOND_SNAKE' => 3,
+        'DINNER' => 4,
+    ];
+
     protected $table = 'mealStore';
+
 
     /**
      * One To Many (Inverse)

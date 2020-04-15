@@ -11,6 +11,6 @@ class NutritionnistTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Nutritionist::class, 2)->create();
+        factory(Nutritionist::class, 1)->create();
     }
 }

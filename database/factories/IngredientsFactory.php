@@ -11,7 +11,7 @@ $factory->define(
         $users = Nutritionist::all()->pluck('id')->toArray();
 
         return [
-            'nom' => $faker->unique()->name,
+            'name' => $faker->unique()->name,
             'nutritionist_id' => $faker->randomElement($users),
             'amount' => $faker->numberBetween(100, 100),
             'calorie' => $faker->numberBetween(100, 300)

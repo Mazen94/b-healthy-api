@@ -13,7 +13,7 @@ $factory->define(
         return [
             'nom' => $faker->unique()->name,
             'nutritionist_id' => $faker->randomElement($users),
-            'quantite' => $faker->numberBetween(100, 100),
+            'amount' => $faker->numberBetween(100, 100),
             'calorie' => $faker->numberBetween(100, 300)
         ];
     }

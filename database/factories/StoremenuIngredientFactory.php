@@ -2,21 +2,21 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\StoremenuIngredient;
+use App\IngredientMealStore;
 use Faker\Generator as Faker;
-use App\Storemenu;
+use App\MealStore;
 use App\Ingredient;
 
 $factory->define(
-    StoremenuIngredient::class,
+    IngredientMealStore::class,
     function (Faker $faker) {
-        $storeMenu = Storemenu::all()->pluck('id')->toArray();
+        $storeMenu = MealStore::all()->pluck('id')->toArray();
         $ingredient = Ingredient::all()->pluck('id')->toArray();
         return [
 
-            'storemenu_id' => $faker->randomElement($storeMenu),
+            'meal_store_id' => $faker->randomElement($storeMenu),
             'ingredients_id' => $faker->randomElement($ingredient),
-            'quantite' => $faker->numberBetween(50, 100)
+            'amount' => $faker->numberBetween(50, 100)
         ];
     }
 );

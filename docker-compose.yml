@@ -1,0 +1,63 @@
+version: '3'
+services:
+
+  #PHP Service
+  b-healthy-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: b-healthy/php
+    container_name: b-healthy-api
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - /var/www/vendor
+      - ./:/var/www
+      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - b-healthy-api-network
+
+  #Nginx Service
+  b-healthy-api-webserver:
+    image: nginx:alpine
+    container_name: b-healthy-api-webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8002:80"
+    volumes:
+      - ./:/var/www
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - b-healthy-api-network
+
+  #MySQL Service
+  b-healthy-db:
+    image: mysql:5.7.22
+    container_name: b-healthy-db
+    restart: unless-stopped
+    tty: true
+    environment:
+      MYSQL_DATABASE: b-healthy
+      MYSQL_ROOT_PASSWORD: secret
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - b-healthy-api-network
+
+#Docker Networks
+networks:
+  b-healthy-api-network:
+    driver: bridge
+
+#Volumes
+volumes:
+  dbdata:
+    driver: local

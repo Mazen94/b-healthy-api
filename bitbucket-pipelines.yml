@@ -1,0 +1,23 @@
+image: atlassian/default-image:2
+
+pipelines:
+  branches:
+    master:
+      - step:
+          name: deployment to anypli dev server
+          script:
+          - pipe: atlassian/rsync-deploy:0.4.1
+            variables:
+              USER: 'forge'
+              SERVER: '46.101.108.105'
+              REMOTE_PATH: '/home/forge/api.b-healthy.dev.anypli.com'
+              LOCAL_PATH: '.'
+              EXTRA_ARGS: '--exclude .env'
+      - step:
+          name: restart docker-compose
+          script:
+          - pipe: atlassian/ssh-run:0.2.4
+            variables:
+              SSH_USER: 'forge'
+              SERVER: '46.101.108.105'
+              COMMAND: 'cd /home/forge/api.b-healthy.dev.anypli.com; docker-compose up --build -d'

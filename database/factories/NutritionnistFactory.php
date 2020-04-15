@@ -7,14 +7,12 @@ use Faker\Generator as Faker;
 
 $factory->define(Nutritionist::class, function (Faker $faker) {
     return [
-        'nom' => $faker->unique()->name,
         'email'=>'admin@admin.com',
-        'password' =>bcrypt('adminadmin'),
-        'lastName' => $faker->lastName,
         'firstName'=> $faker->firstName,
-        'gender' => $faker->randomElement(['male','female']),
+        'lastName' => $faker->lastName,
+        'password' =>bcrypt('adminadmin'),
         'picture' => $faker->imageUrl(),
-
+        'gender' => $faker->randomElement(['male','female']),
 
     ];
 });

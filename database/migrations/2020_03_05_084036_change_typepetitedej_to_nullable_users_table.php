@@ -14,9 +14,7 @@ class ChangeTypepetitedejToNullableUsersTable extends Migration
     public function up()
     {
         Schema::table('menus', function (Blueprint $table) {
-            $table->integer('petit_dej_supp')->nullable()->change();
-            $table->integer('dej_supp')->nullable()->change();
-            $table->integer('dinner_supp')->nullable()->change();
+
         });
     }
 

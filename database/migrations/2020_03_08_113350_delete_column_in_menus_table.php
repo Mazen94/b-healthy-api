@@ -14,9 +14,7 @@ class DeleteColumnInMenusTable extends Migration
     public function up()
     {
         Schema::table('menus', function (Blueprint $table) {
-            $table->dropColumn('dej_supp');
-            $table->dropColumn('petit_dej_supp');
-            $table->dropColumn('dinner_supp');
+
         });
     }
 

@@ -4,6 +4,7 @@
 namespace App\Repositories;
 
 use App\Ingredient;
+use App\MealStore;
 use Illuminate\Database\Eloquent\Model;
 
 class IngredientRepository
@@ -44,15 +45,19 @@ class IngredientRepository
         $this->ingredient->save();
         return $this->ingredient;
     }
+
     /**
      * update amount ingredient to a storeMenu
      *
      * @param string $amount
+     * @param MealStore $mealStore
+     * @param $mealStoreCalorie
      * @return bool|mixed|null
-     * @throws \Exception
      */
-    public function updateAmountIngredientInMealStore($amount)
+    public function updateAmountIngredientInMealStore($amount,$mealStore,$mealStoreCalorie)
     {
+        $mealStore->calorie = $mealStoreCalorie;
+        $mealStore->save();
         $this->ingredient->pivot->amount = $amount;
         $this->ingredient->pivot->save();
         return $this->ingredient->pivot;

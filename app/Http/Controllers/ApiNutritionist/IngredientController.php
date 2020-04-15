@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\IngredientRequest;
 use App\Http\Requests\MealStoreIngredientRequest;
 use App\Http\Requests\PaginationRequest;
+use App\Ingredient;
 use App\Repositories\IngredientRepository;
 use App\Repositories\MealStoreRepository;
 use App\Repositories\NutritionistRepository;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 
 class IngredientController extends Controller
@@ -37,13 +39,14 @@ class IngredientController extends Controller
      *
      * @param IngredientRequest $request
      * @return JsonResponse
+     * @throws AuthorizationException
      */
     public function store(IngredientRequest $request)
     {
-        $nutritionist = auth()->user();
         $name = $request->input('name');
         $amount = $request->input('amount');
         $calorie = $request->input('calorie');
+        $nutritionist = auth()->user();
         $nutritionistRepository = new NutritionistRepository($nutritionist);
         $ingredient = $nutritionistRepository->createIngredient($name, $amount, $calorie);
         return response()->json(['data' => $ingredient], 200);
@@ -54,10 +57,12 @@ class IngredientController extends Controller
      *
      * @param int $id
      * @return JsonResponse
+     * @throws AuthorizationException
      */
     public function show($id)
     {
-        $ingredient = auth()->user()->ingredients()->findOrFail($id);
+        $ingredient = Ingredient::findOrFail($id);
+        $this->authorize('view', $ingredient);
         return response()->json(['data' => $ingredient], 200);
     }
 
@@ -67,11 +72,12 @@ class IngredientController extends Controller
      * @param IngredientRequest $request
      * @param $id
      * @return JsonResponse
+     * @throws AuthorizationException
      */
     public function update(IngredientRequest $request, $id)
     {
-        $nutritionist = auth()->user();
-        $ingredient = $nutritionist->ingredients()->findOrFail($id);
+        $ingredient = Ingredient::findOrFail($id);
+        $this->authorize('update', $ingredient);
         $name = $request->input('name');
         $amount = $request->input('amount');
         $calorie = $request->input('calorie');
@@ -89,12 +95,13 @@ class IngredientController extends Controller
      */
     public function destroy($id)
     {
-        $nutritionist = auth()->user();
-        $ingredient = $nutritionist->ingredients()->findOrFail($id);
+        $ingredient = Ingredient::findOrFail($id);
+        $this->authorize('delete', $ingredient);
         $ingredientRepository = new IngredientRepository($ingredient);
         $ingredientRepository->deleteIngredient();
         return response()->json(['data' => true,], 200);
     }
+
     /**
      * Method for nutritionist add ingredient to the storeMenu and update the calories of mealStore .
      *
@@ -125,6 +132,7 @@ class IngredientController extends Controller
         );
         return response()->json(['data' => $mealStore,], 200);
     }
+
     /**
      * Method for nutritionist to delete ingredient to the storeMenu and update the calories of mealStore .
      *
@@ -149,6 +157,7 @@ class IngredientController extends Controller
         $menu = $mealStoreRepository->deleteIngredientToMealStore($idIngredient, $mealStoreCalorie);
         return response()->json(['data' => $menu,], 200);
     }
+
     /**
      * update amount ingredient to the storeMenu.
      *
@@ -163,11 +172,17 @@ class IngredientController extends Controller
     public static function updateAmountPivotIngredient(MealStoreIngredientRequest $request, $idStoreMenu, $idIngredient)
     {
         $nutritionist = auth()->user();
-        $menu = $nutritionist->mealStore()->findOrFail($idStoreMenu);
-        $ingredient = $menu->ingredients()->findOrFail($idIngredient);
-        $amount = $request->input('amount');
+        $mealStore = $nutritionist->mealStore()->findOrFail($idStoreMenu);
+        $ingredient = $mealStore->ingredients()->findOrFail($idIngredient);
+        $mealStoreCalorie = $mealStore->calorie;
+        $defaultAmount = $ingredient->amount;
+        $ingredientCalorie = $ingredient->calorie;
+        $oldAmount = $ingredient->pivot->amount;
+        $newAmount = $request->input('amount');
+        $amount = $newAmount - $oldAmount;
+        $mealStoreCalorie = $mealStoreCalorie + (($amount / $defaultAmount) * $ingredientCalorie);
         $ingredientRepository = new IngredientRepository($ingredient);
-        $amountUpdated = $ingredientRepository->updateAmountIngredientInMealStore($amount);
+        $amountUpdated = $ingredientRepository->updateAmountIngredientInMealStore($newAmount,$mealStore,$mealStoreCalorie);
         return response()->json(['data' => $amountUpdated,], 200);
     }
 }

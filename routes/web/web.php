@@ -95,7 +95,8 @@ Route::prefix('nutritionist')->group(
                         Route::delete('/{id}', 'ApiNutritionist\IngredientController@destroy');
                         Route::get('/{id}', 'ApiNutritionist\IngredientController@show');
                         Route::get('/', 'ApiNutritionist\IngredientController@index');
-                        Route::put('/{id}', 'ApiNutritionist\IngredientController@update');
+                        Route::put('/{ingredient}', 'ApiNutritionist\IngredientController@update');
+
                     }
                 );
 

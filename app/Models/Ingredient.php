@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string $name
  * @property integer $amount
  * @property integer $calorie
+ * @property integer $nutritionist_id
  */
 class Ingredient extends Model
 {
@@ -21,6 +22,7 @@ class Ingredient extends Model
      * @var string
      */
     protected $table = 'ingredients';
+
 
 
     /**

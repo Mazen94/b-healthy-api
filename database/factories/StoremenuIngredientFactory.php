@@ -15,7 +15,7 @@ $factory->define(
         return [
 
             'meal_store_id' => $faker->randomElement($storeMenu),
-            'ingredients_id' => $faker->randomElement($ingredient),
+            'ingredient_id' => $faker->randomElement($ingredient),
             'amount' => $faker->numberBetween(50, 100)
         ];
     }

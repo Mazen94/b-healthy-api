@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(MealStore::class, function (Faker $faker) {
     return [
-        'nom' => $faker->unique()->name,
+        'name' => $faker->unique()->name,
         'max_age' => $faker->numberBetween(30,50),
         'min_age' => $faker->numberBetween(15,20),
         'calorie'=> $faker->numberBetween(1200,2000),

@@ -12,7 +12,6 @@ $factory->define(Nutritionist::class, function (Faker $faker) {
         'lastName' => $faker->lastName,
         'password' =>bcrypt('adminadmin'),
         'picture' => $faker->imageUrl(),
-        'gender' => $faker->randomElement(['male','female']),
 
     ];
 });

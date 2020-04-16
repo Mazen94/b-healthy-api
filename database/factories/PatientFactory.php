@@ -15,6 +15,7 @@ $factory->define(Patient::class, function (Faker $faker) {
         'firstName'=> $faker->firstName,
         'gender' => $faker->randomElement(['male','female']),
         'profession' => $faker->randomElement(['ingenieur','joueur']),
+        'age'=> $faker->numberBetween(5, 60),
         'nutritionist_id' =>  $faker->randomElement($users),
         'numberPhone' => $faker->phoneNumber
 

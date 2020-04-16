@@ -32,9 +32,6 @@ class NutritionistUpdateRequest extends FormRequest
                 Rule::unique('nutritionists', 'email')->ignore($user->id)
             ],
             'firstName' => 'required|string',
-            'password' => 'required|min:' . Config::get('constants.MIN_PASSWORD_LENGTH') . '|max:' . Config::get(
-                    'constants.MAX_PASSWORD_LENGTH'
-                ),
             'lastName' => 'required|string',
         ];
     }

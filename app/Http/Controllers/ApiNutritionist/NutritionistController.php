@@ -37,8 +37,7 @@ class NutritionistController extends Controller
         $firstName = $request->input('firstName');
         $lastName = $request->input('lastName');
         $password = $request->input('password');
-        $picture = $request->input('picture');
-        $nutritionist = $nutritionistRepository->updateNutritionist($email, $firstName, $lastName, $password, $picture);
+        $nutritionist = $nutritionistRepository->updateNutritionist($email, $firstName, $lastName, $password);
         return response()->json(['data' => $nutritionist,], 200);
     }
 

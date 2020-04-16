@@ -50,15 +50,14 @@ class NutritionistRepository
      * @param $picture
      * @return mixed
      */
-    public function updateNutritionist($email, $firstName, $lastName, $password, $picture)
+    public function updateNutritionist($email, $firstName, $lastName, $password)
     {
-        if (!empty($picture)) {
-            $this->nutritionist->picture = $picture;
-        }
         $this->nutritionist->email = $email;
         $this->nutritionist->firstName = $firstName;
         $this->nutritionist->lastName = $lastName;
-        $this->nutritionist->password = bcrypt($password);
+        if(isset($password)){
+            $this->nutritionist->password = bcrypt($password);
+        }
         $this->nutritionist->save();
         return $this->nutritionist;
     }

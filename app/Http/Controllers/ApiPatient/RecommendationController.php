@@ -15,7 +15,7 @@ class RecommendationController extends Controller
      *
      * @return JsonResponse
      */
-    public function index()
+    public function getLastRecommendation()
     {
         $patient = auth()->user();
         $patientRepository = new PatientRepository($patient);
@@ -35,4 +35,5 @@ class RecommendationController extends Controller
         $menus = $patientRepository->getRecommendationMenusByPatient();
         return response()->json(['Menus' => $menus,], 200);
     }
+
 }

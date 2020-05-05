@@ -20,7 +20,7 @@ class RecommendationController extends Controller
         $patient = auth()->user();
         $patientRepository = new PatientRepository($patient);
         $recommendation = $patientRepository->getRecommendationByPatient();
-        return response()->json(['recommendation' => $recommendation,], 200);
+        return response()->json(['data' => $recommendation,], 200);
     }
 
     /**

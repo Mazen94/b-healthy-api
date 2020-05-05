@@ -105,7 +105,11 @@ class PatientRepository
      */
     public function getRecommendationByPatient()
     {
-        return $this->patient->recommendations()->latest("updated_at")->first();
+        $recommendation = $this->patient->recommendations()->latest("updated_at")->first();
+        $recommendation["menus"] = $recommendation->menus;
+        $recommendation['calories'] = $recommendation->menus()->sum('calorie');
+
+        return $recommendation;
     }
 
     /**

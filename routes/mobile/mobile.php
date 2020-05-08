@@ -21,7 +21,11 @@ Route::prefix('patient')->group(
                     }
                 );
 
-
+                Route::prefix('ingredients')->group(
+                    function () {
+                        Route::get('', 'ApiPatient\IngredientController@index');
+                    }
+                );
                 Route::prefix('notifications')->group(
                     function () {
                         Route::get('/', 'ApiPatient\NotificationController@index');

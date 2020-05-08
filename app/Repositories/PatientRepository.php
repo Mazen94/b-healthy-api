@@ -4,6 +4,7 @@
 namespace App\Repositories;
 
 
+use App\Ingredient;
 use App\Notification;
 use App\Patient;
 use App\PhysicalActivity;
@@ -43,12 +44,14 @@ class PatientRepository
      * @throws \Exception
      *
      */
-    public function deleteAllRecommendation($recommendations) {
+    public function deleteAllRecommendation($recommendations)
+    {
         foreach ($recommendations as $recommendation) {
             $recommendationRepository = new RecommendationRepository($recommendation);
             $recommendationRepository->deleteRecommendation();
         }
     }
+
     /**
      * Method for patient to update patient connected
      *
@@ -88,7 +91,7 @@ class PatientRepository
      * @param string $avoid
      * @return false|Model
      */
-    public function createRecommendation($name,$avoid)
+    public function createRecommendation($name, $avoid)
     {
         $recommendation = new Recommendation();
         $recommendation->avoid = $avoid;
@@ -106,7 +109,7 @@ class PatientRepository
     public function getRecommendationByPatient()
     {
         $recommendation = $this->patient->recommendations()->latest("updated_at")->first();
-        if(!empty($recommendation)){
+        if (!empty($recommendation)) {
             $recommendation["menus"] = $recommendation->menus;
             $recommendation['calories'] = $recommendation->menus()->sum('calorie');
         }
@@ -156,7 +159,7 @@ class PatientRepository
      *
      * @return false|Model
      */
-    public function createVisit($weight, $note,$belly, $chest,$legs, $neck,$tall, $scheduledAt, $doneAt)
+    public function createVisit($weight, $note, $belly, $chest, $legs, $neck, $tall, $scheduledAt, $doneAt)
     {
         $visit = new Visit();
         $visit->weight = $weight;
@@ -220,5 +223,20 @@ class PatientRepository
         $activity->duration = $duration;
         $this->patient->physicalActivity()->save($activity);
         return $activity;
+    }
+
+
+    public function paginateIngredient($page, $perPage, $orderBy, $orderDirection, $search)
+    {
+        $nutritionistId = $this->patient->nutritionist_id;
+        $ingredientsGroup = Ingredient::where('nutritionist_id', $nutritionistId);
+        if (isset($search)) {
+            $ingredientsGroup->where('name', 'like', '%' . $search . '%');
+        }
+        if (isset($orderBy) && isset($orderDirection)) {
+            $ingredientsGroup->orderBy($orderBy, $orderDirection);
+        }
+
+        return $ingredientsGroup->paginate($perPage, ['*'], 'page', $page);
     }
 }

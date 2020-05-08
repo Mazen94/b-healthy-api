@@ -34,10 +34,8 @@ class MenuController extends Controller
         $typeMenu = $request->input('type_menu');
         $calorie = $request->input('calorie');
         $menuRepository = new MenuRepository();
-        $menu = $menuRepository->createMenu($name, $typeMenu, $calorie);
-        $recommendationRepository = new RecommendationRepository($recommendation);
-        $recommendationRepository->addMenuToRecommendation($menu->id);
-        return response()->json(['menu' => $menu,], 200);
+        $menu = $menuRepository->createMenu($name, $typeMenu, $calorie,$recommendation);
+        return response()->json(['data' => $menu,], 200);
     }
 
 }

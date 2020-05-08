@@ -17,9 +17,11 @@ class MenuRepository
      * @param string $name
      * @param string $type_menu
      * @param string $calorie
+     * @param $recommendation
      * @return Menu
+     * @throws \Exception
      */
-    public function createMenu($name, $type_menu, $calorie)
+    public function createMenu($name, $type_menu, $calorie, $recommendation)
     {
         $menu = new Menu();
         $menu->name = $name;
@@ -28,6 +30,9 @@ class MenuRepository
             $menu->calorie = $calorie;
         }
         $menu->save();
+
+        //Add menu to recommendation
+        $recommendation->menus()->attach($menu->id);
 
         return $menu;
     }
@@ -50,7 +55,7 @@ class MenuRepository
         // linked the ingredients with the menus in the table pivot menus_ingredients
         foreach ($ingredients as $ingredient) {
             $ingredientMenu = new IngredientMenu();
-            $ingredientMenu->menu_id= $menu->id;
+            $ingredientMenu->menu_id = $menu->id;
             $ingredientMenu->ingredient_id = $ingredient['id'];
             $ingredientMenu->amount = $ingredient['pivot']['amount'];
             $ingredientMenu->save();

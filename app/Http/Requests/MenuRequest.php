@@ -26,7 +26,7 @@ class MenuRequest extends FormRequest
     public function rules()
     {
         return [
-            'type_menu' => Rule::in(Menu::TYPE_MENU) . 'required|integer',
+            'type_menu' =>  'required|integer',
             'name' => 'required|string',
         ];
     }

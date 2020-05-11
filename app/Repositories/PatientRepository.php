@@ -109,9 +109,10 @@ class PatientRepository
     public function getRecommendationByPatient()
     {
         $recommendation = $this->patient->recommendations()->latest("updated_at")->first();
+
         if (!empty($recommendation)) {
-            $recommendation["menus"] = $recommendation->menus;
-            $recommendation['calories'] = $recommendation->menus()->sum('calorie');
+            $recommendation["menus"] = $recommendation->menus()->whereIn('type_menu', array(0,1, 2, 3,4))->get();
+            $recommendation['calories'] = $recommendation->menus()->whereIn('type_menu', array(0,1, 2, 3,4))->sum('calorie');
         }
         return $recommendation;
     }

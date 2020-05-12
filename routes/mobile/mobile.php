@@ -24,6 +24,7 @@ Route::prefix('patient')->group(
                 Route::prefix('ingredients')->group(
                     function () {
                         Route::get('', 'ApiPatient\IngredientController@index');
+                        Route::post('', 'ApiPatient\IngredientController@addIngredientToMenu');
                     }
                 );
                 Route::prefix('notifications')->group(

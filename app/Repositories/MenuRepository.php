@@ -11,6 +11,14 @@ use Illuminate\Support\Facades\DB;
 
 class MenuRepository
 {
+
+    protected $menu;
+
+    public function __construct(Menu $menu)
+    {
+        $this->menu = $menu;
+    }
+
     /**
      * Method for patient to create a new  menu
      *
@@ -61,6 +69,24 @@ class MenuRepository
             $ingredientMenu->save();
         }
         return $menu->id;
+    }
+
+    /**
+     * @param int $idMenu
+     * @param int $caloriesOfMenu
+     * @param int $idIngredient
+     * @param int $amount
+     */
+    public function addIngredientToMenu($idMenu, $caloriesOfMenu, $idIngredient, $amount)
+    {
+        $this->menu->calorie = $caloriesOfMenu;
+        $this->menu->save();
+        $ingredientMenu = new IngredientMenu();
+        $ingredientMenu->ingredient_id = $idIngredient;
+        $ingredientMenu->menu_id = $idMenu;
+        $ingredientMenu->amount = $amount;
+        $ingredientMenu->save();
+        return $this->menu;
     }
 
 }

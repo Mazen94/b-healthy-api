@@ -33,8 +33,7 @@ class MenuController extends Controller
         $name = $request->input('name');
         $typeMenu = $request->input('type_menu');
         $calorie = $request->input('calorie');
-        $menuRepository = new MenuRepository();
-        $menu = $menuRepository->createMenu($name, $typeMenu, $calorie,$recommendation);
+        $menu = MenuRepository::createMenu($name, $typeMenu, $calorie,$recommendation);
         return response()->json(['data' => $menu,], 200);
     }
 

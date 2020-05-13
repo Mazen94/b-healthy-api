@@ -29,7 +29,7 @@ class MenuRepository
      * @return Menu
      * @throws \Exception
      */
-    public function createMenu($name, $type_menu, $calorie, $recommendation)
+    public static function createMenu($name, $type_menu, $calorie, $recommendation)
     {
         $menu = new Menu();
         $menu->name = $name;
@@ -76,6 +76,7 @@ class MenuRepository
      * @param int $caloriesOfMenu
      * @param int $idIngredient
      * @param int $amount
+     * @return Menu
      */
     public function addIngredientToMenu($idMenu, $caloriesOfMenu, $idIngredient, $amount)
     {

@@ -90,4 +90,42 @@ class MenuRepository
         return $this->menu;
     }
 
+    /**
+     * Check if the patient created a new menu with a special menu type today
+     * @param int $typeMenu
+     * @return bool
+     */
+    public static function checkMenuByDateMenuType($typeMenu)
+    {
+        $typeMenuOfPatient = self::getTypeMenuRelatedToPatient($typeMenu);
+        $menuCreate = Menu::whereDate('created_at', date("Y-m-d"))->where('type_menu', $typeMenuOfPatient)->get();
+        if ($menuCreate->isEmpty()) {
+            $check = false;
+        } else {
+            $check = true;
+        }
+
+        return $check;
+    }
+
+    /**
+     * Function return the value of type menu related to patient
+     * @param  int $value
+     * @return int
+     */
+    public static function getTypeMenuRelatedToPatient($value)
+    {
+        switch ($value) {
+            case 0 :
+                return 5;
+            case 1 :
+                return 6;
+            case 2 :
+                return 7;
+            case 3 :
+                return 8;
+            case 4 :
+                return 9;
+        }
+    }
 }

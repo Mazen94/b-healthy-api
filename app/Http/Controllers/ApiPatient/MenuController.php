@@ -13,8 +13,10 @@ use Illuminate\Http\JsonResponse;
 class MenuController extends Controller
 {
     public function show($id){
+
        $menu = Menu::findOrFail($id);
        $menu['ingredients'] = $menu->ingredients;
+       $menu['checkMenu'] = MenuRepository::checkMenuByDateMenuType($menu->type_menu);
         return response()->json(['data' => $menu], 200);
     }
 
@@ -36,5 +38,7 @@ class MenuController extends Controller
         $menu = MenuRepository::createMenu($name, $typeMenu, $calorie,$recommendation);
         return response()->json(['data' => $menu,], 200);
     }
+
+
 
 }

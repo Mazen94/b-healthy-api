@@ -35,7 +35,7 @@ class PatientRequest extends FormRequest
                     ),
                 'numberPhone' => 'required|string',
                 'profession' => 'required|string',
-                'gender' => 'required|string',
+                'gender' => 'required|integer',
             ];
         }
         else {

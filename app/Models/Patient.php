@@ -27,7 +27,12 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  */
 class Patient extends Authenticatable implements JWTSubject
 {
+
     use Notifiable;
+    const TYPE_MENU = [
+        'MALE' => 0,
+        'FEMALE' => 1
+    ];
 
     /**
      * @var string

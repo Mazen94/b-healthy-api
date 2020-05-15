@@ -220,8 +220,8 @@ class NutritionistRepository
      */
     public function countGenderPatient()
     {
-        $patients['male'] = $this->nutritionist->patients()->where('gender', 'male')->count();
-        $patients['female'] = $this->nutritionist->patients()->where('gender', 'female')->count();
+        $patients['male'] = $this->nutritionist->patients()->where('gender', 0)->count();
+        $patients['female'] = $this->nutritionist->patients()->where('gender', 1)->count();
         return $patients;
     }
 

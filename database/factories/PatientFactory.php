@@ -13,7 +13,7 @@ $factory->define(Patient::class, function (Faker $faker) {
         'password' =>bcrypt('test'), // test
         'lastName' => $faker->lastName,
         'firstName'=> $faker->firstName,
-        'gender' => $faker->randomElement(['male','female']),
+        'gender' => $faker->randomElement([0,1]),
         'profession' => $faker->randomElement(['ingenieur','joueur']),
         'age'=> $faker->numberBetween(5, 60),
         'nutritionist_id' =>  $faker->randomElement($users),

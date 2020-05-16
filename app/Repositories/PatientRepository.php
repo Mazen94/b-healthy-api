@@ -58,9 +58,10 @@ class PatientRepository
      * @param string $email
      * @param string $firstName
      * @param string $lastName
-     * @param string $gender
+     * @param int $gender
      * @param string $numberPhone
      * @param string $profession
+     * @param int $age
      * @return bool|mixed|null
      */
     public function updatePatient(
@@ -69,12 +70,13 @@ class PatientRepository
         $lastName,
         $gender,
         $numberPhone,
-        $profession
+        $profession,
+        $age
     ) {
         $this->patient->email = $email;
         $this->patient->firstName = $firstName;
         $this->patient->lastName = $lastName;
-        //$this->patient->password = bcrypt($password);
+        $this->patient->age = $age;
         $this->patient->gender = $gender;
         $this->patient->profession = $numberPhone;
         $this->patient->numberPhone = $profession;

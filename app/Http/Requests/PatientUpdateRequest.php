@@ -33,12 +33,10 @@ class PatientUpdateRequest extends FormRequest
             ],
             'firstName' => 'required',
             'lastName' => 'required',
-            'password' => 'required|min:' . Config::get('constants.MIN_PASSWORD_LENGTH') . '|max:' . Config::get(
-                    'constants.MAX_PASSWORD_LENGTH'
-                ),
             'numberPhone' => 'required|string',
             'profession' => 'required|string',
-            'gender' => 'required|string',
+            'gender' => 'required|integer',
+            'age' => 'required|integer'
         ];
     }
 }

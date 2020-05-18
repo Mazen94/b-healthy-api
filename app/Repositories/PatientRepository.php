@@ -113,8 +113,10 @@ class PatientRepository
         $recommendation = $this->patient->recommendations()->latest("updated_at")->first();
 
         if (!empty($recommendation)) {
-            $recommendation["menus"] = $recommendation->menus()->whereIn('type_menu', array(0,1, 2, 3,4))->get();
-            $recommendation['calories'] = $recommendation->menus()->whereIn('type_menu', array(0,1, 2, 3,4))->sum('calorie');
+            $recommendation["menus"] = $recommendation->menus()->whereIn('type_menu', array(0, 1, 2, 3, 4))->get();
+            $recommendation['calories'] = $recommendation->menus()->whereIn('type_menu', array(0, 1, 2, 3, 4))->sum(
+                'calorie'
+            );
         }
         return $recommendation;
     }
@@ -228,7 +230,15 @@ class PatientRepository
         return $activity;
     }
 
-
+    /**
+     * Get The list of ingredient
+     * @param int $page
+     * @param int $perPage
+     * @param $orderBy
+     * @param string $orderDirection
+     * @param string $search
+     * @return mixed
+     */
     public function paginateIngredient($page, $perPage, $orderBy, $orderDirection, $search)
     {
         $nutritionistId = $this->patient->nutritionist_id;
@@ -241,5 +251,18 @@ class PatientRepository
         }
 
         return $ingredientsGroup->paginate($perPage, ['*'], 'page', $page);
+    }
+
+    /**
+     * Function to change the password
+     * @param $password
+     * @param $newPassword
+     * @return bool
+     */
+    public function changePassword($password, $newPassword)
+    {
+        $this->patient->password = bcrypt($newPassword);
+        $this->patient->save();
+        return true ;
     }
 }

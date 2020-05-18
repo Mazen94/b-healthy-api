@@ -8,6 +8,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\PatientRequest;
 use App\Http\Requests\PatientUpdateRequest;
 use App\Http\Requests\RegisterPatient;
+use App\Nutritionist;
 use App\Repositories\PatientRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -74,6 +75,15 @@ class PatientController extends Controller
             return response()->json(['data' =>  $patientRepository->changePassword($password,$newPassword)], 200);
         }
         return response()->json(['data' => __('messages.changePassword')], 401);
+    }
+
+    /**
+     * Method to get nutritionist related to patient connected
+     */
+    public function getNutritionist(){
+        $patientConnected = auth()->user();
+        $nutritionist = Nutritionist::findOrFail($patientConnected->nutritionist_id);
+        return response()->json(['data' => $nutritionist], 200);
     }
 
 }

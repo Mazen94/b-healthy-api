@@ -8,7 +8,7 @@ Route::prefix('patient')->group(
                 Route::get('/', 'ApiPatient\PatientController@index');
                 Route::put('/', 'ApiPatient\PatientController@update');
                 Route::put('/password', 'ApiPatient\PatientController@changePassword');
-
+                Route::get('/nutritionist', 'ApiPatient\PatientController@getNutritionist');
                 Route::prefix('recommendation')->group(
                     function () {
                         Route::get('/', 'ApiPatient\RecommendationController@getLastRecommendation');

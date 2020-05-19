@@ -109,8 +109,25 @@ class MenuRepository
     }
 
     /**
+     * get the menu created in this day
+     * @param $patient
+     * @return mixed
+     */
+    public static function getMenuByCurrentDate($patient)
+    {
+        $recommendation = $patient->recommendations()->latest("updated_at")->first();
+        $menuCreate = $recommendation->menus();
+        $menus = $menuCreate->whereIn('type_menu', [5, 6, 7, 8, 9])->whereDate(
+            'menus.created_at',
+            '=',
+            date('Y-m-d')
+        )->get();
+        return $menus;
+    }
+
+    /**
      * Function return the value of type menu related to patient
-     * @param  int $value
+     * @param int $value
      * @return int
      */
     public static function getTypeMenuRelatedToPatient($value)

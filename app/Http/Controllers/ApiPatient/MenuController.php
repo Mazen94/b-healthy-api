@@ -12,11 +12,11 @@ use Illuminate\Http\JsonResponse;
 
 class MenuController extends Controller
 {
-    public function show($id){
-
-       $menu = Menu::findOrFail($id);
-       $menu['ingredients'] = $menu->ingredients;
-       $menu['checkMenu'] = MenuRepository::checkMenuByDateMenuType($menu->type_menu);
+    public function show($id)
+    {
+        $menu = Menu::findOrFail($id);
+        $menu['ingredients'] = $menu->ingredients;
+        $menu['checkMenu'] = MenuRepository::checkMenuByDateMenuType($menu->type_menu);
         return response()->json(['data' => $menu], 200);
     }
 
@@ -35,10 +35,20 @@ class MenuController extends Controller
         $name = $request->input('name');
         $typeMenu = $request->input('type_menu');
         $calorie = $request->input('calorie');
-        $menu = MenuRepository::createMenu($name, $typeMenu, $calorie,$recommendation);
+        $menu = MenuRepository::createMenu($name, $typeMenu, $calorie, $recommendation);
         return response()->json(['data' => $menu,], 200);
     }
 
+    /**
+     * get the menus created by patient today
+     * @return mixed
+     */
+    public function getMenuByDate()
+    {
+        $patient = auth()->user();
+        $menus = MenuRepository::getMenuByCurrentDate($patient);
+        return response()->json(['data' => $menus,], 200);
+    }
 
 
 }

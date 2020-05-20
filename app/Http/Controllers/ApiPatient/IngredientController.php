@@ -58,4 +58,25 @@ class IngredientController extends Controller
         return response()->json(['data' => $menu,], 200);
     }
 
+    /**
+     * Delete Ingredient from menu
+     * @param $idMenu
+     * @param $idIngredient
+     * @return mixed
+     */
+    public function detachIngredientToMenu($idMenu, $idIngredient)
+    {
+        $menu = Menu::findOrFail($idMenu);
+        $ingredients = $menu->ingredients();
+        $ingredient = $ingredients->findOrFail($idIngredient);
+        $caloriesOfIngredient = $ingredient->calorie;
+        $defaultAmount = $ingredient->amount;
+        $caloriesOfMenu = $menu->calorie;
+        $amount = $ingredient->pivot->amount;
+        $caloriesOfMenu = $caloriesOfMenu - (($amount / $defaultAmount) * $caloriesOfIngredient);
+        $menuRepository = new MenuRepository($menu);
+        $menu = $menuRepository->deleteIngredientFromMenu( $caloriesOfMenu, $idIngredient);
+        return response()->json(['data' => $menu,], 200);
+    }
+
 }

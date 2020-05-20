@@ -20,6 +20,7 @@ Route::prefix('patient')->group(
                     function () {
                         Route::get('/{idMenu}', 'ApiPatient\MenuController@show');
                         Route::get('/', 'ApiPatient\MenuController@getMenuByDate');
+                        Route::delete('/{idMenu}/ingredients/{idIngredient}', 'ApiPatient\IngredientController@detachIngredientToMenu');
                     }
                 );
 

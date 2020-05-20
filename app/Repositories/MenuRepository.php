@@ -126,6 +126,20 @@ class MenuRepository
     }
 
     /**
+     * delete ingredient from menu and change the number of calories
+     * @param int $caloriesOfMenu
+     * @param int $idIngredient
+     * @return Menu
+     */
+    public function deleteIngredientFromMenu($caloriesOfMenu, $idIngredient)
+    {
+        $this->menu->calorie = $caloriesOfMenu;
+        $this->menu->save();
+        $this->menu->ingredients()->detach($idIngredient);
+        return $this->menu;
+    }
+
+    /**
      * Function return the value of type menu related to patient
      * @param int $value
      * @return int

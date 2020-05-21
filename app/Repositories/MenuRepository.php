@@ -53,7 +53,7 @@ class MenuRepository
      * @param array $ingredients
      * @return int id
      */
-    public function createMenuWithIngredients($name, $calorie, $type_menu, $ingredients)
+    public static function createMenuWithIngredients($name, $calorie, $type_menu, $ingredients)
     {
         $menu = new Menu();
         $menu->name = $name;

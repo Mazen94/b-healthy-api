@@ -60,8 +60,7 @@ class RecommendationRepository
         $calorie = $mealStore->calorie;
         $typeMenu = $mealStore->type_menu;
         $ingredients = $mealStore->ingredients;
-        $menuRepository = new MenuRepository();
-        $idMenu = $menuRepository->createMenuWithIngredients($name, $calorie, $typeMenu, $ingredients);
+        $idMenu = MenuRepository::createMenuWithIngredients($name, $calorie, $typeMenu, $ingredients);
         $this->recommendation->menus()->attach($idMenu);
         return $this->recommendation->menus;
     }

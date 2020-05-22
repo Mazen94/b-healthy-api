@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PaginationRequest;
 use App\Ingredient;
 use App\Menu;
+use App\Repositories\IngredientRepository;
 use App\Repositories\MenuRepository;
 use App\Repositories\PatientRepository;
 use Illuminate\Http\Request;
@@ -35,12 +36,9 @@ class IngredientController extends Controller
     /**
      * Method for nutritionist add ingredient to the storeMenu and update the calories of mealStore .
      *
-     * @param MealStoreIngredientRequest $request
-     * @param int $idStoreMenu
-     *
+     * @param Request $request
      * @return JsonResponse
      *
-     * @throws \Exception
      */
     public function addIngredientToMenu(Request $request)
     {
@@ -75,8 +73,24 @@ class IngredientController extends Controller
         $amount = $ingredient->pivot->amount;
         $caloriesOfMenu = $caloriesOfMenu - (($amount / $defaultAmount) * $caloriesOfIngredient);
         $menuRepository = new MenuRepository($menu);
-        $menu = $menuRepository->deleteIngredientFromMenu( $caloriesOfMenu, $idIngredient);
+        $menu = $menuRepository->deleteIngredientFromMenu($caloriesOfMenu, $idIngredient);
         return response()->json(['data' => $menu,], 200);
     }
 
+    public function updateAmountOfIngredient(Request $request,$idMenu, $idIngredient)
+    {
+        $menu = Menu::findOrFail($idMenu);
+        $ingredients = $menu->ingredients();
+        $ingredient = $ingredients->findOrFail($idIngredient);
+        $menuCalorie = $menu->calorie;
+        $defaultAmount = $ingredient->amount;
+        $ingredientCalorie = $ingredient->calorie;
+        $oldAmount = $ingredient->pivot->amount;
+        $newAmount = $request->input('amount');
+        $amount = $newAmount - $oldAmount;
+        $mealStoreCalorie = $menuCalorie + (($amount / $defaultAmount) * $ingredientCalorie);
+        $ingredientRepository = new IngredientRepository($ingredient);
+        $amountUpdated =  $ingredientRepository->updateAmountIngredientInMealStore($newAmount,$menu,$mealStoreCalorie);
+        return response()->json(['data' => $amountUpdated,], 200);
+    }
 }

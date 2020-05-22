@@ -16,9 +16,6 @@ class MenuController extends Controller
     {
         $menu = Menu::findOrFail($id);
        $menu['ingredients'] = $menu->ingredients;
-
-
-
         $menu['checkMenu'] = MenuRepository::checkMenuByDateMenuType($menu->type_menu);
         return response()->json(['data' => $menu], 200);
     }

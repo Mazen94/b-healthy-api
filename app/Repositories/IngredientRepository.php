@@ -60,6 +60,7 @@ class IngredientRepository
         $mealStore->save();
         $this->ingredient->pivot->amount = $amount;
         $this->ingredient->pivot->save();
-        return $this->ingredient->pivot;
+        $mealStore['ingredients'] = $mealStore->ingredients;
+        return $mealStore;
     }
 }

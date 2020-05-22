@@ -21,6 +21,7 @@ Route::prefix('patient')->group(
                         Route::get('/{idMenu}', 'ApiPatient\MenuController@show');
                         Route::get('/', 'ApiPatient\MenuController@getMenuByDate');
                         Route::delete('/{idMenu}/ingredients/{idIngredient}', 'ApiPatient\IngredientController@detachIngredientToMenu');
+                        Route::put('/{idMenu}/ingredients/{idIngredient}', 'ApiPatient\IngredientController@updateAmountOfIngredient');
                     }
                 );
 

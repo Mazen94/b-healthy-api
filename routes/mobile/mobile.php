@@ -46,6 +46,12 @@ Route::prefix('patient')->group(
                         Route::post('/', 'ApiPatient\PhysicalActiviteController@store');
                     }
                 );
+                Route::prefix('visits')->group(
+                    function () {
+                        Route::get('', 'ApiPatient\VisitController@getLastVisit');
+
+                    }
+                );
             }
         );
     }

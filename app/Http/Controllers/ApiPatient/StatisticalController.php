@@ -48,8 +48,11 @@ class StatisticalController extends Controller
                 }
             }
         }
-        $followUp = (($numberOfMenus - $numbOfBadMenus) / $numberOfMenus) * 100;
-        return response()->json(['data' => round($followUp, 2)], 200);
+        $followUp =  (($numberOfMenus - $numbOfBadMenus) / $numberOfMenus) * 100;
+        $data['followUp'] = round($followUp, 2);
+        $data['numbBadMenu'] = $numbOfBadMenus;
+        $data['numberOfMenus'] = $numberOfMenus;
+        return response()->json(['data' => $data], 200);
     }
 }
 

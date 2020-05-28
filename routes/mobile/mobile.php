@@ -49,7 +49,11 @@ Route::prefix('patient')->group(
                 Route::prefix('visits')->group(
                     function () {
                         Route::get('', 'ApiPatient\VisitController@getLastVisit');
-
+                    }
+                );
+                Route::prefix('statistical')->group(
+                    function () {
+                        Route::get('/weight', 'ApiPatient\StatisticalController@getWeightMonth');
                     }
                 );
             }

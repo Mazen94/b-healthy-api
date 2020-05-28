@@ -217,7 +217,7 @@ class PatientRepository
      * @param int $energyBurned
      * @param int $duration
      *
-     * @return false|Model
+     * @return PhysicalActivity
      */
     public function createActivity($distance, $activityType, $energyBurned, $duration)
     {
@@ -263,6 +263,19 @@ class PatientRepository
     {
         $this->patient->password = bcrypt($newPassword);
         $this->patient->save();
-        return true ;
+        return true;
+    }
+
+    /**
+     * get the first weight for each month
+     * @return mixed
+     */
+    public function weightAndMonth()
+    {
+        $weights = $this->patient->visits()->whereYear('created_at', date('Y'))->get(['created_at', 'weight']);
+        foreach ($weights as $weight) {
+            $weight['month'] = $weight->created_at->format('m');
+        }
+        return $weights->unique('month');
     }
 }

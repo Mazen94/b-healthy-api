@@ -54,6 +54,7 @@ Route::prefix('patient')->group(
                 Route::prefix('statistical')->group(
                     function () {
                         Route::get('/weight', 'ApiPatient\StatisticalController@getWeightMonth');
+                        Route::get('/followUp', 'ApiPatient\StatisticalController@followUpRate');
                     }
                 );
             }

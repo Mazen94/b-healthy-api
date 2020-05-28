@@ -121,16 +121,6 @@ class PatientRepository
         return $recommendation;
     }
 
-    /**
-     * Patient : Get the list of menus linked to a recommendation
-     *
-     * @return mixed
-     */
-    public function getRecommendationMenusByPatient()
-    {
-        $recommendation = $this->patient->recommendations()->latest("updated_at")->first();
-        return $recommendation->menus;
-    }
 
     /**
      * show Visits related to patient

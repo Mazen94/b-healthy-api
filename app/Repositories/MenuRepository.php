@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 use App\IngredientMenu;
 use App\Menu;
+use App\Recommendation;
 use Illuminate\Database\Eloquent\Model;
 use Config;
 use Illuminate\Support\Facades\DB;
@@ -97,7 +98,7 @@ class MenuRepository
      */
     public static function checkMenuByDateMenuType($typeMenu)
     {
-        $typeMenuOfPatient = self::getTypeMenuRelatedToPatient($typeMenu);
+        $typeMenuOfPatient = self::valueOfTypeMenu($typeMenu);
         $menuCreate = Menu::whereDate('created_at', date("Y-m-d"))->where('type_menu', $typeMenuOfPatient)->get();
         if ($menuCreate->isEmpty()) {
             $check = false;
@@ -140,11 +141,11 @@ class MenuRepository
     }
 
     /**
-     * Function return the value of type menu related to patient
+     * Function return the value of type menu related to patient (vis-versa)
      * @param int $value
      * @return int
      */
-    public static function getTypeMenuRelatedToPatient($value)
+    public static function valueOfTypeMenu($value)
     {
         switch ($value) {
             case 0 :
@@ -157,6 +158,27 @@ class MenuRepository
                 return 8;
             case 4 :
                 return 9;
+            case 5 :
+                return 0;
+            case 6 :
+                return 1;
+            case 7 :
+                return 2;
+            case 8 :
+                return 3;
+            case 9 :
+                return 4;
         }
+    }
+
+    /**
+     * Method to get  the number of menus related to recommendation and created by patient
+     * @param $id
+     * @return
+     */
+    public static function menusCreatedPatient($id)
+    {
+        $recommendation = Recommendation::find($id);
+        return $recommendation->menus()->whereIn('type_menu', array(5, 6, 7, 8, 9))->get();
     }
 }

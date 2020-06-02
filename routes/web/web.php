@@ -40,7 +40,7 @@ Route::prefix('nutritionist')->group(
                                     function () {
                                         Route::get(
                                             '/',
-                                            'ApiNutritionist\PatientStatsController@getStatisticalOfPatient'
+                                            'ApiNutritionist\StatisticalController@getStatisticalOfPatient'
                                         );
                                     }
                                 );

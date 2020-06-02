@@ -268,4 +268,42 @@ class PatientRepository
         }
         return $weights->unique('month');
     }
+
+    /**
+     * get the first leg for each month
+     * @return mixed
+     */
+    public function legsAndMonth()
+    {
+        $legs = $this->patient->visits()->whereYear('created_at', date('Y'))->get(['created_at', 'legs']);
+        foreach ($legs as $leg) {
+            $leg['month'] = $leg->created_at->format('m');
+        }
+        return $legs->unique('month');
+    }
+    /**
+     * get the first leg for each month
+     * @return mixed
+     */
+    public function bellyAndMonth()
+    {
+        $bellys = $this->patient->visits()->whereYear('created_at', date('Y'))->get(['created_at', 'belly']);
+        foreach ($bellys as $belly) {
+            $belly['month'] = $belly->created_at->format('m');
+        }
+        return $bellys->unique('month');
+    }
+
+    /**
+     * get the first leg for each month
+     * @return mixed
+     */
+    public function chestAndMonth()
+    {
+        $chests = $this->patient->visits()->whereYear('created_at', date('Y'))->get(['created_at', 'chest']);
+        foreach ($chests as $chest) {
+            $chest['month'] = $chest->created_at->format('m');
+        }
+        return $chests->unique('month');
+    }
 }

@@ -36,7 +36,14 @@ Route::prefix('nutritionist')->group(
                                         Route::delete('/{idVisit}', 'ApiNutritionist\VisitController@destroy');
                                     }
                                 );
-
+                                Route::prefix('statistical')->group(
+                                    function () {
+                                        Route::get(
+                                            '/',
+                                            'ApiNutritionist\PatientStatsController@getStatisticalOfPatient'
+                                        );
+                                    }
+                                );
 
                                 Route::prefix('recommendations')->group(
                                     function () {
@@ -96,7 +103,6 @@ Route::prefix('nutritionist')->group(
                         Route::get('/{id}', 'ApiNutritionist\IngredientController@show');
                         Route::get('/', 'ApiNutritionist\IngredientController@index');
                         Route::put('/{ingredient}', 'ApiNutritionist\IngredientController@update');
-
                     }
                 );
 

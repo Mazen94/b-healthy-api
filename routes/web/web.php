@@ -39,8 +39,12 @@ Route::prefix('nutritionist')->group(
                                 Route::prefix('statistical')->group(
                                     function () {
                                         Route::get(
-                                            '/',
+                                            '/progression',
                                             'ApiNutritionist\StatisticalController@getStatisticalOfPatient'
+                                        );
+                                        Route::get(
+                                            '/followRate',
+                                            'ApiNutritionist\StatisticalController@followUpRate'
                                         );
                                     }
                                 );
@@ -93,6 +97,7 @@ Route::prefix('nutritionist')->group(
                         Route::get('/menus', 'ApiNutritionist\StatisticalController@countMenus');
                         Route::get('/gender', 'ApiNutritionist\StatisticalController@genderPatient');
                         Route::get('/age', 'ApiNutritionist\StatisticalController@rangeAgePatient');
+
                     }
                 );
 

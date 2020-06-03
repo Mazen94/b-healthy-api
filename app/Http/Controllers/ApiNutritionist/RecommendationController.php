@@ -7,6 +7,7 @@ use App\Http\Requests\RecommendationRequest;
 use App\Repositories\PatientRepository;
 use App\Repositories\RecommendationRepository;
 use Illuminate\Http\JsonResponse;
+use OneSignal;
 
 
 class RecommendationController extends Controller
@@ -39,6 +40,10 @@ class RecommendationController extends Controller
         $name = $request->input('name');
         $patientRepository = new PatientRepository($patient);
         $recommendation = $patientRepository->createRecommendation($name, $avoid);
+        OneSignal::setParam('headings', __('messages.recommendationHeading'))->sendNotificationToExternalUser(
+            __('messages.newRecommendation'),
+            123456789
+        );
         return response()->json(['data' => $recommendation], 200);
     }
 
@@ -75,6 +80,10 @@ class RecommendationController extends Controller
         $name = $request->input('name');
         $recommendationRepository = new RecommendationRepository($recommendation);
         $recommendation = $recommendationRepository->updateRecommendation($name, $avoid);
+        OneSignal::setParam('headings', __('messages.recommendationHeading'))->sendNotificationToExternalUser(
+            __('messages.newRecommendation'),
+            $patient->id
+        );
         return response()->json(['data' => $recommendation], 200);
     }
 

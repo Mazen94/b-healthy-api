@@ -42,7 +42,7 @@ class RecommendationController extends Controller
         $recommendation = $patientRepository->createRecommendation($name, $avoid);
         OneSignal::setParam('headings', __('messages.recommendationHeading'))->sendNotificationToExternalUser(
             __('messages.newRecommendation'),
-            123456789
+            $patient->id
         );
         return response()->json(['data' => $recommendation], 200);
     }

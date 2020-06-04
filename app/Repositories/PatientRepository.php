@@ -62,6 +62,7 @@ class PatientRepository
      * @param string $numberPhone
      * @param string $profession
      * @param int $age
+     * @param string $password
      * @return bool|mixed|null
      */
     public function updatePatient(
@@ -71,7 +72,8 @@ class PatientRepository
         $gender,
         $numberPhone,
         $profession,
-        $age
+        $age,
+        $password
     ) {
         $this->patient->email = $email;
         $this->patient->firstName = $firstName;
@@ -80,6 +82,9 @@ class PatientRepository
         $this->patient->gender = $gender;
         $this->patient->profession = $numberPhone;
         $this->patient->numberPhone = $profession;
+        if(isset($password)){
+            $this->patient->password = bcrypt($password);
+        }
         $this->patient->save();
         return $this->patient;
     }

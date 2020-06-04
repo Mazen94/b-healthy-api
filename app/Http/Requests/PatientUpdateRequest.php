@@ -35,6 +35,7 @@ class PatientUpdateRequest extends FormRequest
             'lastName' => 'required',
             'numberPhone' => 'required|string',
             'profession' => 'required|string',
+            'password' => 'string',
             'gender' => 'required|integer',
             'age' => 'required|integer'
         ];

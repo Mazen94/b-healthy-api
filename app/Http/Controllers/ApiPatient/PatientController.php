@@ -46,6 +46,7 @@ class PatientController extends Controller
         $gender = $request->input('gender');
         $numberPhone = $request->input('numberPhone');
         $profession = $request->input('profession');
+        $password = $request->input('password',null);
         $age = $request->input('age');
         $patientRepository = new PatientRepository($patientConnected);
         $patient = $patientRepository->updatePatient(
@@ -55,7 +56,8 @@ class PatientController extends Controller
             $gender,
             $numberPhone,
             $profession,
-            $age
+            $age,
+            $password
         );
         return response()->json(['patient' => $patient], 200);
     }

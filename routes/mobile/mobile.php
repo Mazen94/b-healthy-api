@@ -3,6 +3,7 @@
 Route::prefix('patient')->group(
     function () {
         Route::post('login', 'ApiPatient\AuthController@login');
+        Route::post('forgotPassword', 'ApiPatient\ForgotPasswordController@sendNewPassword');
         Route::middleware('auth:api-patient')->group(
             function () {
                 Route::get('/', 'ApiPatient\PatientController@index');

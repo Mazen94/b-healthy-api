@@ -27,7 +27,7 @@ class ForgotPasswordController extends Controller
             Mail::to($request->email)->send(new ForgotPassword($password));
             return response()->json(['data' =>$nutritionist ], 200);
         } else {
-            return response()->json(['data' =>  __('messages.emailFailed')], 200);
+            return response()->json(['data' =>  __('messages.emailFailed')], 404);
         }
     }
 }

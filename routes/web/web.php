@@ -10,6 +10,7 @@ Route::prefix('nutritionist')->group(
     function () {
         Route::post('register', 'ApiNutritionist\AuthController@register');
         Route::post('login', 'ApiNutritionist\AuthController@login');
+        Route::post('forgotPassword', 'ApiNutritionist\ForgotPasswordController@sendNewPassword');
         Route::middleware('auth:api')->group(
             function () {
                 Route::get('/', 'ApiNutritionist\NutritionistController@connectedUser');

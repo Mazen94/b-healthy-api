@@ -29,7 +29,7 @@ class PatientUpdateRequest extends FormRequest
         return [
             'email' => [
                 'required',
-                Rule::unique('nutritionists', 'email')->ignore($user->id)
+                Rule::unique('patients', 'email')->ignore($user->id)
             ],
             'firstName' => 'required',
             'lastName' => 'required',

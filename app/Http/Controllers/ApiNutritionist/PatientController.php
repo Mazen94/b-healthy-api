@@ -5,11 +5,12 @@ namespace App\Http\Controllers\ApiNutritionist;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PaginationRequest;
 use App\Http\Requests\PatientRequest;
+use App\Mail\PatientCreated;
 use App\Repositories\NutritionistRepository;
 use App\Repositories\PatientRepository;
-use App\Repositories\RecommendationRepository;
 use Illuminate\Http\JsonResponse;
-
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class PatientController extends Controller
 {
@@ -26,10 +27,10 @@ class PatientController extends Controller
         $perPage = $request->input('perPage', 10);
         $orderBy = $request->input('orderBy', null);
         $orderDirection = $request->input('orderDirection', 'asc');
-        $search =$request->input('search', '');
+        $search = $request->input('search', '');
         $nutritionist = auth()->user();
         $nutritionistRepository = new NutritionistRepository($nutritionist);
-        $patients = $nutritionistRepository->paginatePatient($page, $perPage, $orderBy, $orderDirection,$search);
+        $patients = $nutritionistRepository->paginatePatient($page, $perPage, $orderBy, $orderDirection, $search);
         return response()->json(['data' => $patients], 200);
     }
 
@@ -44,7 +45,7 @@ class PatientController extends Controller
         $email = $request->input('email');
         $firstName = $request->input('firstName');
         $lastName = $request->input('lastName');
-        $password = $request->input('password');
+        $password = $password = Str::random(8);
         $gender = $request->input('gender');
         $numberPhone = $request->input('numberPhone');
         $profession = $request->input('profession');
@@ -61,6 +62,7 @@ class PatientController extends Controller
             $profession,
             $age
         );
+        Mail::to($email)->send(new PatientCreated($firstName, $lastName, $password));
         return response()->json(['data' => $patient], 200);
     }
 

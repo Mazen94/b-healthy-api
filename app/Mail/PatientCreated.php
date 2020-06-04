@@ -7,18 +7,24 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ForgotPassword extends Mailable
+class PatientCreated extends Mailable
 {
     use Queueable, SerializesModels;
+    public $firstName;
+    public $lastName;
     public $password;
 
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param $firstName
+     * @param $lastName
+     * @param $password
      */
-    public function __construct($password)
+    public function __construct($firstName, $lastName, $password)
     {
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
         $this->password = $password;
     }
 
@@ -29,6 +35,6 @@ class ForgotPassword extends Mailable
      */
     public function build()
     {
-        return $this->subject(__('messages.newPassword'))->markdown('emails.forgotPassword');
+        return $this->subject(__('messages.welcome'))->markdown('emails.patientCreated');
     }
 }

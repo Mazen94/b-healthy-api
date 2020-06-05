@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\ApiNutritionist;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginRequest;
-use App\Http\Requests\NutritionistCreateRequest;
 use App\Http\Requests\NutritionistUpdateRequest;
+use App\Http\Requests\UploadImageRequest;
 use App\Repositories\NutritionistRepository;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use JWTAuth;
+use Image;
+use Config;
 
 class NutritionistController extends Controller
 {
@@ -54,5 +56,20 @@ class NutritionistController extends Controller
         return response()->json(['data' => true,], 200);
     }
 
-
+    public function uploadImage(UploadImageRequest $request)
+    {
+        $nutritionist = auth()->user();
+        $photo = $request->file('photo');
+        if ($nutritionist->photo == Config::get('constants.IMAGE_NUTRITIONIST')) {
+            $fileName = time() . '-' . $request->file('photo')->getClientOriginalName();
+            $location = public_path(Config::get('constants.PATH_IMAGES_NUTRITIONIST') . $fileName);
+        } else {
+            $fileName = $nutritionist->photo;
+            $location = public_path(Config::get('constants.PATH_IMAGES_NUTRITIONIST') . $fileName);
+        }
+        Image::make($photo)->resize(300, 300)->save($location);
+        $nutritionist->photo = $fileName;
+        $nutritionist->save();
+        return response()->json(['data' => true,], 200);
+    }
 }

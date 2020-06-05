@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MenuRequest;
 use App\Menu;
 use App\Repositories\MenuRepository;
-use App\Repositories\RecommendationRepository;
 use Illuminate\Http\JsonResponse;
 
 

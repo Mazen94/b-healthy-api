@@ -15,6 +15,7 @@ Route::prefix('nutritionist')->group(
             function () {
                 Route::get('/', 'ApiNutritionist\NutritionistController@connectedUser');
                 Route::put('/', 'ApiNutritionist\NutritionistController@update');
+                Route::post('/uploadImage', 'ApiNutritionist\NutritionistController@uploadImage');
 
                 Route::prefix('patients')->group(
                     function () {

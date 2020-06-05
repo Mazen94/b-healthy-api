@@ -5,7 +5,7 @@
 
 return [
     //minimum current_page (pagination)
-    'MIN_CURRENT_PAGE' => 1 ,
+    'MIN_CURRENT_PAGE' => 1,
     //minimum Number of data per page
     'MIN_PER_PAGE' => 1,
     //maximum length of a password
@@ -32,7 +32,25 @@ return [
     //minimum calories of a store menu
     'MIN_CALORIES_LENGTH' => 100,
 
-    'ARRAY_OF_AGE' => [[10,15],[16,20],[21,25],[26,30],[31,35],[36,40],[41,45],[46,50],[51,55],[56,60]]
+    'ARRAY_OF_AGE' => [
+        [10, 15],
+        [16, 20],
+        [21, 25],
+        [26, 30],
+        [31, 35],
+        [36, 40],
+        [41, 45],
+        [46, 50],
+        [51, 55],
+        [56, 60]
+    ],
 
+    //the type of file is image
+    'FILE_TYPE' => 'Le fichier doit être une image',
 
+    'EXTENSIONS_OF_FILES' => 'La photo doit être un fichier de type: jpeg, jpg, png',
+
+    'IMAGE_NUTRITIONIST' => 'defaultNutritionist.png',
+
+    'PATH_IMAGES_NUTRITIONIST' => 'images/nutritionists/',
 ];

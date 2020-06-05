@@ -70,6 +70,6 @@ class NutritionistController extends Controller
         Image::make($photo)->resize(300, 300)->save($location);
         $nutritionist->photo = $fileName;
         $nutritionist->save();
-        return response()->json(['data' => true,], 200);
+        return response()->json(['data' => $fileName,], 200);
     }
 }

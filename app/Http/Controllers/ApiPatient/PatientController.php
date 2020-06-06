@@ -100,7 +100,7 @@ class PatientController extends Controller
         $patient = auth()->user();
         $photo = $request->file('photo');
         if ($patient->photo != Config::get('constants.IMAGE_PATIENT')) {
-            unlink('images/patients/' . $patient->photo);
+            unlink(Config::get('constants.PATH_IMAGES_PATIENT') . $patient->photo);
         }
         $fileName = uniqid() . '-' . time() . '.' . $photo->guessExtension();
         $location = public_path(Config::get('constants.PATH_IMAGES_PATIENT') . $fileName);

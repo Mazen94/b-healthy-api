@@ -56,17 +56,20 @@ class NutritionistController extends Controller
         return response()->json(['data' => true,], 200);
     }
 
+    /**
+     * upload image
+     * @param UploadImageRequest $request
+     * @return mixed
+     */
     public function uploadImage(UploadImageRequest $request)
     {
         $nutritionist = auth()->user();
         $photo = $request->file('photo');
-        if ($nutritionist->photo == Config::get('constants.IMAGE_NUTRITIONIST')) {
-            $fileName = time() . '-' . $request->file('photo')->getClientOriginalName();
-            $location = public_path(Config::get('constants.PATH_IMAGES_NUTRITIONIST') . $fileName);
-        } else {
-            $fileName = $nutritionist->photo;
-            $location = public_path(Config::get('constants.PATH_IMAGES_NUTRITIONIST') . $fileName);
+        if ($nutritionist->photo != Config::get('constants.IMAGE_NUTRITIONIST')) {
+            unlink('images/nutritionists/' . $nutritionist->photo);
         }
+        $fileName = uniqid() . '-' . time() . '.' . $photo->guessExtension();
+        $location = public_path(Config::get('constants.PATH_IMAGES_NUTRITIONIST') . $fileName);
         Image::make($photo)->resize(300, 300)->save($location);
         $nutritionist->photo = $fileName;
         $nutritionist->save();

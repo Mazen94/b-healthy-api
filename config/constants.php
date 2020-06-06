@@ -51,6 +51,8 @@ return [
     'EXTENSIONS_OF_FILES' => 'La photo doit être un fichier de type: jpeg, jpg, png',
 
     'IMAGE_NUTRITIONIST' => 'defaultNutritionist.png',
-
     'PATH_IMAGES_NUTRITIONIST' => 'images/nutritionists/',
+
+    'PATH_IMAGES_PATIENT' => 'images/patients/',
+    'IMAGE_PATIENT' => 'defaultPatient.png',
 ];

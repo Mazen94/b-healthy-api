@@ -23,7 +23,9 @@ class NutritionistController extends Controller
      */
     public function connectedUser()
     {
-        return response()->json(['data' => auth()->user(),], 200);
+        $nutritonist = auth()->user();
+        $nutritonist->photo = asset(config('constants.PATH_IMAGES_NUTRITIONIST') . $nutritonist->photo);
+        return response()->json(['data' => $nutritonist,], 200);
     }
 
     /**
@@ -66,13 +68,14 @@ class NutritionistController extends Controller
         $nutritionist = auth()->user();
         $photo = $request->file('photo');
         if ($nutritionist->photo != Config::get('constants.IMAGE_NUTRITIONIST')) {
-            unlink('images/nutritionists/' . $nutritionist->photo);
+            unlink(config('constants.PATH_IMAGES_NUTRITIONIST') . $nutritionist->photo);
         }
         $fileName = uniqid() . '-' . time() . '.' . $photo->guessExtension();
         $location = public_path(Config::get('constants.PATH_IMAGES_NUTRITIONIST') . $fileName);
         Image::make($photo)->resize(300, 300)->save($location);
         $nutritionist->photo = $fileName;
         $nutritionist->save();
-        return response()->json(['data' => $fileName,], 200);
+        $urlPhoto = asset(config('constants.PATH_IMAGES_NUTRITIONIST') . $fileName);
+        return response()->json(['data' => $urlPhoto,], 200);
     }
 }

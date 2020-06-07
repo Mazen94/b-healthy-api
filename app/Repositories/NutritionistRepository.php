@@ -234,7 +234,9 @@ class NutritionistRepository
         $patient = [];
         $data = Config::get('constants.ARRAY_OF_AGE');
         foreach ($data as $age) {
+            if($this->rangeAge($age[0], $age[1]) !==0)
             $patient ["[$age[0]-$age[1]]"] = $this->rangeAge($age[0], $age[1]);
+            else continue;
         }
         return $patient;
     }

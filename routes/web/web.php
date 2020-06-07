@@ -56,7 +56,7 @@ Route::prefix('nutritionist')->group(
                                         Route::get('/', 'ApiNutritionist\RecommendationController@index');
                                         Route::get(
                                             '/menus',
-                                            'ApiNutritionist\MenuController@getPatientMenus'
+                                            'ApiNutritionist\MenuController@getMenus'
                                         );
                                         Route::get(
                                             '/menus/{idMenu}',
@@ -99,7 +99,6 @@ Route::prefix('nutritionist')->group(
                         Route::get('/menus', 'ApiNutritionist\StatisticalController@countMenus');
                         Route::get('/gender', 'ApiNutritionist\StatisticalController@genderPatient');
                         Route::get('/age', 'ApiNutritionist\StatisticalController@rangeAgePatient');
-
                     }
                 );
 

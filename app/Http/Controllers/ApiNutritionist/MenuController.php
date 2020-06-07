@@ -32,7 +32,7 @@ class MenuController extends Controller
     }
 
     /**
-     * get a menus posted by patient related  to recommendation
+     * get a menus related  to recommendation
      *
      * @param int $patientId
      * @return JsonResponse

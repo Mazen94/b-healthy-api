@@ -27,7 +27,6 @@ class IngredientController extends Controller
         $orderDirection = $request->input('orderDirection', 'asc');
         $search = $request->input('search', '');
         $patient = auth()->user();
-
         $patientRepository = new PatientRepository($patient);
         $patients = $patientRepository->paginateIngredient($page, $perPage, $orderBy, $orderDirection, $search);
         return response()->json(['data' => $patients], 200);
@@ -48,17 +47,17 @@ class IngredientController extends Controller
         $check = MenuRepository::checkRecordExists($idIngredient, $idMenu);
         //check if the record exists in the table or not
         if (isset($check)) {
-            return response()->json(['data' => __('messages.IngredientExists'),], 400);
+            return response()->json(['data' => __('messages.IngredientExists'),], 200);
         }
         $menu = Menu::findOrFail($idMenu);
         $ingredient = Ingredient::findOrFail($idIngredient);
         $caloriesOfIngredient = $ingredient->calorie;
         $caloriesOfMenu = $menu->calorie;
         $defaultAmount = $ingredient->amount;
-        $caloriesOfMenu = $caloriesOfMenu + (($amount / $defaultAmount) * $caloriesOfIngredient);
+        $newCaloriesOfMenu = $caloriesOfMenu + round((($amount / $defaultAmount) * $caloriesOfIngredient), 1);
         $menuRepository = new MenuRepository($menu);
-        $menu = $menuRepository->addIngredientToMenu($idMenu, $caloriesOfMenu, $idIngredient, $amount);
-        return response()->json(['data' => $menu,], 201);
+        $menu = $menuRepository->addIngredientToMenu($idMenu, $newCaloriesOfMenu, $idIngredient, $amount);
+        return response()->json(['data' => $menu,], 200);
     }
 
     /**
@@ -76,12 +75,18 @@ class IngredientController extends Controller
         $defaultAmount = $ingredient->amount;
         $caloriesOfMenu = $menu->calorie;
         $amount = $ingredient->pivot->amount;
-        $caloriesOfMenu = $caloriesOfMenu - (($amount / $defaultAmount) * $caloriesOfIngredient);
+        $newCaloriesOfMenu = $caloriesOfMenu - round((($amount / $defaultAmount) * $caloriesOfIngredient), 1);
         $menuRepository = new MenuRepository($menu);
-        $menu = $menuRepository->deleteIngredientFromMenu($caloriesOfMenu, $idIngredient);
+        $menu = $menuRepository->deleteIngredientFromMenu($newCaloriesOfMenu, $idIngredient);
         return response()->json(['data' => $menu,], 200);
     }
 
+    /**
+     * @param Request $request
+     * @param int $idMenu
+     * @param int $idIngredient
+     * @return mixed
+     */
     public function updateAmountOfIngredient(Request $request, $idMenu, $idIngredient)
     {
         $menu = Menu::findOrFail($idMenu);
@@ -93,9 +98,13 @@ class IngredientController extends Controller
         $oldAmount = $ingredient->pivot->amount;
         $newAmount = $request->input('amount');
         $amount = $newAmount - $oldAmount;
-        $mealStoreCalorie = $menuCalorie + (($amount / $defaultAmount) * $ingredientCalorie);
+        $newCaloriesOfMenu = $menuCalorie + round((($amount / $defaultAmount) * $ingredientCalorie), 1);
         $ingredientRepository = new IngredientRepository($ingredient);
-        $amountUpdated = $ingredientRepository->updateAmountIngredientInMealStore($newAmount, $menu, $mealStoreCalorie);
+        $amountUpdated = $ingredientRepository->updateAmountIngredientInMealStore(
+            $newAmount,
+            $menu,
+            $newCaloriesOfMenu
+        );
         return response()->json(['data' => $amountUpdated,], 200);
     }
 }

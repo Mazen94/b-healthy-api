@@ -129,7 +129,7 @@ class IngredientController extends Controller
         $caloriesOfMealStore = $mealStore->calorie; //Number calories of menu
         $defaultAmount = $ingredient->amount; //Default number of amount of ingredient
         //new value of calorie of menu
-        $caloriesOfMealStore = $caloriesOfMealStore + (($amount / $defaultAmount) * $caloriesOfIngredient);
+        $caloriesOfMealStore = $caloriesOfMealStore + round((($amount / $defaultAmount) * $caloriesOfIngredient), 1);
         $mealStoreRepository = new MealStoreRepository($mealStore);
         $mealStore = $mealStoreRepository->addIngredientToMealStore(
             $idStoreMenu,
@@ -160,7 +160,7 @@ class IngredientController extends Controller
         $ingredientCalorie = $ingredient->calorie;//Default number of calories of ingredient
         $amount = $ingredient->pivot->amount; //number of amount of ingredient
         //new value of calorie of menu
-        $mealStoreCalorie = $mealStoreCalorie - (($amount / $defaultAmount) * $ingredientCalorie);
+        $mealStoreCalorie = $mealStoreCalorie - round((($amount / $defaultAmount) * $ingredientCalorie), 1);
         $mealStoreRepository = new MealStoreRepository($mealStore);
         $menu = $mealStoreRepository->deleteIngredientToMealStore($idIngredient, $mealStoreCalorie);
         return response()->json(['data' => $menu,], 200);
@@ -189,7 +189,7 @@ class IngredientController extends Controller
         $newAmount = $request->input('amount'); //the new amount of ingredient
         $amount = $newAmount - $oldAmount;
         //new value of calorie of menu
-        $mealStoreCalorie = $mealStoreCalorie + (($amount / $defaultAmount) * $ingredientCalorie);
+        $mealStoreCalorie = $mealStoreCalorie + round((($amount / $defaultAmount) * $ingredientCalorie), 1);
         $ingredientRepository = new IngredientRepository($ingredient);
         $amountUpdated = $ingredientRepository->updateAmountIngredientInMealStore(
             $newAmount,

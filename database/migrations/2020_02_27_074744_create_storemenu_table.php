@@ -18,7 +18,7 @@ class CreateStoremenuTable extends Migration
             $table->string('nom');
             $table->integer('max_age');
             $table->integer('min_age');
-            $table->integer('calorie');
+            $table->float('calorie');
             $table->integer('type_menu');
             $table->unsignedBigInteger('nutritionist_id');
             $table->foreign('nutritionist_id')->references('id')->on('nutritionist');

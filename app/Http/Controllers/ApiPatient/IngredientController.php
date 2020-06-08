@@ -45,6 +45,11 @@ class IngredientController extends Controller
         $idIngredient = $request->input('idIngredient');
         $idMenu = $request->input('idMenu');
         $amount = $request->input('amount');
+        $check = MenuRepository::checkRecordExists($idIngredient, $idMenu);
+        //check if the record exists in the table or not
+        if (isset($check)) {
+            return response()->json(['data' => __('messages.IngredientExists'),], 400);
+        }
         $menu = Menu::findOrFail($idMenu);
         $ingredient = Ingredient::findOrFail($idIngredient);
         $caloriesOfIngredient = $ingredient->calorie;
@@ -53,7 +58,7 @@ class IngredientController extends Controller
         $caloriesOfMenu = $caloriesOfMenu + (($amount / $defaultAmount) * $caloriesOfIngredient);
         $menuRepository = new MenuRepository($menu);
         $menu = $menuRepository->addIngredientToMenu($idMenu, $caloriesOfMenu, $idIngredient, $amount);
-        return response()->json(['data' => $menu,], 200);
+        return response()->json(['data' => $menu,], 201);
     }
 
     /**
@@ -77,7 +82,7 @@ class IngredientController extends Controller
         return response()->json(['data' => $menu,], 200);
     }
 
-    public function updateAmountOfIngredient(Request $request,$idMenu, $idIngredient)
+    public function updateAmountOfIngredient(Request $request, $idMenu, $idIngredient)
     {
         $menu = Menu::findOrFail($idMenu);
         $ingredients = $menu->ingredients();
@@ -90,7 +95,7 @@ class IngredientController extends Controller
         $amount = $newAmount - $oldAmount;
         $mealStoreCalorie = $menuCalorie + (($amount / $defaultAmount) * $ingredientCalorie);
         $ingredientRepository = new IngredientRepository($ingredient);
-        $amountUpdated =  $ingredientRepository->updateAmountIngredientInMealStore($newAmount,$menu,$mealStoreCalorie);
+        $amountUpdated = $ingredientRepository->updateAmountIngredientInMealStore($newAmount, $menu, $mealStoreCalorie);
         return response()->json(['data' => $amountUpdated,], 200);
     }
 }

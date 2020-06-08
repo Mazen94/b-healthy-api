@@ -181,4 +181,18 @@ class MenuRepository
         $recommendation = Recommendation::find($id);
         return $recommendation->menus()->whereIn('type_menu', array(5, 6, 7, 8, 9))->get();
     }
+    /**
+     * Method Checking If a Record Exists
+     *
+     * @param int $idIngredient
+     * @param int $idMenu
+     * @return bool|mixed|null
+     */
+    public static function checkRecordExists($idIngredient, $idMenu)
+    {
+        return IngredientMenu::where('menu_id', $idMenu)->where(
+            'ingredient_id',
+            $idIngredient
+        )->first();
+    }
 }

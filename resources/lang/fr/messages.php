@@ -6,5 +6,6 @@ return [
     'recommendationHeading' => ["en" => "Recommandation"],
     'emailFailed' => 'Ton adresse email n\'est pas valide.',
     'newPassword' => 'Nouveau mot de passe',
-    'welcome' => 'Bienvenue dans notre application'
+    'welcome' => 'Bienvenue dans notre application',
+    'IngredientExists' => 'Vous avez deja ajoutée ce ingredient'
 ];

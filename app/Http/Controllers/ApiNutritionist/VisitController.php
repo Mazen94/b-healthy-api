@@ -8,6 +8,7 @@ use App\Http\Requests\VisitRequest;
 use App\Repositories\PatientRepository;
 use App\Repositories\VisitRepository;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class VisitController extends Controller
 {
@@ -25,8 +26,8 @@ class VisitController extends Controller
         $patient = $nutritionist->patients()->findOrFail($idPatient);
         $page = $request->input('page', 1);
         $perPage = $request->input('perPage', 10);
-        $orderBy = $request->input('orderBy', null);
-        $orderDirection = $request->input('orderDirection', 'asc');
+        $orderBy = $request->input('orderBy', 'id');
+        $orderDirection = $request->input('orderDirection', 'desc');
         $patientRepository = new PatientRepository($patient);
         $visits = $patientRepository->paginateVisits($page, $perPage, $orderBy, $orderDirection);
         return response()->json(['data' => $visits], 200);
@@ -44,6 +45,8 @@ class VisitController extends Controller
     {
         $nutritionist = auth()->user();
         $patient = $nutritionist->patients()->findOrFail($idPatient);
+        $visit = [];
+        $checkVisit = VisitRepository::checkVisit($idPatient);
         $weight = $request->input('weight');
         $note = $request->input('note');
         $belly = $request->input('belly');
@@ -51,10 +54,35 @@ class VisitController extends Controller
         $legs = $request->input('legs');
         $neck = $request->input('neck');
         $tall = $request->input('tall');
-        $scheduledAt = $request->input('scheduled_at');
-        $doneAt = $request->input('done_at');
-        $patientRepository = new PatientRepository($patient);
-        $visit = $patientRepository->createVisit($weight, $note,$belly, $chest,$legs, $neck,$tall,$scheduledAt, $doneAt);
+        if (!$checkVisit->isEmpty()) {
+            $visitRepository = new VisitRepository($checkVisit[0]);
+            $visit = $visitRepository->updateVisit(
+                $weight,
+                $note,
+                $belly,
+                $chest,
+                $legs,
+                $neck,
+                $tall,
+                $checkVisit[0]->scheduledAt,
+                $checkVisit[0]->meetingHour
+            );
+        } else {
+            $nutritionist = auth()->user();
+            $patient = $nutritionist->patients()->findOrFail($idPatient);
+            $patientRepository = new PatientRepository($patient);
+            $visit = $patientRepository->createVisit(
+                $weight,
+                $note,
+                $belly,
+                $chest,
+                $legs,
+                $neck,
+                $tall,
+                null,
+                null
+            );
+        }
         return response()->json(['data' => $visit], 200);
     }
 
@@ -112,4 +140,59 @@ class VisitController extends Controller
         return response()->json(['data' => true], 200);
     }
 
+    /**
+     * get hour of meeting by date
+     * @param Request $request
+     * @return mixed
+     */
+    public function showMeetingHour(Request $request)
+    {
+        $date = $request->input('date');
+        $meetings = VisitRepository::showMeetingByDate($date);
+        return response()->json(['data' => $meetings], 200);
+    }
+
+    /**
+     * create new meeting to the patient
+     * @param Request $request
+     * @param $idPatient
+     * @return mixed
+     */
+    public function newMeeting(Request $request, $idPatient)
+    {
+        $visit = [];
+        $date = $request->input('date');
+        $hour = $request->input('hour');
+        $checkVisit = VisitRepository::checkVisit($idPatient);
+        if (!$checkVisit->isEmpty()) {
+            $visitRepository = new VisitRepository($checkVisit[0]);
+            $visit = $visitRepository->updateVisit(
+                $checkVisit[0]->weight,
+                $checkVisit[0]->note,
+                $checkVisit[0]->belly,
+                $checkVisit[0]->chest,
+                $checkVisit[0]->legs,
+                $checkVisit[0]->neck,
+                $checkVisit[0]->tall,
+                $date,
+                $hour
+            );
+        } else {
+            $nutritionist = auth()->user();
+            $patient = $nutritionist->patients()->findOrFail($idPatient);
+            $patientRepository = new PatientRepository($patient);
+            $visit = $patientRepository->createVisit(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                $date,
+                $hour
+            );
+        }
+        return response()->json(['data' => $visit], 200);
+    }
 }

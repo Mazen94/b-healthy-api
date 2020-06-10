@@ -24,26 +24,40 @@ class VisitRepository
      *
      * @param int $weight
      * @param string $note
-     * @param Date $scheduledAt
-     * @param Date $doneAt
-     *
-     * @return bool|false|Collection|Model|HasMany|HasMany[]
+     * @param $belly
+     * @param $chest
+     * @param $legs
+     * @param $neck
+     * @param $tall
+     * @param $scheduledAt
+     * @param $meetingHour
+     * @return Visit
      */
-    public function updateVisit($weight, $note, $scheduledAt, $doneAt)
+    public function updateVisit($weight, $note, $belly, $chest, $legs, $neck, $tall, $scheduledAt, $meetingHour)
     {
         $this->visit->weight = $weight;
-        $this->visit->scheduled_at = $scheduledAt;
-        if (!empty($doneAt)) {
-            $this->visit->done_at = $doneAt;
-        }
-        if (!empty($note)) {
-            $this->visit->note = $note;
-        }
+        $this->visit->meetingHour = $meetingHour;
+        $this->visit->scheduledAt = $scheduledAt;
+        $this->visit->belly = $belly;
+        $this->visit->chest = $chest;
+        $this->visit->legs = $legs;
+        $this->visit->neck = $neck;
+        $this->visit->tall = $tall;
+        $this->visit->note = $note;
         $this->visit->save();
 
         return $this->visit;
     }
 
+    /**
+     * hour of meeting  by date
+     * @param $date
+     * @return mixed
+     */
+    public static function showMeetingByDate($date)
+    {
+        return Visit::select('meetingHour')->where('scheduledAt', $date)->get();
+    }
 
     /**
      * Method to delete visit related to patient
@@ -57,5 +71,16 @@ class VisitRepository
     public function deleteVisit()
     {
         return $this->visit->delete();
+    }
+
+    /**
+     * check visit of patient by current date
+     * @param $id
+     * @return mixed
+     */
+    public static function checkVisit($id)
+    {
+        $date = date('Y-m-d');
+        return Visit::whereDate('created_at', $date)->where('patient_id', $id)->get();
     }
 }

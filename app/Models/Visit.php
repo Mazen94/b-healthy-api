@@ -16,8 +16,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $neck
  * @property int $tall
  * @property string $note
- * @property  $scheduled_at
- * @property  $done_at
+ * @property  $scheduledAt
+ * @property  $meetingHour
  *
  */
 class Visit extends Model

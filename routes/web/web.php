@@ -16,7 +16,7 @@ Route::prefix('nutritionist')->group(
                 Route::get('/', 'ApiNutritionist\NutritionistController@connectedUser');
                 Route::put('/', 'ApiNutritionist\NutritionistController@update');
                 Route::post('/uploadImage', 'ApiNutritionist\NutritionistController@uploadImage');
-
+                Route::post('/meeting', 'ApiNutritionist\VisitController@showMeetingHour');
                 Route::prefix('patients')->group(
                     function () {
                         Route::post('/', 'ApiNutritionist\PatientController@store');
@@ -36,6 +36,7 @@ Route::prefix('nutritionist')->group(
                                         Route::get('/{idVisit}', 'ApiNutritionist\VisitController@show');
                                         Route::put('/{idVisit}', 'ApiNutritionist\VisitController@update');
                                         Route::delete('/{idVisit}', 'ApiNutritionist\VisitController@destroy');
+                                        Route::post('/newMeeting', 'ApiNutritionist\VisitController@newMeeting');
                                     }
                                 );
                                 Route::prefix('statistical')->group(

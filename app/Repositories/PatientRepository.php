@@ -82,7 +82,7 @@ class PatientRepository
         $this->patient->gender = $gender;
         $this->patient->profession = $numberPhone;
         $this->patient->numberPhone = $profession;
-        if(isset($password)){
+        if (isset($password)) {
             $this->patient->password = bcrypt($password);
         }
         $this->patient->save();
@@ -154,18 +154,25 @@ class PatientRepository
      * @param int $legs
      * @param int $neck
      * @param int $tall
-     * @param Date $scheduledAt
-     * @param Date $doneAt
-     *
+     * @param $date
+     * @param $hour
      * @return false|Model
      */
-    public function createVisit($weight, $note, $belly, $chest, $legs, $neck, $tall, $scheduledAt, $doneAt)
-    {
+    public function createVisit(
+        $weight,
+        $note,
+        $belly,
+        $chest,
+        $legs,
+        $neck,
+        $tall,
+        $date,
+        $hour
+    ) {
         $visit = new Visit();
-        $visit->weight = $weight;
-        $visit->scheduled_at = $scheduledAt;
-        if (!empty($doneAt)) {
-            $visit->done_at = $doneAt;
+
+        if (!empty($weight)) {
+            $visit->weight = $weight;
         }
         if (!empty($belly)) {
             $visit->belly = $belly;
@@ -184,6 +191,12 @@ class PatientRepository
         }
         if (!empty($note)) {
             $visit->note = $note;
+        }
+        if (!empty($date)) {
+            $visit->scheduledAt = $date;
+        }
+        if (!empty($hour)) {
+            $visit->meetingHour = $hour;
         }
         return $this->patient->visits()->save($visit);
     }
@@ -286,6 +299,7 @@ class PatientRepository
         }
         return $legs->unique('month');
     }
+
     /**
      * get the first leg for each month
      * @return mixed

@@ -7,8 +7,11 @@ use App\Http\Requests\PaginationRequest;
 use App\Http\Requests\VisitRequest;
 use App\Repositories\PatientRepository;
 use App\Repositories\VisitRepository;
+use App\Visit;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 
 class VisitController extends Controller
 {
@@ -41,7 +44,7 @@ class VisitController extends Controller
      *
      * @return JsonResponse
      */
-    public function store(VisitRequest $request, $idPatient)
+    public function newMeasure(VisitRequest $request, $idPatient)
     {
         $nutritionist = auth()->user();
         $patient = $nutritionist->patients()->findOrFail($idPatient);
@@ -84,60 +87,6 @@ class VisitController extends Controller
             );
         }
         return response()->json(['data' => $visit], 200);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param int $idPatient
-     * @param int $idVisit
-     * @return JsonResponse
-     */
-    public function show($idPatient, $idVisit)
-    {
-        $nutritionist = auth()->user();
-        $patient = $nutritionist->patients()->findOrFail($idPatient);
-        $visit = $patient->visits()->findOrFail($idVisit);
-        return response()->json(['data' => $visit], 200);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param VisitRequest $request
-     * @param int $idPatient
-     * @param int $idVisit
-     * @return JsonResponse
-     */
-    public function update(VisitRequest $request, $idPatient, $idVisit)
-    {
-        $nutritionist = auth()->user();
-        $patient = $nutritionist->patients()->findOrFail($idPatient);
-        $visit = $patient->visits()->findOrFail($idVisit);
-        $weight = $request->input('weight');
-        $note = $request->input('note');
-        $scheduledAt = $request->input('scheduled_at');
-        $doneAt = $request->input('done_at');
-        $visitRepository = new VisitRepository($visit);
-        $visitUpdated = $visitRepository->updateVisit($weight, $note, $scheduledAt, $doneAt);
-        return response()->json(['data' => $visitUpdated], 200);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @param $idPatient
-     * @param $idVisit
-     * @return JsonResponse
-     * @throws \Exception
-     */
-    public function destroy($idPatient, $idVisit)
-    {
-        $nutritionist = auth()->user();
-        $patient = $nutritionist->patients()->findOrFail($idPatient);
-        $visit = $patient->visits()->findOrFail($idVisit);
-        $visitRepository = new VisitRepository($visit);
-        $visitRepository->deleteVisit();
-        return response()->json(['data' => true], 200);
     }
 
     /**
@@ -194,5 +143,50 @@ class VisitController extends Controller
             );
         }
         return response()->json(['data' => $visit], 200);
+    }
+
+
+    /**
+     * get meeting of day
+     *
+     * @return mixed
+     */
+    public function showMeetingOfDay()
+    {
+        $meetingOfDay = [];
+        $nutritionist = auth()->user();
+        $patients = $nutritionist->patients;
+        foreach ($patients as $patient) {
+            $meetingHour = VisitRepository::checkMeetingDayById($patient->id);
+            if (!$meetingHour->isEmpty()) {
+                $data = [];
+                $data['photo'] = $patient->photo;
+                $data['firstName'] = $patient->firstName;
+                $data['lastName'] = $patient->lastName;
+                $data['meetingHour'] = $meetingHour[0]->meetingHour;
+                $data['idVisit'] = $meetingHour[0]->id;
+                $data['idPatient'] = $patient->id;
+                $meetingOfDay = $array = Arr::collapse(
+
+                    [$meetingOfDay, [$data]]
+                );
+            }
+        }
+        $meetingOfDay = collect($meetingOfDay)->sortBy('meetingHour');
+        //the values method to reset the keys to consecutively numbered indexes
+        return response()->json(['data' => $meetingOfDay->values()->all()], 200);
+    }
+
+    /**
+     * get hour of meeting by date
+     * @param Request $request
+     * @return mixed
+     */
+    public function deleteMeeting(Request $request)
+    {
+        $id = $request->input('id');
+        $visit = Visit::findOrFail($id);
+        VisitRepository::deleteMeeting($visit);
+        return response()->json(['data' => true], 200);
     }
 }

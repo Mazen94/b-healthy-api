@@ -8,6 +8,8 @@ use App\Http\Requests\NutritionistCreateRequest;
 use App\Repositories\NutritionistRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use JWTAuth;
+use Config;
 
 class AuthController extends Controller
 {
@@ -22,7 +24,8 @@ class AuthController extends Controller
         $firstName = $request->input('firstName');
         $lastName = $request->input('lastName');
         $password = $request->input('password');
-        $nutritionist = NutritionistRepository::register($email, $firstName, $lastName, $password);
+        $photo = config('constants.IMAGE_NUTRITIONIST');
+        $nutritionist = NutritionistRepository::register($email, $firstName, $lastName, $password, $photo);
         $token = JWTAuth::fromUser($nutritionist);
         return response()->json(['token' => $token,], 200);
     }

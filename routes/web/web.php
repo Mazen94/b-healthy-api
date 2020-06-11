@@ -17,6 +17,9 @@ Route::prefix('nutritionist')->group(
                 Route::put('/', 'ApiNutritionist\NutritionistController@update');
                 Route::post('/uploadImage', 'ApiNutritionist\NutritionistController@uploadImage');
                 Route::post('/meeting', 'ApiNutritionist\VisitController@showMeetingHour');
+                Route::get('/meetingOfDay', 'ApiNutritionist\VisitController@showMeetingOfDay');
+                Route::post('/deleteMeeting', 'ApiNutritionist\VisitController@deleteMeeting');
+
                 Route::prefix('patients')->group(
                     function () {
                         Route::post('/', 'ApiNutritionist\PatientController@store');
@@ -32,10 +35,8 @@ Route::prefix('nutritionist')->group(
                                 Route::prefix('visits')->group(
                                     function () {
                                         Route::get('/', 'ApiNutritionist\VisitController@index');
-                                        Route::post('/', 'ApiNutritionist\VisitController@store');
-                                        Route::get('/{idVisit}', 'ApiNutritionist\VisitController@show');
-                                        Route::put('/{idVisit}', 'ApiNutritionist\VisitController@update');
-                                        Route::delete('/{idVisit}', 'ApiNutritionist\VisitController@destroy');
+                                        Route::post('/', 'ApiNutritionist\VisitController@newMeasure');
+
                                         Route::post('/newMeeting', 'ApiNutritionist\VisitController@newMeeting');
                                     }
                                 );

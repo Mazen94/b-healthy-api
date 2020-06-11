@@ -60,20 +60,6 @@ class VisitRepository
     }
 
     /**
-     * Method to delete visit related to patient
-     *
-     * @param Visit $visit
-     *
-     * @return bool|mixed|null
-     *
-     * @throws \Exception
-     */
-    public function deleteVisit()
-    {
-        return $this->visit->delete();
-    }
-
-    /**
      * check visit of patient by current date
      * @param $id
      * @return mixed
@@ -82,5 +68,30 @@ class VisitRepository
     {
         $date = date('Y-m-d');
         return Visit::whereDate('created_at', $date)->where('patient_id', $id)->get();
+    }
+
+    /**
+     * hour of meeting  by date
+     * @param $id
+     * @return mixed
+     */
+    public static function checkMeetingDayById($id)
+    {
+        $date = date('Y-m-d');
+        return Visit::select('meetingHour', 'id')->where('scheduledAt', $date)->where('patient_id', $id)->where(
+            'meetingStatus',
+            0
+        )->get();
+    }
+
+    /**
+     * update the value of meeting to 1
+     * @param $visit
+     * @return mixed
+     */
+    public static function deleteMeeting($visit)
+    {
+        $visit->meetingStatus = 1;
+        $visit->save();
     }
 }

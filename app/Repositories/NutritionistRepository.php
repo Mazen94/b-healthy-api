@@ -27,15 +27,17 @@ class NutritionistRepository
      * @param $firstName
      * @param $lastName
      * @param $password
+     * @param $photo
      * @return Nutritionist
      */
-    public static function register($email, $firstName, $lastName, $password)
+    public static function register($email, $firstName, $lastName, $password,$photo)
     {
         $nutritionist = new Nutritionist();
         $nutritionist->email = $email;
         $nutritionist->firstName = $firstName;
         $nutritionist->lastName = $lastName;
         $nutritionist->password = bcrypt($password);
+        $nutritionist->photo=$photo;
         $nutritionist->save();
         return $nutritionist;
     }

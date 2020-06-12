@@ -15,10 +15,10 @@ class CreateVisitTable extends Migration
     {
         Schema::create('visit', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('poids');
+            $table->integer('poids')->nullable();
             $table->string('note');
-            $table->date('scheduled_at');
-            $table->date('done_at');
+            $table->date('scheduledAt')->nullable();
+            $table->date('meetingHour')->nullable();
             $table->unsignedBigInteger('patient_id');
             $table->foreign('patient_id')->references('id')->on('patient');
             $table->timestamps();

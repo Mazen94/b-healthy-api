@@ -90,5 +90,19 @@ class MealStoreRepository
         return $this->mealStore;
     }
 
+    /**
+     * Method Checking If a Record Exists
+     *
+     * @param int $idIngredient
+     * @param int $idMealStore
+     * @return bool|mixed|null
+     */
+    public static function checkRecordExists($idIngredient, $idMealStore)
+    {
+        return IngredientMealStore::where('meal_store_id', $idMealStore)->where(
+            'ingredient_id',
+            $idIngredient
+        )->first();
+    }
 
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ChangePictureToUsersTable extends Migration
+class AddMeetingStatusToVisitsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class ChangePictureToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('nutritionists', function (Blueprint $table) {
-            $table->string('picture')->nullable()->change();
+        Schema::table('visits', function (Blueprint $table) {
+            $table->integer('meetingStatus')->default(0);
         });
     }
 
@@ -25,8 +25,8 @@ class ChangePictureToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('nutritionnist', function (Blueprint $table) {
-            //
+        Schema::table('visits', function (Blueprint $table) {
+            $table->dropColumn('meetingStatus');
         });
     }
 }

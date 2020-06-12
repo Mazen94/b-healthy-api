@@ -15,24 +15,13 @@ class RecommendationController extends Controller
      *
      * @return JsonResponse
      */
-    public function index()
+    public function getLastRecommendation()
     {
         $patient = auth()->user();
         $patientRepository = new PatientRepository($patient);
         $recommendation = $patientRepository->getRecommendationByPatient();
-        return response()->json(['recommendation' => $recommendation,], 200);
+        return response()->json(['data' => $recommendation,], 200);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return JsonResponse
-     */
-    public function indexMenus()
-    {
-        $patient = auth()->user();
-        $patientRepository = new PatientRepository($patient);
-        $menus = $patientRepository->getRecommendationMenusByPatient();
-        return response()->json(['Menus' => $menus,], 200);
-    }
+
 }

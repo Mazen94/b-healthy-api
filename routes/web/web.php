@@ -10,10 +10,15 @@ Route::prefix('nutritionist')->group(
     function () {
         Route::post('register', 'ApiNutritionist\AuthController@register');
         Route::post('login', 'ApiNutritionist\AuthController@login');
+        Route::post('forgotPassword', 'ApiNutritionist\ForgotPasswordController@sendNewPassword');
         Route::middleware('auth:api')->group(
             function () {
                 Route::get('/', 'ApiNutritionist\NutritionistController@connectedUser');
                 Route::put('/', 'ApiNutritionist\NutritionistController@update');
+                Route::post('/uploadImage', 'ApiNutritionist\NutritionistController@uploadImage');
+                Route::post('/meeting', 'ApiNutritionist\VisitController@showMeetingHour');
+                Route::get('/meetingOfDay', 'ApiNutritionist\VisitController@showMeetingOfDay');
+                Route::post('/deleteMeeting', 'ApiNutritionist\VisitController@deleteMeeting');
 
                 Route::prefix('patients')->group(
                     function () {
@@ -30,20 +35,30 @@ Route::prefix('nutritionist')->group(
                                 Route::prefix('visits')->group(
                                     function () {
                                         Route::get('/', 'ApiNutritionist\VisitController@index');
-                                        Route::post('/', 'ApiNutritionist\VisitController@store');
-                                        Route::get('/{idVisit}', 'ApiNutritionist\VisitController@show');
-                                        Route::put('/{idVisit}', 'ApiNutritionist\VisitController@update');
-                                        Route::delete('/{idVisit}', 'ApiNutritionist\VisitController@destroy');
+                                        Route::post('/', 'ApiNutritionist\VisitController@newMeasure');
+
+                                        Route::post('/newMeeting', 'ApiNutritionist\VisitController@newMeeting');
                                     }
                                 );
-
+                                Route::prefix('statistical')->group(
+                                    function () {
+                                        Route::get(
+                                            '/progression',
+                                            'ApiNutritionist\StatisticalController@getStatisticalOfPatient'
+                                        );
+                                        Route::get(
+                                            '/followRate',
+                                            'ApiNutritionist\StatisticalController@followUpRate'
+                                        );
+                                    }
+                                );
 
                                 Route::prefix('recommendations')->group(
                                     function () {
                                         Route::get('/', 'ApiNutritionist\RecommendationController@index');
                                         Route::get(
                                             '/menus',
-                                            'ApiNutritionist\MenuController@getPatientMenus'
+                                            'ApiNutritionist\MenuController@getMenus'
                                         );
                                         Route::get(
                                             '/menus/{idMenu}',
@@ -96,7 +111,6 @@ Route::prefix('nutritionist')->group(
                         Route::get('/{id}', 'ApiNutritionist\IngredientController@show');
                         Route::get('/', 'ApiNutritionist\IngredientController@index');
                         Route::put('/{ingredient}', 'ApiNutritionist\IngredientController@update');
-
                     }
                 );
 

@@ -19,7 +19,7 @@ class CreatePatientTable extends Migration
             $table->string('firstName');
             $table->string('lastName');
             $table->string('password');
-            $table->string('gender');
+            $table->integer('gender');
             $table->string('numberPhone');
             $table->string('profession');
             $table->unsignedBigInteger('nutritionist_id');

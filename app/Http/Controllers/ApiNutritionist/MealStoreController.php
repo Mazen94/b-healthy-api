@@ -22,8 +22,8 @@ class MealStoreController extends Controller
     {
         $page = $request->input('page', 1);
         $perPage = $request->input('perPage', 10);
-        $orderBy = $request->input('orderBy', null);
-        $orderDirection = $request->input('orderDirection', 'asc');
+        $orderBy = $request->input('orderBy', 'created_at');
+        $orderDirection = $request->input('orderDirection', 'desc');
         $nutritionist = auth()->user();
         $nutritionistRepository = new NutritionistRepository($nutritionist);
         $mealStores = $nutritionistRepository->paginateMealStore($page, $perPage, $orderBy, $orderDirection);

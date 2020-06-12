@@ -22,7 +22,10 @@ class AuthController extends Controller
 
         if (!$token = auth('api-patient')->attempt($credentials)) {
             return response()->json(['message' => __('messages.login')], 401);
+        } else {
+            $data['token'] = $token;
+            $data['id'] = auth('api-patient')->user()->id;
+            return response()->json(['data' => $data], 200);
         }
-        return response()->json(['token' => $token], 200);
     }
 }

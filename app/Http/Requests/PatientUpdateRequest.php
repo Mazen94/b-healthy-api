@@ -29,16 +29,15 @@ class PatientUpdateRequest extends FormRequest
         return [
             'email' => [
                 'required',
-                Rule::unique('nutritionists', 'email')->ignore($user->id)
+                Rule::unique('patients', 'email')->ignore($user->id)
             ],
             'firstName' => 'required',
             'lastName' => 'required',
-            'password' => 'required|min:' . Config::get('constants.MIN_PASSWORD_LENGTH') . '|max:' . Config::get(
-                    'constants.MAX_PASSWORD_LENGTH'
-                ),
             'numberPhone' => 'required|string',
             'profession' => 'required|string',
-            'gender' => 'required|string',
+            'password' => 'string',
+            'gender' => 'required|integer',
+            'age' => 'required|integer'
         ];
     }
 }

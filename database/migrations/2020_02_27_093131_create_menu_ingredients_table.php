@@ -14,6 +14,7 @@ class CreateMenuIngredientsTable extends Migration
     public function up()
     {
         Schema::create('menu_ingredients', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('menu_id');
             $table->unsignedBigInteger('ingredients_id');
             $table->foreign('menu_id')->references('id')->on('menu')

@@ -27,15 +27,17 @@ class NutritionistRepository
      * @param $firstName
      * @param $lastName
      * @param $password
+     * @param $photo
      * @return Nutritionist
      */
-    public static function register($email, $firstName, $lastName, $password)
+    public static function register($email, $firstName, $lastName, $password,$photo)
     {
         $nutritionist = new Nutritionist();
         $nutritionist->email = $email;
         $nutritionist->firstName = $firstName;
         $nutritionist->lastName = $lastName;
         $nutritionist->password = bcrypt($password);
+        $nutritionist->photo=$photo;
         $nutritionist->save();
         return $nutritionist;
     }
@@ -220,8 +222,8 @@ class NutritionistRepository
      */
     public function countGenderPatient()
     {
-        $patients['male'] = $this->nutritionist->patients()->where('gender', 'male')->count();
-        $patients['female'] = $this->nutritionist->patients()->where('gender', 'female')->count();
+        $patients['male'] = $this->nutritionist->patients()->where('gender', 0)->count();
+        $patients['female'] = $this->nutritionist->patients()->where('gender', 1)->count();
         return $patients;
     }
 
@@ -234,7 +236,9 @@ class NutritionistRepository
         $patient = [];
         $data = Config::get('constants.ARRAY_OF_AGE');
         foreach ($data as $age) {
+            if($this->rangeAge($age[0], $age[1]) !==0)
             $patient ["[$age[0]-$age[1]]"] = $this->rangeAge($age[0], $age[1]);
+            else continue;
         }
         return $patient;
     }

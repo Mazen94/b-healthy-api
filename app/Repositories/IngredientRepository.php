@@ -35,7 +35,7 @@ class IngredientRepository
      * @param $amount
      * @param $calorie
      *
-     * @return Model
+     * @return Ingredient
      */
     public function updateIngredient($name, $amount, $calorie)
     {
@@ -60,6 +60,7 @@ class IngredientRepository
         $mealStore->save();
         $this->ingredient->pivot->amount = $amount;
         $this->ingredient->pivot->save();
-        return $this->ingredient->pivot;
+        $mealStore['ingredients'] = $mealStore->ingredients;
+        return $mealStore;
     }
 }

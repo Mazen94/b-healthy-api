@@ -27,8 +27,12 @@ class MenuController extends Controller
         $id = $request->input('id');
         $mealStore = $nutritionist->mealStore()->findOrFail($id);
         $recommendationRepository = new RecommendationRepository($recommendation);
+        $checkTypeMenuExist = $recommendationRepository->checkTypeMenuExist($mealStore->type_menu);
+        if (!$checkTypeMenuExist->isEmpty()) {
+            return response()->json(['data' => __('messages.typeMenuExist')], 200);
+        }
         $newRecommendation = $recommendationRepository->addMenuToRecommendation($mealStore);
-        return response()->json(['data' => $newRecommendation], 200);
+        return response()->json(['data' => $newRecommendation], 201);
     }
 
     /**

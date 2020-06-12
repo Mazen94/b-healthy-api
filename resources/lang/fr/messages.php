@@ -7,5 +7,6 @@ return [
     'emailFailed' => 'Ton adresse email n\'est pas valide.',
     'newPassword' => 'Nouveau mot de passe',
     'welcome' => 'Bienvenue dans notre application',
-    'IngredientExists' => 'Vous avez deja ajoutée ce ingredient'
+    'IngredientExists' => 'Vous avez deja ajoutée ce ingredient',
+    'typeMenuExist' => 'Vous avez deja ajouté un menu de ce type'
 ];

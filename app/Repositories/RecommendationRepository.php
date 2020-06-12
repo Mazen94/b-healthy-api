@@ -56,7 +56,7 @@ class RecommendationRepository
      */
     public function addMenuToRecommendation($mealStore)
     {
-        $name =  $mealStore->name;
+        $name = $mealStore->name;
         $calorie = $mealStore->calorie;
         $typeMenu = $mealStore->type_menu;
         $ingredients = $mealStore->ingredients;
@@ -78,5 +78,8 @@ class RecommendationRepository
         return $this->recommendation->menus()->detach($idMenu);
     }
 
-
+    public function checkTypeMenuExist($typeMenu)
+    {
+        return $this->recommendation->menus()->where('type_menu', $typeMenu)->get();
+    }
 }

@@ -113,11 +113,11 @@ class PatientRepository
      *
      * @return mixed
      */
-    public function getRecommendationByPatient()
+    public function getLastRecommendation()
     {
         $recommendation = $this->patient->recommendations()->latest("updated_at")->first();
-
         if (!empty($recommendation)) {
+            //add the menus created by nutritionist and the number of calories
             $recommendation["menus"] = $recommendation->menus()->whereIn('type_menu', array(0, 1, 2, 3, 4))->get();
             $recommendation['calories'] = $recommendation->menus()->whereIn('type_menu', array(0, 1, 2, 3, 4))->sum(
                 'calorie'

@@ -32,7 +32,7 @@ class StatisticalController extends Controller
         $numbOfBadMenus = 0;
         $patient = auth()->user();
         $patientRepository = new PatientRepository($patient);
-        $recommendation = $patientRepository->getRecommendationByPatient();
+        $recommendation = $patientRepository->getLastRecommendation();
         $menusCreated = MenuRepository::menusCreatedPatient($recommendation->id);
         $currentDate = new \DateTime(date('Y-m-d '));
         $dataOfRecommendation = new \DateTime(date('Y-m-d', strtotime($recommendation->updated_at)));

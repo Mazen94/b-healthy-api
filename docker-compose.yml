@@ -41,8 +41,6 @@ services:
     container_name: b-healthy-db
     restart: unless-stopped
     tty: true
-    ports:
-      - "3306:3306"
     environment:
       MYSQL_DATABASE: b-healthy
       MYSQL_ROOT_PASSWORD: secret

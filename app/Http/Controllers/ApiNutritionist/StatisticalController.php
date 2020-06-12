@@ -76,6 +76,7 @@ class StatisticalController extends Controller
 
     /**
      * Method to get follow-up rate for last recommendation
+     * @param $patientId
      * @return mixed
      * @throws \Exception
      */
@@ -85,9 +86,9 @@ class StatisticalController extends Controller
         $nutritionist = auth()->user();
         $patient = $nutritionist->patients()->findOrFail($patientId);
         $patientRepository = new PatientRepository($patient);
-        $recommendation = $patientRepository->getRecommendationByPatient();
+        $recommendation = $patientRepository->getLastRecommendation();
         if ($recommendation) {
-            $menusCreated = MenuRepository::menusCreatedPatient($recommendation->id);
+            $menusCreatedByPatient = MenuRepository::menusCreatedPatient($recommendation->id);
             $currentDate = new \DateTime(date('Y-m-d '));
             $dataOfRecommendation = new \DateTime(date('Y-m-d', strtotime($recommendation->updated_at)));
             $difference = $currentDate->diff($dataOfRecommendation);
@@ -95,11 +96,11 @@ class StatisticalController extends Controller
             if ($numberOfMenus == 0) {
                 return response()->json(['data' => 100], 200);
             } else {
-                foreach ($menusCreated as $menuCreated) {
-                    $nutritionistTypeMenu = MenuRepository::valueOfTypeMenu($menuCreated->type_menu);
+                foreach ($menusCreatedByPatient as $menuCreatedByPatient) {
+                    $nutritionistTypeMenu = MenuRepository::valueOfTypeMenu($menuCreatedByPatient->type_menu);
                     foreach ($recommendation->menus as $menu) {
                         if ($menu->type_menu == $nutritionistTypeMenu) {
-                            if ($menu->calorie != $menuCreated->calorie) {
+                            if ($menu->calorie != $menuCreatedByPatient->calorie) {
                                 $numbOfBadMenus++;
                             }
                         }
@@ -112,6 +113,5 @@ class StatisticalController extends Controller
         } else {
             return response()->json(['data' => null], 200);
         }
-
     }
 }

@@ -7,7 +7,6 @@ use App\Http\Requests\IngredientRequest;
 use App\Http\Requests\MealStoreIngredientRequest;
 use App\Http\Requests\PaginationRequest;
 use App\Ingredient;
-use App\IngredientMealStore;
 use App\Repositories\IngredientRepository;
 use App\Repositories\MealStoreRepository;
 use App\Repositories\NutritionistRepository;
@@ -25,7 +24,7 @@ class IngredientController extends Controller
     public function index(PaginationRequest $request)
     {
         $page = $request->input('page', 1);
-        $perPage = $request->input('perPage', 10);
+        $perPage = $request->input('perPage', 20);
         $orderBy = $request->input('orderBy', 'created_at');
         $orderDirection = $request->input('orderDirection', 'desc');
         $nutritionist = auth()->user();

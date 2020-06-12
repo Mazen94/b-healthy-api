@@ -38,21 +38,25 @@ class StatisticalController extends Controller
         $dataOfRecommendation = new \DateTime(date('Y-m-d', strtotime($recommendation->updated_at)));
         $difference = $currentDate->diff($dataOfRecommendation);
         $numberOfMenus = $difference->days * 5;
-        foreach ($menusCreated as $menuCreated) {
-            $nutritionistTypeMenu = MenuRepository::valueOfTypeMenu($menuCreated->type_menu);
-            foreach ($recommendation->menus as $menu) {
-                if ($menu->type_menu == $nutritionistTypeMenu) {
-                    if ($menu->calorie != $menuCreated->calorie) {
-                        $numbOfBadMenus++;
+        if ($numberOfMenus == 0) {
+            return response()->json(['data' => 100], 200);
+        } else {
+            foreach ($menusCreated as $menuCreated) {
+                $nutritionistTypeMenu = MenuRepository::valueOfTypeMenu($menuCreated->type_menu);
+                foreach ($recommendation->menus as $menu) {
+                    if ($menu->type_menu == $nutritionistTypeMenu) {
+                        if ($menu->calorie != $menuCreated->calorie) {
+                            $numbOfBadMenus++;
+                        }
                     }
                 }
             }
+            $followUp = (($numberOfMenus - $numbOfBadMenus) / $numberOfMenus) * 100;
+            $data['followUp'] = round($followUp, 2);
+            $data['numbBadMenu'] = $numbOfBadMenus;
+            $data['numberOfMenus'] = $numberOfMenus;
+            return response()->json(['data' => $data], 200);
         }
-        $followUp =  (($numberOfMenus - $numbOfBadMenus) / $numberOfMenus) * 100;
-        $data['followUp'] = round($followUp, 2);
-        $data['numbBadMenu'] = $numbOfBadMenus;
-        $data['numberOfMenus'] = $numberOfMenus;
-        return response()->json(['data' => $data], 200);
     }
 }
 

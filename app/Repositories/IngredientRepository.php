@@ -35,7 +35,7 @@ class IngredientRepository
      * @param $amount
      * @param $calorie
      *
-     * @return Model
+     * @return Ingredient
      */
     public function updateIngredient($name, $amount, $calorie)
     {

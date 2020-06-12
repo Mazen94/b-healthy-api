@@ -46,9 +46,6 @@ class VisitController extends Controller
      */
     public function newMeasure(VisitRequest $request, $idPatient)
     {
-        $nutritionist = auth()->user();
-        $patient = $nutritionist->patients()->findOrFail($idPatient);
-        $visit = [];
         $checkVisit = VisitRepository::checkVisit($idPatient);
         $weight = $request->input('weight');
         $note = $request->input('note');
@@ -109,7 +106,6 @@ class VisitController extends Controller
      */
     public function newMeeting(Request $request, $idPatient)
     {
-        $visit = [];
         $date = $request->input('date');
         $hour = $request->input('hour');
         $checkVisit = VisitRepository::checkVisit($idPatient);

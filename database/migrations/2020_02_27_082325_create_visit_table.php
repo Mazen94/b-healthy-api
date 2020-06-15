@@ -18,7 +18,7 @@ class CreateVisitTable extends Migration
             $table->integer('poids')->nullable();
             $table->string('note');
             $table->date('scheduledAt')->nullable();
-            $table->date('meetingHour')->nullable();
+            $table->string('meetingHour')->nullable();
             $table->unsignedBigInteger('patient_id');
             $table->foreign('patient_id')->references('id')->on('patient');
             $table->timestamps();

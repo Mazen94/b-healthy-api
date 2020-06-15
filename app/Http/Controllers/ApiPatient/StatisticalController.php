@@ -37,10 +37,10 @@ class StatisticalController extends Controller
         $currentDate = new \DateTime(date('Y-m-d '));
         $dataOfRecommendation = new \DateTime(date('Y-m-d', strtotime($recommendation->updated_at)));
         $difference = $currentDate->diff($dataOfRecommendation);
-        $numberOfMenus = $difference->days * 5;
-        if ($numberOfMenus == 0) {
+        $difference->days == 0 ? $numberOfMenus = 5 : $numberOfMenus = $difference->days * 5;
+        if ($menusCreated->isEmpty()) {
             $data['followUp'] = 100;
-            return response()->json(['data' => $data], 200);
+            return response()->json(['data' => $numberOfMenus], 200);
         } else {
             foreach ($menusCreated as $menuCreated) {
                 $nutritionistTypeMenu = MenuRepository::valueOfTypeMenu($menuCreated->type_menu);

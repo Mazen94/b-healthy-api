@@ -92,8 +92,8 @@ class StatisticalController extends Controller
             $currentDate = new \DateTime(date('Y-m-d '));
             $dataOfRecommendation = new \DateTime(date('Y-m-d', strtotime($recommendation->updated_at)));
             $difference = $currentDate->diff($dataOfRecommendation);
-            $numberOfMenus = $difference->days * 5;
-            if ($numberOfMenus == 0) {
+            $difference->days == 0 ? $numberOfMenus = 5 : $numberOfMenus = $difference->days * 5;
+            if ($menusCreatedByPatient->isEmpty()) {
                 return response()->json(['data' => 100], 200);
             } else {
                 foreach ($menusCreatedByPatient as $menuCreatedByPatient) {

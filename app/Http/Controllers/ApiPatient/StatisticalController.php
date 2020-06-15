@@ -39,7 +39,8 @@ class StatisticalController extends Controller
         $difference = $currentDate->diff($dataOfRecommendation);
         $numberOfMenus = $difference->days * 5;
         if ($numberOfMenus == 0) {
-            return response()->json(['data' => 100], 200);
+            $data['followUp'] = 100;
+            return response()->json(['data' => $data], 200);
         } else {
             foreach ($menusCreated as $menuCreated) {
                 $nutritionistTypeMenu = MenuRepository::valueOfTypeMenu($menuCreated->type_menu);

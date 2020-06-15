@@ -57,7 +57,7 @@ class IngredientController extends Controller
         $newCaloriesOfMenu = $caloriesOfMenu + round((($amount / $defaultAmount) * $caloriesOfIngredient), 1);
         $menuRepository = new MenuRepository($menu);
         $menu = $menuRepository->addIngredientToMenu($idMenu, $newCaloriesOfMenu, $idIngredient, $amount);
-        return response()->json(['data' => $menu,], 200);
+        return response()->json(['data' => $menu,], 201);
     }
 
     /**

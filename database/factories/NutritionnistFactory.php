@@ -11,7 +11,7 @@ $factory->define(Nutritionist::class, function (Faker $faker) {
         'firstName'=> $faker->firstName,
         'lastName' => $faker->lastName,
         'password' =>bcrypt('adminadmin'),
-        'picture' => $faker->imageUrl(),
+
 
     ];
 });

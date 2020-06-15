@@ -10,7 +10,7 @@ $factory->define(Patient::class, function (Faker $faker) {
     $users = Nutritionist::all()->pluck('id')->toArray();
     return [
         'email' => $faker->unique()->safeEmail,
-        'password' =>bcrypt('test'), // test
+        'password' =>bcrypt('testtest'), // test
         'lastName' => $faker->lastName,
         'firstName'=> $faker->firstName,
         'gender' => $faker->randomElement([0,1]),

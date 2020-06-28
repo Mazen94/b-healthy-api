@@ -15,6 +15,7 @@ Route::prefix('admin')->group(
                 Route::get('/nutritionist', 'ApiAdmin\NutritionistsController@index');
                 Route::post('/nutritionist/{id}', 'ApiAdmin\NutritionistsController@activate');
                 Route::delete('/nutritionist/{id}', 'ApiAdmin\NutritionistsController@destroy');
+                Route::get('/stats', 'ApiAdmin\StatisticalsController@count');
             }
         );
     }

@@ -7,10 +7,10 @@ use Faker\Generator as Faker;
 
 $factory->define(Nutritionist::class, function (Faker $faker) {
     return [
-        'email'=>'admin@admin.com',
+        'email' => $faker->unique()->safeEmail,
         'firstName'=> $faker->firstName,
         'lastName' => $faker->lastName,
-        'password' =>bcrypt('adminadmin'),
+        'password' =>bcrypt('testtest'),
 
 
     ];

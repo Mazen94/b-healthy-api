@@ -13,7 +13,6 @@ $factory->define(
         $storeMenu = MealStore::all()->pluck('id')->toArray();
         $ingredient = Ingredient::all()->pluck('id')->toArray();
         return [
-
             'meal_store_id' => $faker->randomElement($storeMenu),
             'ingredient_id' => $faker->randomElement($ingredient),
             'amount' => $faker->numberBetween(50, 100)

@@ -2,6 +2,24 @@
 
 /*
 |--------------------------------------------------------------------------
+| API Admin Routes
+|--------------------------------------------------------------------------
+
+*/
+Route::prefix('admin')->group(
+    function () {
+        Route::post('login', 'ApiAdmin\AuthController@login');
+        Route::post('forgotPassword', 'ApiAdmin\ForgotPasswordController@sendNewPassword');
+        Route::middleware('auth:api-admin')->group(
+            function () {
+                Route::get('/', 'ApiAdmin\NutritionistController@connectedUser');
+            }
+        );
+    }
+);
+
+/*
+|--------------------------------------------------------------------------
 | API Nutritionist Routes
 |--------------------------------------------------------------------------
 

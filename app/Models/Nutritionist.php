@@ -16,6 +16,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string $lastName
  * @property string $picture
  * @property string $password
+ * @property int status
  *
  */
 class Nutritionist extends Authenticatable implements JWTSubject

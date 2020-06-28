@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
-class IngredientsTableSeeder extends Seeder
+use App\Admin;
+class AdminTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class IngredientsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Ingredient::class, 80)->create();
+        factory(Admin::class, 1)->create();
     }
 }

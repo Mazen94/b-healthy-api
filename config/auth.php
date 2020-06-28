@@ -41,6 +41,12 @@ return [
             'provider' => 'nutritionnists',
         ],
 
+        'api-admin' => [
+            'driver' => 'jwt',
+            'provider' => 'admins',
+            'hash' => false,
+        ],
+
         'api' => [
             'driver' => 'jwt',
             'provider' => 'nutritionnists',
@@ -74,6 +80,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Admin::class,
         ],
         'nutritionnists' => [
             'driver' => 'eloquent',

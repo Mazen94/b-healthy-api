@@ -41,6 +41,8 @@ class AuthController extends Controller
         if (!$token = auth('api')->attempt($credentials)) {
             return response()->json(['message' => __('messages.login')], 401);
         }
-        return response()->json(['token' => $token,], 200);
+        $data['token'] = $token;
+        $data['status'] = auth('api')->user()->status;
+        return response()->json(['data' => $data,], 200);
     }
 }

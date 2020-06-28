@@ -12,7 +12,9 @@ Route::prefix('admin')->group(
         Route::post('forgotPassword', 'ApiAdmin\ForgotPasswordController@sendNewPassword');
         Route::middleware('auth:api-admin')->group(
             function () {
-                Route::get('/', 'ApiAdmin\NutritionistController@connectedUser');
+                Route::get('/nutritionist', 'ApiAdmin\NutritionistsController@index');
+                Route::post('/nutritionist/{id}', 'ApiAdmin\NutritionistsController@activate');
+                Route::delete('/nutritionist/{id}', 'ApiAdmin\NutritionistsController@destroy');
             }
         );
     }

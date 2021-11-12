@@ -11,6 +11,6 @@ class StoremenuTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\MealStore::class,80)->create();
+        factory(\App\Models\MealStore::class,80)->create();
     }
 }

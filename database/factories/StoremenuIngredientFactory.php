@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\IngredientMealStore;
+use App\Models\IngredientMealStore;
 use Faker\Generator as Faker;
-use App\MealStore;
-use App\Ingredient;
+use App\Models\MealStore;
+use App\Models\Ingredient;
 
 $factory->define(
     IngredientMealStore::class,

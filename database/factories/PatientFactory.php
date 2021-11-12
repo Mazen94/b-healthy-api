@@ -2,8 +2,8 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Patient;
-use App\Nutritionist;
+use App\Models\Patient;
+use App\Models\Nutritionist;
 use Faker\Generator as Faker;
 
 $factory->define(Patient::class, function (Faker $faker) {

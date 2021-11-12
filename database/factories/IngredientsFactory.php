@@ -2,9 +2,9 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Ingredient;
+use App\Models\Ingredient;
 use Faker\Generator as Faker;
-use App\Nutritionist;
+use App\Models\Nutritionist;
 $factory->define(
     Ingredient::class,
     function (Faker $faker) {

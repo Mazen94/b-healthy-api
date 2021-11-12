@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Admin;
+use App\Models\Admin;
+
 class AdminTableSeeder extends Seeder
 {
     /**

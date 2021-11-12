@@ -79,19 +79,19 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => App\Models\User::class,
         ],
         'admins' => [
             'driver' => 'eloquent',
-            'model' => App\Admin::class,
+            'model' => App\Models\Admin::class,
         ],
         'nutritionnists' => [
             'driver' => 'eloquent',
-            'model' => App\Nutritionist::class,
+            'model' => App\Models\Nutritionist::class,
         ],
         'patients' => [
             'driver' => 'eloquent',
-            'model' => App\Patient::class,
+            'model' => App\Models\Patient::class,
         ],
         // 'users' => [
         //     'driver' => 'database',

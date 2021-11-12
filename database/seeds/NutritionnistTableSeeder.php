@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Nutritionist;
+use App\Models\Nutritionist;
 class NutritionnistTableSeeder extends Seeder
 {
     /**
